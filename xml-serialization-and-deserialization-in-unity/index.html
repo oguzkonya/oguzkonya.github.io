@@ -6,8 +6,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>XML Serialization in Unity | oguzkonya</title>
 <link rel="stylesheet" href="/assets/main.css">
+<link rel="stylesheet" href="/assets/prism.css">
 <link rel="alternate" type="application/rss+xml" title="oguzkonya" href="/feed.xml">
-<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/prism.js"></script>
 <title>XML Serialization in Unity | oguzkonya</title>
 <meta name="generator" content="Jekyll v3.7.4" />
 <meta property="og:title" content="XML Serialization in Unity" />
@@ -57,101 +58,89 @@
  <div class="post-content" itemprop="articleBody">
 <p>Unity stores contents of a scene in a custom YAML file called a <strong>Unity scene file</strong>. While this is convenient for levels which are designed in Unity’s scene editor, it is not very useful for levels which are built at runtime. Moreover, it is not possible to store game related data in scene files, such as properties of weapons, cars, NPCs, etc. (actually, it is possible, but not feasible). Even though there are a few solutions for that kind of data storage in Unity, such as JSON, or SQL, the easiest of them to implement is XML. In this post, I will show you how to store your game data in XML files and read them at runtime.</p>
 <p>To be able to save data in XML files, first we need to be able to convert objects into XML format and then convert XML format back into objects. This process is called <abbr title="Converting objects into a form (such as JSON, or XML) that can be easily transported.">serialization</abbr> and <abbr title="Creating objects from transport formats such as JSON, or XML.">deserialization</abbr>. C# already has great tools for XML <abbr title="Converting objects into a form (such as JSON, or XML) that can be easily transported.">serialization</abbr>, and we will build upon them to create XML serializer we need.</p>
-<p>First, let’s create a sample class to start serializing:</p>
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><div class="line-1"><span class="k">public</span> <span class="k">class</span> <span class="nc">Hero</span>
-</div><div class="line-2"><span class="p">{</span>
-</div><div class="line-3">    <span class="k">public</span> <span class="kt">string</span> <span class="n">name</span><span class="p">;</span>
-</div><div class="line-4">
-</div><div class="line-5">    <span class="k">public</span> <span class="kt">bool</span> <span class="n">isBoss</span><span class="p">;</span>
-</div><div class="line-6">
-</div><div class="line-7">    <span class="k">public</span> <span class="kt">int</span> <span class="n">hitPoints</span><span class="p">;</span>
-</div><div class="line-8">
-</div><div class="line-9">    <span class="k">public</span> <span class="kt">float</span> <span class="n">baseDamage</span><span class="p">;</span>
-</div><div class="line-10"><span class="p">}</span>
-</div></code></pre></figure>
+<p>First, let’s create a sample class to start serializing:</p><pre class=" language-csharp  line-numbers "><code>public class Hero
+{
+    public string name;
+
+    public bool isBoss;
+
+    public int hitPoints;
+
+    public float baseDamage;
+}</code></pre>
 <p>This is a very basic version of a <code class="highlighter-rouge">Hero</code> class that you might find yourself creating for your game. You may think that it is <em>too</em> basic, but don’t worry, we will be adding features as we move on. However, before moving on, you should know two important key points about XML serializing:</p>
 <ol>
  <li>XML serializer can only serialize public fields.</li>
  <li>Class to be serialized should have a parameterless constructor.</li>
 </ol>
 <p>In our case, <code class="highlighter-rouge">Hero</code> class already has nothing but public fields and since there isn’t any kind of constructor, it implicitly has a parameterless default constructor.</p>
-<p>Let’s say we want this class to output an XML file just like the following:</p>
-<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><div class="line-1"><span class="nt">&lt;Hero&gt;</span>
-</div><div class="line-2">    <span class="nt">&lt;name&gt;&lt;/name&gt;</span>
-</div><div class="line-3">    <span class="nt">&lt;isBoss&gt;&lt;/isBoss&gt;</span>
-</div><div class="line-4">    <span class="nt">&lt;hitPoints&gt;&lt;/hitPoints&gt;</span>
-</div><div class="line-5">    <span class="nt">&lt;baseDamage&gt;&lt;/baseDamage&gt;</span>
-</div><div class="line-6"><span class="nt">&lt;/Hero&gt;</span>
-</div></code></pre></figure>
-<p>Generally, producing an XML file in a certain format requires some modification to target class. But, in our case we are not looking for a specific format. All our fields we want to serialize are public and there is a default constructor, therefore, we can start creating the XML file:</p>
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><div class="line-1"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
-</div><div class="line-2"><span class="k">using</span> <span class="nn">System.Xml.Serialization</span><span class="p">;</span>
-</div><div class="line-3"><span class="k">using</span> <span class="nn">System.IO</span><span class="p">;</span>
-</div><div class="line-4">
-</div><div class="line-5"><span class="k">public</span> <span class="k">class</span> <span class="nc">XMLSerializer</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> 
-</div><div class="line-6"><span class="p">{</span>
-</div><div class="line-7">    <span class="k">private</span> <span class="k">void</span> <span class="nf">Start</span><span class="p">()</span> 
-</div><div class="line-8">    <span class="p">{</span>
-</div><div class="line-9">        <span class="n">Hero</span> <span class="n">knight</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Hero</span><span class="p">();</span>
-</div><div class="line-10">        <span class="n">knight</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="s">"Knight of Solamnia"</span><span class="p">;</span>
-</div><div class="line-11">        <span class="n">knight</span><span class="p">.</span><span class="n">isBoss</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
-</div><div class="line-12">        <span class="n">knight</span><span class="p">.</span><span class="n">hitPoints</span> <span class="p">=</span> <span class="m">100</span><span class="p">;</span>
-</div><div class="line-13">        <span class="n">knight</span><span class="p">.</span><span class="n">baseDamage</span> <span class="p">=</span> <span class="m">50f</span><span class="p">;</span>
-</div><div class="line-14">
-</div><div class="line-15">        <span class="n">XmlSerializer</span> <span class="n">serializer</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">XmlSerializer</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">Hero</span><span class="p">));</span>
-</div><div class="line-16">        <span class="n">StreamWriter</span> <span class="n">writer</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamWriter</span><span class="p">(</span><span class="s">"hero.xml"</span><span class="p">);</span>
-</div><div class="line-17">        <span class="n">serializer</span><span class="p">.</span><span class="nf">Serialize</span><span class="p">(</span><span class="n">writer</span><span class="p">.</span><span class="n">BaseStream</span><span class="p">,</span> <span class="n">knight</span><span class="p">);</span>
-</div><div class="line-18">        <span class="n">writer</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
-</div><div class="line-19">    <span class="p">}</span>
-</div><div class="line-20"><span class="p">}</span>
-</div></code></pre></figure>
+<p>Let’s say we want this class to output an XML file just like the following:</p><pre class=" language-xml  line-numbers "><code>&lt;Hero&gt;
+    &lt;name&gt;&lt;/name&gt;
+    &lt;isBoss&gt;&lt;/isBoss&gt;
+    &lt;hitPoints&gt;&lt;/hitPoints&gt;
+    &lt;baseDamage&gt;&lt;/baseDamage&gt;
+&lt;/Hero&gt;</code></pre>
+<p>Generally, producing an XML file in a certain format requires some modification to target class. But, in our case we are not looking for a specific format. All our fields we want to serialize are public and there is a default constructor, therefore, we can start creating the XML file:</p><pre class=" language-csharp  line-numbers "><code>using UnityEngine;
+using System.Xml.Serialization;
+using System.IO;
+
+public class XMLSerializer : MonoBehaviour 
+{
+    private void Start() 
+    {
+        Hero knight = new Hero();
+        knight.name = &quot;Knight of Solamnia&quot;;
+        knight.isBoss = true;
+        knight.hitPoints = 100;
+        knight.baseDamage = 50f;
+
+        XmlSerializer serializer = new XmlSerializer(typeof(Hero));
+        StreamWriter writer = new StreamWriter(&quot;hero.xml&quot;);
+        serializer.Serialize(writer.BaseStream, knight);
+        writer.Close();
+    }
+}</code></pre>
 <p>Let’s have a look at this code line by line:</p>
 <p>On <strong>Line 9-13</strong>, we create a new <code class="highlighter-rouge">Hero</code> and assign its <abbr title="A method to associate declarative information with the code">attributes</abbr>.</p>
 <p>On <strong>Line 15</strong>, we create an <code class="highlighter-rouge">XmlSerializer</code> instance with type of <code class="highlighter-rouge">Hero</code>, since it is the type of the class we are serializing. This <code class="highlighter-rouge">XmlSerializer</code> is a C# class and it can be found under <code class="highlighter-rouge">System.Xml.Serialization</code>.</p>
 <p>On <strong>Line 16</strong>, we create a <code class="highlighter-rouge">StreamWriter</code> instance which would create the XML file itself and do the actual writing. <code class="highlighter-rouge">StreamWriter</code> is also a C# class and it can be found under <code class="highlighter-rouge">System.IO</code></p>
 <p>On <strong>Line 17</strong>, we tell the <code class="highlighter-rouge">XmlSerializer</code> to serialize knight (our <code class="highlighter-rouge">Hero</code>), and send it to a stream.</p>
 <p>And finally, on <strong>Line 18</strong>, we tell writer to close streaming (i.e stop reading input and create the file).</p>
-<p>When you drag&amp;drop this code on an empty game object in Unity and run it, you will see that a file named <code class="highlighter-rouge">hero.xml</code> is created in your Unity project folder and its contents hold Hero data:</p>
-<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><div class="line-1"><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
-</div><div class="line-2"><span class="nt">&lt;Hero</span> <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="na">xmlns:xsd=</span><span class="s">"http://www.w3.org/2001/XMLSchema"</span><span class="nt">&gt;</span>
-</div><div class="line-3">    <span class="nt">&lt;name&gt;</span>Knight of Solamnia<span class="nt">&lt;/name&gt;</span>
-</div><div class="line-4">    <span class="nt">&lt;isBoss&gt;</span>true<span class="nt">&lt;/isBoss&gt;</span>
-</div><div class="line-5">    <span class="nt">&lt;hitPoints&gt;</span>100<span class="nt">&lt;/hitPoints&gt;</span>
-</div><div class="line-6">    <span class="nt">&lt;baseDamage&gt;</span>50<span class="nt">&lt;/baseDamage&gt;</span>
-</div><div class="line-7"><span class="nt">&lt;/Hero&gt;</span>
-</div></code></pre></figure>
-<p>As you can see, creating an XML file required no more than a few lines of code. But, what if we want to have different tag names in the XML file? Or, to use XML <abbr title="A method to associate declarative information with the code">attributes</abbr> instead of XML elements to store data? Or, to use arrays in our class? To achieve these, we need to modify our base class by adding some XML <abbr title="A method to associate declarative information with the code">attributes</abbr> to our fields. But first, we should change something in our code. I like my code well organized and I favor OOP’s single responsibility principle, so I will move XML <abbr title="Converting objects into a form (such as JSON, or XML) that can be easily transported.">serialization</abbr> part into its own class. This way, we will be able to serialize any type of object with a single line of code:</p>
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><div class="line-1"><span class="k">using</span> <span class="nn">System.IO</span><span class="p">;</span>
-</div><div class="line-2"><span class="k">using</span> <span class="nn">System.Xml.Serialization</span><span class="p">;</span>
-</div><div class="line-3">
-</div><div class="line-4"><span class="k">public</span> <span class="k">class</span> <span class="nc">XMLOp</span>
-</div><div class="line-5"><span class="p">{</span>
-</div><div class="line-6">    <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Serialize</span><span class="p">(</span><span class="kt">object</span> <span class="n">item</span><span class="p">,</span> <span class="kt">string</span> <span class="n">path</span><span class="p">)</span>
-</div><div class="line-7">    <span class="p">{</span>
-</div><div class="line-8">        <span class="n">XmlSerializer</span> <span class="n">serializer</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">XmlSerializer</span><span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="nf">GetType</span><span class="p">());</span>
-</div><div class="line-9">        <span class="n">StreamWriter</span> <span class="n">writer</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamWriter</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
-</div><div class="line-10">        <span class="n">serializer</span><span class="p">.</span><span class="nf">Serialize</span><span class="p">(</span><span class="n">writer</span><span class="p">.</span><span class="n">BaseStream</span><span class="p">,</span> <span class="n">item</span><span class="p">);</span>
-</div><div class="line-11">        <span class="n">writer</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
-</div><div class="line-12">    <span class="p">}</span>
-</div><div class="line-13"><span class="p">}</span>
-</div></code></pre></figure>
-<p>Now our <code class="highlighter-rouge">XMLSerializer</code> looks like this:</p>
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><div class="line-1"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
-</div><div class="line-2">
-</div><div class="line-3"><span class="k">public</span> <span class="k">class</span> <span class="nc">XMLSerializer</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
-</div><div class="line-4"><span class="p">{</span>
-</div><div class="line-5">    <span class="k">private</span> <span class="k">void</span> <span class="nf">Start</span><span class="p">()</span>
-</div><div class="line-6">    <span class="p">{</span>
-</div><div class="line-7">        <span class="n">Hero</span> <span class="n">knight</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Hero</span><span class="p">();</span>
-</div><div class="line-8">        <span class="n">knight</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="s">"Knight of Solamnia"</span><span class="p">;</span>
-</div><div class="line-9">        <span class="n">knight</span><span class="p">.</span><span class="n">isBoss</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
-</div><div class="line-10">        <span class="n">knight</span><span class="p">.</span><span class="n">hitPoints</span> <span class="p">=</span> <span class="m">100</span><span class="p">;</span>
-</div><div class="line-11">        <span class="n">knight</span><span class="p">.</span><span class="n">baseDamage</span> <span class="p">=</span> <span class="m">50f</span><span class="p">;</span>
-</div><div class="line-12">
-</div><div class="line-13">        <span class="n">XMLOp</span><span class="p">.</span><span class="nf">Serialize</span><span class="p">(</span><span class="n">knight</span><span class="p">,</span> <span class="s">"hero.xml"</span><span class="p">);</span>
-</div><div class="line-14">    <span class="p">}</span>
-</div><div class="line-15"><span class="p">}</span>
-</div></code></pre></figure>
+<p>When you drag&amp;drop this code on an empty game object in Unity and run it, you will see that a file named <code class="highlighter-rouge">hero.xml</code> is created in your Unity project folder and its contents hold Hero data:</p><pre class=" language-xml  line-numbers "><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;Hero xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
+    &lt;name&gt;Knight of Solamnia&lt;/name&gt;
+    &lt;isBoss&gt;true&lt;/isBoss&gt;
+    &lt;hitPoints&gt;100&lt;/hitPoints&gt;
+    &lt;baseDamage&gt;50&lt;/baseDamage&gt;
+&lt;/Hero&gt;</code></pre>
+<p>As you can see, creating an XML file required no more than a few lines of code. But, what if we want to have different tag names in the XML file? Or, to use XML <abbr title="A method to associate declarative information with the code">attributes</abbr> instead of XML elements to store data? Or, to use arrays in our class? To achieve these, we need to modify our base class by adding some XML <abbr title="A method to associate declarative information with the code">attributes</abbr> to our fields. But first, we should change something in our code. I like my code well organized and I favor OOP’s single responsibility principle, so I will move XML <abbr title="Converting objects into a form (such as JSON, or XML) that can be easily transported.">serialization</abbr> part into its own class. This way, we will be able to serialize any type of object with a single line of code:</p><pre class=" language-csharp  line-numbers "><code>using System.IO;
+using System.Xml.Serialization;
+
+public class XMLOp
+{
+    public static void Serialize(object item, string path)
+    {
+        XmlSerializer serializer = new XmlSerializer(item.GetType());
+        StreamWriter writer = new StreamWriter(path);
+        serializer.Serialize(writer.BaseStream, item);
+        writer.Close();
+    }
+}</code></pre>
+<p>Now our <code class="highlighter-rouge">XMLSerializer</code> looks like this:</p><pre class=" language-csharp  line-numbers "><code>using UnityEngine;
+
+public class XMLSerializer : MonoBehaviour
+{
+    private void Start()
+    {
+        Hero knight = new Hero();
+        knight.name = &quot;Knight of Solamnia&quot;;
+        knight.isBoss = true;
+        knight.hitPoints = 100;
+        knight.baseDamage = 50f;
+
+        XMLOp.Serialize(knight, &quot;hero.xml&quot;);
+    }
+}</code></pre>
 <h2 id="xml-serialization">XML Serialization</h2>
 <p>As I have mentioned above, to change the behaviour of XML <abbr title="Converting objects into a form (such as JSON, or XML) that can be easily transported.">serialization</abbr>, we need to modify our class with XML <abbr title="A method to associate declarative information with the code">attributes</abbr>. As you can see <a href="https://msdn.microsoft.com/en-us/library/83y7df3e%28v=vs.110%29.aspx">here</a> there are many XML <abbr title="A method to associate declarative information with the code">attributes</abbr> that control <abbr title="Converting objects into a form (such as JSON, or XML) that can be easily transported.">serialization</abbr>, but in this post, I will only cover the following:</p>
 <ul>
@@ -162,309 +151,269 @@
  <li>[XmlArray]</li>
  <li>[XmlArrayItem]</li>
 </ul>
-<p>Usage of an XML attribute is very simple: you type the necessary attribute above your field or class just like the following:</p>
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><div class="line-1"><span class="p">[</span><span class="nf">XmlElement</span><span class="p">(</span><span class="s">"Name"</span><span class="p">)]</span>
-</div><div class="line-2"><span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span><span class="p">;</span>
-</div></code></pre></figure>
+<p>Usage of an XML attribute is very simple: you type the necessary attribute above your field or class just like the following:</p><pre class=" language-csharp  line-numbers "><code>[XmlElement(&quot;Name&quot;)]
+public string Name;</code></pre>
 <h3 id="xmlelementstring">[XmlElement(String)]</h3>
-<p>This attribute indicates that a field will be represented as an XML element. Fields of an object is serialized as XMLElement as default, so this attribute is necessary only to change the name of a field (or force an array to act like an element but we will get to that later). Let’s modify our script file and see what kind of XML file it produces:</p>
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><div class="line-1"><span class="k">using</span> <span class="nn">System.Xml.Serialization</span><span class="p">;</span>
-</div><div class="line-2">
-</div><div class="line-3"><span class="k">public</span> <span class="k">class</span> <span class="nc">Hero</span>
-</div><div class="line-4"><span class="p">{</span>
-</div><div class="line-5">    <span class="p">[</span><span class="nf">XmlElement</span><span class="p">(</span><span class="s">"n"</span><span class="p">)]</span>
-</div><div class="line-6">    <span class="k">public</span> <span class="kt">string</span> <span class="n">name</span><span class="p">;</span>
-</div><div class="line-7">
-</div><div class="line-8">    <span class="k">public</span> <span class="kt">bool</span> <span class="n">isBoss</span><span class="p">;</span>
-</div><div class="line-9">
-</div><div class="line-10">    <span class="k">public</span> <span class="kt">int</span> <span class="n">hitPoints</span><span class="p">;</span>
-</div><div class="line-11">
-</div><div class="line-12">    <span class="k">public</span> <span class="kt">float</span> <span class="n">baseDamage</span><span class="p">;</span>
-</div><div class="line-13"><span class="p">}</span>
-</div></code></pre></figure>
-<p>And the output becomes:</p>
-<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><div class="line-1"><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
-</div><div class="line-2"><span class="nt">&lt;Hero</span> <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="na">xmlns:xsd=</span><span class="s">"http://www.w3.org/2001/XMLSchema"</span><span class="nt">&gt;</span>
-</div><div class="line-3">    <span class="nt">&lt;n&gt;</span>Knight of Solamnia<span class="nt">&lt;/n&gt;</span>
-</div><div class="line-4">    <span class="nt">&lt;hitPoints&gt;</span>100<span class="nt">&lt;/hitPoints&gt;</span>
-</div><div class="line-5">    <span class="nt">&lt;baseDamage&gt;</span>50<span class="nt">&lt;/baseDamage&gt;</span>
-</div><div class="line-6">    <span class="nt">&lt;isBoss&gt;</span>true<span class="nt">&lt;/isBoss&gt;</span>
-</div><div class="line-7"><span class="nt">&lt;/Hero&gt;</span>
-</div></code></pre></figure>
+<p>This attribute indicates that a field will be represented as an XML element. Fields of an object is serialized as XMLElement as default, so this attribute is necessary only to change the name of a field (or force an array to act like an element but we will get to that later). Let’s modify our script file and see what kind of XML file it produces:</p><pre class=" language-csharp  line-numbers "><code>using System.Xml.Serialization;
+
+public class Hero
+{
+    [XmlElement(&quot;n&quot;)]
+    public string name;
+
+    public bool isBoss;
+
+    public int hitPoints;
+
+    public float baseDamage;
+}</code></pre>
+<p>And the output becomes:</p><pre class=" language-xml  line-numbers "><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;Hero xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
+    &lt;n&gt;Knight of Solamnia&lt;/n&gt;
+    &lt;hitPoints&gt;100&lt;/hitPoints&gt;
+    &lt;baseDamage&gt;50&lt;/baseDamage&gt;
+    &lt;isBoss&gt;true&lt;/isBoss&gt;
+&lt;/Hero&gt;</code></pre>
 <p><strong>NOTE</strong>: XML <abbr title="A method to associate declarative information with the code">attributes</abbr> have more constructors with different signatures than this tutorial covers. For example, <code class="highlighter-rouge">XmlElement</code> also has <code class="highlighter-rouge">XmlElement(String, Type)</code> and <code class="highlighter-rouge">XmlElement(Type)</code>. However, since this tutorial is planned to be an introductory one, I am not going to cover them here.</p>
 <h3 id="xmlattributestring">[XmlAttribute(String)]</h3>
-<p>This attribute indicates that a field will be represented as an XML attribute.</p>
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><div class="line-1"><span class="k">using</span> <span class="nn">System.Xml.Serialization</span><span class="p">;</span>
-</div><div class="line-2">
-</div><div class="line-3"><span class="k">public</span> <span class="k">class</span> <span class="nc">Hero</span>
-</div><div class="line-4"><span class="p">{</span>
-</div><div class="line-5">    <span class="p">[</span><span class="nf">XmlElement</span><span class="p">(</span><span class="s">"n"</span><span class="p">)]</span>
-</div><div class="line-6">    <span class="k">public</span> <span class="kt">string</span> <span class="n">name</span><span class="p">;</span>
-</div><div class="line-7">
-</div><div class="line-8">    <span class="p">[</span><span class="nf">XmlAttribute</span><span class="p">(</span><span class="s">"boss"</span><span class="p">)]</span>
-</div><div class="line-9">    <span class="k">public</span> <span class="kt">bool</span> <span class="n">isBoss</span><span class="p">;</span>
-</div><div class="line-10">
-</div><div class="line-11">    <span class="k">public</span> <span class="kt">int</span> <span class="n">hitPoints</span><span class="p">;</span>
-</div><div class="line-12">
-</div><div class="line-13">    <span class="k">public</span> <span class="kt">float</span> <span class="n">baseDamage</span><span class="p">;</span>
-</div><div class="line-14"><span class="p">}</span>
-</div></code></pre></figure>
-<p>And the output becomes:</p>
-<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><div class="line-1"><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
-</div><div class="line-2"><span class="nt">&lt;Hero</span> <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="na">xmlns:xsd=</span><span class="s">"http://www.w3.org/2001/XMLSchema"</span> <span class="na">boss=</span><span class="s">"true"</span><span class="nt">&gt;</span>
-</div><div class="line-3">    <span class="nt">&lt;n&gt;</span>Knight of Solamnia<span class="nt">&lt;/n&gt;</span>
-</div><div class="line-4">    <span class="nt">&lt;hitPoints&gt;</span>100<span class="nt">&lt;/hitPoints&gt;</span>
-</div><div class="line-5">    <span class="nt">&lt;baseDamage&gt;</span>50<span class="nt">&lt;/baseDamage&gt;</span>
-</div><div class="line-6"><span class="nt">&lt;/Hero&gt;</span>
-</div></code></pre></figure>
+<p>This attribute indicates that a field will be represented as an XML attribute.</p><pre class=" language-csharp  line-numbers "><code>using System.Xml.Serialization;
+
+public class Hero
+{
+    [XmlElement(&quot;n&quot;)]
+    public string name;
+
+    [XmlAttribute(&quot;boss&quot;)]
+    public bool isBoss;
+
+    public int hitPoints;
+
+    public float baseDamage;
+}</code></pre>
+<p>And the output becomes:</p><pre class=" language-xml  line-numbers "><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;Hero xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; boss=&quot;true&quot;&gt;
+    &lt;n&gt;Knight of Solamnia&lt;/n&gt;
+    &lt;hitPoints&gt;100&lt;/hitPoints&gt;
+    &lt;baseDamage&gt;50&lt;/baseDamage&gt;
+&lt;/Hero&gt;</code></pre>
 <h3 id="xmlignore">[XmlIgnore]</h3>
-<p>As I have mentioned before, a field must be public in order to be serialized. This also means that all the public fields will be serialized by the XML serializer. But sometimes, we might need a field to be <strong>not</strong> serialized without making it private. This is where <code class="highlighter-rouge">[XmlIgnore]</code> comes into play. It indicates that a field will not be represented in the XML file at all.</p>
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><div class="line-1"><span class="k">using</span> <span class="nn">System.Xml.Serialization</span><span class="p">;</span>
-</div><div class="line-2">
-</div><div class="line-3"><span class="k">public</span> <span class="k">class</span> <span class="nc">Hero</span>
-</div><div class="line-4"><span class="p">{</span>
-</div><div class="line-5">    <span class="p">[</span><span class="nf">XmlElement</span><span class="p">(</span><span class="s">"n"</span><span class="p">)]</span>
-</div><div class="line-6">    <span class="k">public</span> <span class="kt">string</span> <span class="n">name</span><span class="p">;</span>
-</div><div class="line-7">
-</div><div class="line-8">    <span class="p">[</span><span class="nf">XmlAttribute</span><span class="p">(</span><span class="s">"boss"</span><span class="p">)]</span>
-</div><div class="line-9">    <span class="k">public</span> <span class="kt">bool</span> <span class="n">isBoss</span><span class="p">;</span>
-</div><div class="line-10">
-</div><div class="line-11">    <span class="p">[</span><span class="n">XmlIgnore</span><span class="p">]</span>
-</div><div class="line-12">    <span class="k">public</span> <span class="kt">int</span> <span class="n">hitPoints</span><span class="p">;</span>
-</div><div class="line-13">
-</div><div class="line-14">    <span class="k">public</span> <span class="kt">float</span> <span class="n">baseDamage</span><span class="p">;</span>
-</div><div class="line-15"><span class="p">}</span>
-</div></code></pre></figure>
-<p>And the output becomes:</p>
-<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><div class="line-1"><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
-</div><div class="line-2"><span class="nt">&lt;Hero</span> <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="na">xmlns:xsd=</span><span class="s">"http://www.w3.org/2001/XMLSchema"</span> <span class="na">boss=</span><span class="s">"true"</span><span class="nt">&gt;</span>
-</div><div class="line-3">    <span class="nt">&lt;n&gt;</span>Knight of Solamnia<span class="nt">&lt;/n&gt;</span>
-</div><div class="line-4">    <span class="nt">&lt;baseDamage&gt;</span>50<span class="nt">&lt;/baseDamage&gt;</span>
-</div><div class="line-5"><span class="nt">&lt;/Hero&gt;</span>
-</div></code></pre></figure>
+<p>As I have mentioned before, a field must be public in order to be serialized. This also means that all the public fields will be serialized by the XML serializer. But sometimes, we might need a field to be <strong>not</strong> serialized without making it private. This is where <code class="highlighter-rouge">[XmlIgnore]</code> comes into play. It indicates that a field will not be represented in the XML file at all.</p><pre class=" language-csharp  line-numbers "><code>using System.Xml.Serialization;
+
+public class Hero
+{
+    [XmlElement(&quot;n&quot;)]
+    public string name;
+
+    [XmlAttribute(&quot;boss&quot;)]
+    public bool isBoss;
+
+    [XmlIgnore]
+    public int hitPoints;
+
+    public float baseDamage;
+}</code></pre>
+<p>And the output becomes:</p><pre class=" language-xml  line-numbers "><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;Hero xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; boss=&quot;true&quot;&gt;
+    &lt;n&gt;Knight of Solamnia&lt;/n&gt;
+    &lt;baseDamage&gt;50&lt;/baseDamage&gt;
+&lt;/Hero&gt;</code></pre>
 <h3 id="xmlrootstring">[XmlRoot(String)]</h3>
-<p>The object that is serialized by the XML serializer becomes the root of the XML file. As a result, object’s class name becomes the name of the root tag. Sometimes, we want to use some other name in order to provide clarification. This attribute indicates that the name of the root tag will be the provided string. It should be noted that <code class="highlighter-rouge">[XmlRoot]</code> attribute can only be used on classes, structs, enumerations or interfaces unlike the previous <abbr title="A method to associate declarative information with the code">attributes</abbr>.</p>
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><div class="line-1"><span class="k">using</span> <span class="nn">System.Xml.Serialization</span><span class="p">;</span>
-</div><div class="line-2">
-</div><div class="line-3"><span class="p">[</span><span class="nf">XmlRoot</span><span class="p">(</span><span class="s">"Knight"</span><span class="p">)]</span>
-</div><div class="line-4"><span class="k">public</span> <span class="k">class</span> <span class="nc">Hero</span>
-</div><div class="line-5"><span class="p">{</span>
-</div><div class="line-6">    <span class="p">[</span><span class="nf">XmlElement</span><span class="p">(</span><span class="s">"n"</span><span class="p">)]</span>
-</div><div class="line-7">    <span class="k">public</span> <span class="kt">string</span> <span class="n">name</span><span class="p">;</span>
-</div><div class="line-8">
-</div><div class="line-9">    <span class="p">[</span><span class="nf">XmlAttribute</span><span class="p">(</span><span class="s">"boss"</span><span class="p">)]</span>
-</div><div class="line-10">    <span class="k">public</span> <span class="kt">bool</span> <span class="n">isBoss</span><span class="p">;</span>
-</div><div class="line-11">
-</div><div class="line-12">    <span class="p">[</span><span class="n">XmlIgnore</span><span class="p">]</span>
-</div><div class="line-13">    <span class="k">public</span> <span class="kt">int</span> <span class="n">hitPoints</span><span class="p">;</span>
-</div><div class="line-14">
-</div><div class="line-15">    <span class="k">public</span> <span class="kt">float</span> <span class="n">baseDamage</span><span class="p">;</span>
-</div><div class="line-16"><span class="p">}</span>
-</div></code></pre></figure>
-<p>And the output becomes:</p>
-<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><div class="line-1"><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
-</div><div class="line-2"><span class="nt">&lt;Knight</span> <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="na">xmlns:xsd=</span><span class="s">"http://www.w3.org/2001/XMLSchema"</span> <span class="na">boss=</span><span class="s">"true"</span><span class="nt">&gt;</span>
-</div><div class="line-3">    <span class="nt">&lt;n&gt;</span>Knight of Solamnia<span class="nt">&lt;/n&gt;</span>
-</div><div class="line-4">    <span class="nt">&lt;baseDamage&gt;</span>50<span class="nt">&lt;/baseDamage&gt;</span>
-</div><div class="line-5"><span class="nt">&lt;/Knight&gt;</span>
-</div></code></pre></figure>
+<p>The object that is serialized by the XML serializer becomes the root of the XML file. As a result, object’s class name becomes the name of the root tag. Sometimes, we want to use some other name in order to provide clarification. This attribute indicates that the name of the root tag will be the provided string. It should be noted that <code class="highlighter-rouge">[XmlRoot]</code> attribute can only be used on classes, structs, enumerations or interfaces unlike the previous <abbr title="A method to associate declarative information with the code">attributes</abbr>.</p><pre class=" language-csharp  line-numbers "><code>using System.Xml.Serialization;
+
+[XmlRoot(&quot;Knight&quot;)]
+public class Hero
+{
+    [XmlElement(&quot;n&quot;)]
+    public string name;
+
+    [XmlAttribute(&quot;boss&quot;)]
+    public bool isBoss;
+
+    [XmlIgnore]
+    public int hitPoints;
+
+    public float baseDamage;
+}</code></pre>
+<p>And the output becomes:</p><pre class=" language-xml  line-numbers "><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;Knight xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; boss=&quot;true&quot;&gt;
+    &lt;n&gt;Knight of Solamnia&lt;/n&gt;
+    &lt;baseDamage&gt;50&lt;/baseDamage&gt;
+&lt;/Knight&gt;</code></pre>
 <h3 id="xmlarraystring-and-xmlarrayitemstring">[XmlArray(String)] and [XmlArrayItem(String)]</h3>
-<p>But, how about arrays? What if our Hero has a int array which includes combo rewards?</p>
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><div class="line-1"><span class="k">using</span> <span class="nn">System.Xml.Serialization</span><span class="p">;</span>
-</div><div class="line-2">
-</div><div class="line-3"><span class="k">public</span> <span class="k">class</span> <span class="nc">Hero</span>
-</div><div class="line-4"><span class="p">{</span>
-</div><div class="line-5">    <span class="p">[</span><span class="nf">XmlElement</span><span class="p">(</span><span class="s">"n"</span><span class="p">)]</span>
-</div><div class="line-6">    <span class="k">public</span> <span class="kt">string</span> <span class="n">name</span><span class="p">;</span>
-</div><div class="line-7">
-</div><div class="line-8">    <span class="p">[</span><span class="nf">XmlAttribute</span><span class="p">(</span><span class="s">"boss"</span><span class="p">)]</span>
-</div><div class="line-9">    <span class="k">public</span> <span class="kt">bool</span> <span class="n">isBoss</span><span class="p">;</span>
-</div><div class="line-10">
-</div><div class="line-11">    <span class="p">[</span><span class="n">XmlIgnore</span><span class="p">]</span>
-</div><div class="line-12">    <span class="k">public</span> <span class="kt">int</span> <span class="n">hitPoints</span><span class="p">;</span>
-</div><div class="line-13">
-</div><div class="line-14">    <span class="k">public</span> <span class="kt">float</span> <span class="n">baseDamage</span><span class="p">;</span>
-</div><div class="line-15">
-</div><div class="line-16">    <span class="k">public</span> <span class="kt">int</span><span class="p">[]</span> <span class="n">comboRewards</span><span class="p">;</span>
-</div><div class="line-17"><span class="p">}</span>
-</div></code></pre></figure>
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><div class="line-1"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
-</div><div class="line-2">
-</div><div class="line-3"><span class="k">public</span> <span class="k">class</span> <span class="nc">XMLSerializer</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
-</div><div class="line-4"><span class="p">{</span>
-</div><div class="line-5">    <span class="k">private</span> <span class="k">void</span> <span class="nf">Start</span><span class="p">()</span>
-</div><div class="line-6">    <span class="p">{</span>
-</div><div class="line-7">        <span class="n">Hero</span> <span class="n">knight</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Hero</span><span class="p">();</span>
-</div><div class="line-8">        <span class="n">knight</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="s">"Knight of Solamnia"</span><span class="p">;</span>
-</div><div class="line-9">        <span class="n">knight</span><span class="p">.</span><span class="n">isBoss</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
-</div><div class="line-10">        <span class="n">knight</span><span class="p">.</span><span class="n">hitPoints</span> <span class="p">=</span> <span class="m">100</span><span class="p">;</span>
-</div><div class="line-11">        <span class="n">knight</span><span class="p">.</span><span class="n">baseDamage</span> <span class="p">=</span> <span class="m">50f</span><span class="p">;</span>
-</div><div class="line-12">        <span class="n">knight</span><span class="p">.</span><span class="n">comboRewards</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[]</span> <span class="p">{</span> <span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">5</span> <span class="p">};</span>
-</div><div class="line-13">
-</div><div class="line-14">        <span class="n">XMLOp</span><span class="p">.</span><span class="nf">Serialize</span><span class="p">(</span><span class="n">knight</span><span class="p">,</span> <span class="s">"hero.xml"</span><span class="p">);</span>
-</div><div class="line-15">    <span class="p">}</span>
-</div><div class="line-16"><span class="p">}</span>
-</div></code></pre></figure>
-<p>Output of this code would be:</p>
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><div class="line-1"><span class="p">&lt;?</span><span class="n">xml</span> <span class="n">version</span><span class="p">=</span><span class="s">"1.0"</span> <span class="n">encoding</span><span class="p">=</span><span class="s">"utf-8"</span><span class="p">?&gt;</span>
-</div><div class="line-2"><span class="p">&lt;</span><span class="n">Knight</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">xsi</span><span class="p">=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">xsd</span><span class="p">=</span><span class="s">"http://www.w3.org/2001/XMLSchema"</span> <span class="n">boss</span><span class="p">=</span><span class="s">"true"</span><span class="p">&gt;</span>
-</div><div class="line-3">    <span class="p">&lt;</span><span class="n">n</span><span class="p">&gt;</span><span class="n">Knight</span> <span class="n">of</span> <span class="n">Solamnia</span><span class="p">&lt;/</span><span class="n">n</span><span class="p">&gt;</span>
-</div><div class="line-4">    <span class="p">&lt;</span><span class="n">baseDamage</span><span class="p">&gt;</span><span class="m">50</span><span class="p">&lt;/</span><span class="n">baseDamage</span><span class="p">&gt;</span>
-</div><div class="line-5">    <span class="p">&lt;</span><span class="n">comboRewards</span><span class="p">&gt;</span>
-</div><div class="line-6">        <span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span><span class="m">1</span><span class="p">&lt;/</span><span class="kt">int</span><span class="p">&gt;</span>
-</div><div class="line-7">        <span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span><span class="m">3</span><span class="p">&lt;/</span><span class="kt">int</span><span class="p">&gt;</span>
-</div><div class="line-8">        <span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span><span class="m">5</span><span class="p">&lt;/</span><span class="kt">int</span><span class="p">&gt;</span>
-</div><div class="line-9">    <span class="p">&lt;/</span><span class="n">comboRewards</span><span class="p">&gt;</span>
-</div><div class="line-10"><span class="p">&lt;/</span><span class="n">Knight</span><span class="p">&gt;</span>
-</div></code></pre></figure>
-<p><code class="highlighter-rouge">&lt;comboRewards&gt;</code> tag is OK, but those <code class="highlighter-rouge">&lt;int&gt;</code> tags don’t look nice, do they? Fortunately, there are two XML <abbr title="A method to associate declarative information with the code">attributes</abbr> which modify the XML output of an array: <code class="highlighter-rouge">[XmlArray(string)]</code> which modifies the name of the array, and <code class="highlighter-rouge">[XmlArrayItem(string)]</code> which, as you might have guessed, modifies the name of the array items.</p>
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><div class="line-1"><span class="k">using</span> <span class="nn">System.Xml.Serialization</span><span class="p">;</span>
-</div><div class="line-2">
-</div><div class="line-3"><span class="k">public</span> <span class="k">class</span> <span class="nc">Hero</span>
-</div><div class="line-4"><span class="p">{</span>
-</div><div class="line-5">    <span class="p">[</span><span class="nf">XmlElement</span><span class="p">(</span><span class="s">"n"</span><span class="p">)]</span>
-</div><div class="line-6">    <span class="k">public</span> <span class="kt">string</span> <span class="n">name</span><span class="p">;</span>
-</div><div class="line-7">
-</div><div class="line-8">    <span class="p">[</span><span class="nf">XmlAttribute</span><span class="p">(</span><span class="s">"boss"</span><span class="p">)]</span>
-</div><div class="line-9">    <span class="k">public</span> <span class="kt">bool</span> <span class="n">isBoss</span><span class="p">;</span>
-</div><div class="line-10">
-</div><div class="line-11">    <span class="p">[</span><span class="n">XmlIgnore</span><span class="p">]</span>
-</div><div class="line-12">    <span class="k">public</span> <span class="kt">int</span> <span class="n">hitPoints</span><span class="p">;</span>
-</div><div class="line-13">
-</div><div class="line-14">    <span class="k">public</span> <span class="kt">float</span> <span class="n">baseDamage</span><span class="p">;</span>
-</div><div class="line-15">
-</div><div class="line-16">    <span class="p">[</span><span class="nf">XmlArray</span><span class="p">(</span><span class="s">"rewards"</span><span class="p">),</span> <span class="nf">XmlArrayItem</span><span class="p">(</span><span class="s">"reward"</span><span class="p">)]</span>
-</div><div class="line-17">    <span class="k">public</span> <span class="kt">int</span><span class="p">[]</span> <span class="n">comboRewards</span><span class="p">;</span>
-</div><div class="line-18"><span class="p">}</span>
-</div></code></pre></figure>
-<p>And this would produce a better output:</p>
-<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><div class="line-1"><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
-</div><div class="line-2"><span class="nt">&lt;Knight</span> <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="na">xmlns:xsd=</span><span class="s">"http://www.w3.org/2001/XMLSchema"</span> <span class="na">boss=</span><span class="s">"true"</span><span class="nt">&gt;</span>
-</div><div class="line-3">    <span class="nt">&lt;n&gt;</span>Knight of Solamnia<span class="nt">&lt;/n&gt;</span>
-</div><div class="line-4">    <span class="nt">&lt;baseDamage&gt;</span>50<span class="nt">&lt;/baseDamage&gt;</span>
-</div><div class="line-5">    <span class="nt">&lt;rewards&gt;</span>
-</div><div class="line-6">        <span class="nt">&lt;reward&gt;</span>1<span class="nt">&lt;/reward&gt;</span>
-</div><div class="line-7">        <span class="nt">&lt;reward&gt;</span>3<span class="nt">&lt;/reward&gt;</span>
-</div><div class="line-8">        <span class="nt">&lt;reward&gt;</span>5<span class="nt">&lt;/reward&gt;</span>
-</div><div class="line-9">    <span class="nt">&lt;/rewards&gt;</span>
-</div><div class="line-10"><span class="nt">&lt;/Knight&gt;</span>
-</div></code></pre></figure>
+<p>But, how about arrays? What if our Hero has a int array which includes combo rewards?</p><pre class=" language-csharp  line-numbers "><code>using System.Xml.Serialization;
+
+public class Hero
+{
+    [XmlElement(&quot;n&quot;)]
+    public string name;
+
+    [XmlAttribute(&quot;boss&quot;)]
+    public bool isBoss;
+
+    [XmlIgnore]
+    public int hitPoints;
+
+    public float baseDamage;
+
+    public int[] comboRewards;
+}</code></pre><pre class=" language-csharp  line-numbers "><code>using UnityEngine;
+
+public class XMLSerializer : MonoBehaviour
+{
+    private void Start()
+    {
+        Hero knight = new Hero();
+        knight.name = &quot;Knight of Solamnia&quot;;
+        knight.isBoss = true;
+        knight.hitPoints = 100;
+        knight.baseDamage = 50f;
+        knight.comboRewards = new int[] { 1, 3, 5 };
+
+        XMLOp.Serialize(knight, &quot;hero.xml&quot;);
+    }
+}</code></pre>
+<p>Output of this code would be:</p><pre class=" language-csharp  line-numbers "><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;Knight xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; boss=&quot;true&quot;&gt;
+    &lt;n&gt;Knight of Solamnia&lt;/n&gt;
+    &lt;baseDamage&gt;50&lt;/baseDamage&gt;
+    &lt;comboRewards&gt;
+        &lt;int&gt;1&lt;/int&gt;
+        &lt;int&gt;3&lt;/int&gt;
+        &lt;int&gt;5&lt;/int&gt;
+    &lt;/comboRewards&gt;
+&lt;/Knight&gt;</code></pre>
+<p><code class="highlighter-rouge">&lt;comboRewards&gt;</code> tag is OK, but those <code class="highlighter-rouge">&lt;int&gt;</code> tags don’t look nice, do they? Fortunately, there are two XML <abbr title="A method to associate declarative information with the code">attributes</abbr> which modify the XML output of an array: <code class="highlighter-rouge">[XmlArray(string)]</code> which modifies the name of the array, and <code class="highlighter-rouge">[XmlArrayItem(string)]</code> which, as you might have guessed, modifies the name of the array items.</p><pre class=" language-csharp  line-numbers "><code>using System.Xml.Serialization;
+
+public class Hero
+{
+    [XmlElement(&quot;n&quot;)]
+    public string name;
+
+    [XmlAttribute(&quot;boss&quot;)]
+    public bool isBoss;
+
+    [XmlIgnore]
+    public int hitPoints;
+
+    public float baseDamage;
+
+    [XmlArray(&quot;rewards&quot;), XmlArrayItem(&quot;reward&quot;)]
+    public int[] comboRewards;
+}</code></pre>
+<p>And this would produce a better output:</p><pre class=" language-xml  line-numbers "><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;Knight xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; boss=&quot;true&quot;&gt;
+    &lt;n&gt;Knight of Solamnia&lt;/n&gt;
+    &lt;baseDamage&gt;50&lt;/baseDamage&gt;
+    &lt;rewards&gt;
+        &lt;reward&gt;1&lt;/reward&gt;
+        &lt;reward&gt;3&lt;/reward&gt;
+        &lt;reward&gt;5&lt;/reward&gt;
+    &lt;/rewards&gt;
+&lt;/Knight&gt;</code></pre>
 <h2 id="xml-deserialization">XML Deserialization</h2>
-<p>We have successfully saved our game data in an XML file, but currently it is pretty useless, because we can’t take that data back into our game. In order to do that, we need to read the XML file and create objects (namely, deserialize it). Deserialization is simpler than <abbr title="Converting objects into a form (such as JSON, or XML) that can be easily transported.">serialization</abbr>, because we already defined the structure in our class. All we need to do is just add a few lines of code to our <code class="highlighter-rouge">XMLOp.cs</code>:</p>
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><div class="line-1"><span class="k">using</span> <span class="nn">System.IO</span><span class="p">;</span>
-</div><div class="line-2"><span class="k">using</span> <span class="nn">System.Xml.Serialization</span><span class="p">;</span>
-</div><div class="line-3">
-</div><div class="line-4"><span class="k">public</span> <span class="k">class</span> <span class="nc">XMLOp</span>
-</div><div class="line-5"><span class="p">{</span>
-</div><div class="line-6">	<span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Serialize</span><span class="p">(</span><span class="kt">object</span> <span class="n">item</span><span class="p">,</span> <span class="kt">string</span> <span class="n">path</span><span class="p">)</span>
-</div><div class="line-7">	<span class="p">{</span>
-</div><div class="line-8">		<span class="n">XmlSerializer</span> <span class="n">serializer</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">XmlSerializer</span><span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="nf">GetType</span><span class="p">());</span>
-</div><div class="line-9">		<span class="n">StreamWriter</span> <span class="n">writer</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamWriter</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
-</div><div class="line-10">		<span class="n">serializer</span><span class="p">.</span><span class="nf">Serialize</span><span class="p">(</span><span class="n">writer</span><span class="p">.</span><span class="n">BaseStream</span><span class="p">,</span> <span class="n">item</span><span class="p">);</span>
-</div><div class="line-11">		<span class="n">writer</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
-</div><div class="line-12">	<span class="p">}</span>
-</div><div class="line-13">
-</div><div class="line-14">	<span class="k">public</span> <span class="k">static</span> <span class="n">T</span> <span class="n">Deserialize</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="kt">string</span> <span class="n">path</span><span class="p">)</span>
-</div><div class="line-15">	<span class="p">{</span>
-</div><div class="line-16">		<span class="n">XmlSerializer</span> <span class="n">serializer</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">XmlSerializer</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">T</span><span class="p">));</span>
-</div><div class="line-17">		<span class="n">StreamReader</span> <span class="n">reader</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamReader</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
-</div><div class="line-18">		<span class="n">T</span> <span class="n">deserialized</span> <span class="p">=</span> <span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="n">serializer</span><span class="p">.</span><span class="nf">Deserialize</span><span class="p">(</span><span class="n">reader</span><span class="p">.</span><span class="n">BaseStream</span><span class="p">);</span>
-</div><div class="line-19">		<span class="n">reader</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
-</div><div class="line-20">		<span class="k">return</span> <span class="n">deserialized</span><span class="p">;</span>
-</div><div class="line-21">	<span class="p">}</span>
-</div><div class="line-22"><span class="p">}</span>
-</div></code></pre></figure>
+<p>We have successfully saved our game data in an XML file, but currently it is pretty useless, because we can’t take that data back into our game. In order to do that, we need to read the XML file and create objects (namely, deserialize it). Deserialization is simpler than <abbr title="Converting objects into a form (such as JSON, or XML) that can be easily transported.">serialization</abbr>, because we already defined the structure in our class. All we need to do is just add a few lines of code to our <code class="highlighter-rouge">XMLOp.cs</code>:</p><pre class=" language-csharp  line-numbers "><code>using System.IO;
+using System.Xml.Serialization;
+
+public class XMLOp
+{
+	public static void Serialize(object item, string path)
+	{
+		XmlSerializer serializer = new XmlSerializer(item.GetType());
+		StreamWriter writer = new StreamWriter(path);
+		serializer.Serialize(writer.BaseStream, item);
+		writer.Close();
+	}
+
+	public static T Deserialize&lt;T&gt;(string path)
+	{
+		XmlSerializer serializer = new XmlSerializer(typeof(T));
+		StreamReader reader = new StreamReader(path);
+		T deserialized = (T)serializer.Deserialize(reader.BaseStream);
+		reader.Close();
+		return deserialized;
+	}
+}</code></pre>
 <p>Deserialization process is very similar to <abbr title="Converting objects into a form (such as JSON, or XML) that can be easily transported.">serialization</abbr> process:</p>
 <p>On <strong>Line 16</strong>, we create an <code class="highlighter-rouge">XmlSerializer</code> instance with type of T so that it can take any type to deserialize.</p>
 <p>On <strong>Line 17</strong>, we create a <code class="highlighter-rouge">StreamReader</code> instance which would read the XML file.</p>
 <p>On <strong>Line 18</strong>, we tell the <code class="highlighter-rouge">XmlSerializer</code> to deserialize the stream and cast it to our target type T.</p>
 <p>On <strong>Line 19</strong>, we tell reader to close streaming and then on <strong>Line 20</strong> we return the deserialized object.</p>
-<p>Let’s say, we have already serialized our weapon object and created the XML file. Now we can deserialize it in another script:</p>
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><div class="line-1"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
-</div><div class="line-2">
-</div><div class="line-3"><span class="k">public</span> <span class="k">class</span> <span class="nc">XMLDeserializer</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
-</div><div class="line-4"><span class="p">{</span>
-</div><div class="line-5">    <span class="k">private</span> <span class="k">void</span> <span class="nf">Start</span><span class="p">()</span>
-</div><div class="line-6">    <span class="p">{</span>
-</div><div class="line-7">        <span class="n">Hero</span> <span class="n">hero</span> <span class="p">=</span> <span class="n">XMLOp</span><span class="p">.</span><span class="n">Deserialize</span><span class="p">&lt;</span><span class="n">Hero</span><span class="p">&gt;(</span><span class="s">"hero.xml"</span><span class="p">);</span>
-</div><div class="line-8">        <span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="n">hero</span><span class="p">.</span><span class="n">name</span><span class="p">);</span>
-</div><div class="line-9">    <span class="p">}</span>
-</div><div class="line-10"><span class="p">}</span>
-</div></code></pre></figure>
+<p>Let’s say, we have already serialized our weapon object and created the XML file. Now we can deserialize it in another script:</p><pre class=" language-csharp  line-numbers "><code>using UnityEngine;
+
+public class XMLDeserializer : MonoBehaviour
+{
+    private void Start()
+    {
+        Hero hero = XMLOp.Deserialize&lt;Hero&gt;(&quot;hero.xml&quot;);
+        Debug.Log(hero.name);
+    }
+}</code></pre>
 <h2 id="conclusion">Conclusion</h2>
 <p>This concludes our tutorial, and as you can see, XML <abbr title="Converting objects into a form (such as JSON, or XML) that can be easily transported.">serialization</abbr> in Unity (in C# actually) is pretty easy. All you have to do is to use XML <abbr title="A method to associate declarative information with the code">attributes</abbr> in your classes to modify <abbr title="Converting objects into a form (such as JSON, or XML) that can be easily transported.">serialization</abbr> behaviour.</p>
-<p>As always, here are the scripts in full, below. Until next time.</p>
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><div class="line-1"><span class="k">using</span> <span class="nn">System.Xml.Serialization</span><span class="p">;</span>
-</div><div class="line-2">
-</div><div class="line-3"><span class="p">[</span><span class="nf">XmlRoot</span><span class="p">(</span><span class="s">"Knight"</span><span class="p">)]</span>
-</div><div class="line-4"><span class="k">public</span> <span class="k">class</span> <span class="nc">Hero</span>
-</div><div class="line-5"><span class="p">{</span>
-</div><div class="line-6">    <span class="p">[</span><span class="nf">XmlElement</span><span class="p">(</span><span class="s">"n"</span><span class="p">)]</span>
-</div><div class="line-7">    <span class="k">public</span> <span class="kt">string</span> <span class="n">name</span><span class="p">;</span>
-</div><div class="line-8">
-</div><div class="line-9">    <span class="p">[</span><span class="nf">XmlAttribute</span><span class="p">(</span><span class="s">"boss"</span><span class="p">)]</span>
-</div><div class="line-10">    <span class="k">public</span> <span class="kt">bool</span> <span class="n">isBoss</span><span class="p">;</span>
-</div><div class="line-11">
-</div><div class="line-12">    <span class="p">[</span><span class="n">XmlIgnore</span><span class="p">]</span>
-</div><div class="line-13">    <span class="k">public</span> <span class="kt">int</span> <span class="n">hitPoints</span><span class="p">;</span>
-</div><div class="line-14">
-</div><div class="line-15">    <span class="k">public</span> <span class="kt">float</span> <span class="n">baseDamage</span><span class="p">;</span>
-</div><div class="line-16">
-</div><div class="line-17">    <span class="p">[</span><span class="nf">XmlArray</span><span class="p">(</span><span class="s">"rewards"</span><span class="p">),</span> <span class="nf">XmlArrayItem</span><span class="p">(</span><span class="s">"reward"</span><span class="p">)]</span>
-</div><div class="line-18">    <span class="k">public</span> <span class="kt">int</span><span class="p">[]</span> <span class="n">comboRewards</span><span class="p">;</span>
-</div><div class="line-19"><span class="p">}</span>
-</div></code></pre></figure>
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><div class="line-1"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
-</div><div class="line-2">
-</div><div class="line-3"><span class="k">public</span> <span class="k">class</span> <span class="nc">XMLSerializer</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
-</div><div class="line-4"><span class="p">{</span>
-</div><div class="line-5">    <span class="k">private</span> <span class="k">void</span> <span class="nf">Start</span><span class="p">()</span>
-</div><div class="line-6">    <span class="p">{</span>
-</div><div class="line-7">        <span class="n">Hero</span> <span class="n">knight</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Hero</span><span class="p">();</span>
-</div><div class="line-8">        <span class="n">knight</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="s">"Knight of Solamnia"</span><span class="p">;</span>
-</div><div class="line-9">        <span class="n">knight</span><span class="p">.</span><span class="n">hitPoints</span> <span class="p">=</span> <span class="m">100</span><span class="p">;</span>
-</div><div class="line-10">        <span class="n">knight</span><span class="p">.</span><span class="n">baseDamage</span> <span class="p">=</span> <span class="m">50f</span><span class="p">;</span>
-</div><div class="line-11">        <span class="n">knight</span><span class="p">.</span><span class="n">isBoss</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
-</div><div class="line-12">        <span class="n">knight</span><span class="p">.</span><span class="n">comboRewards</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[]</span> <span class="p">{</span> <span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">5</span> <span class="p">};</span>
-</div><div class="line-13">
-</div><div class="line-14">        <span class="n">XMLOp</span><span class="p">.</span><span class="nf">Serialize</span><span class="p">(</span><span class="n">knight</span><span class="p">,</span> <span class="s">"hero.xml"</span><span class="p">);</span>
-</div><div class="line-15">    <span class="p">}</span>
-</div><div class="line-16"><span class="p">}</span>
-</div></code></pre></figure>
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><div class="line-1"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
-</div><div class="line-2">
-</div><div class="line-3"><span class="k">public</span> <span class="k">class</span> <span class="nc">XMLDeserializer</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
-</div><div class="line-4"><span class="p">{</span>
-</div><div class="line-5">    <span class="k">private</span> <span class="k">void</span> <span class="nf">Start</span><span class="p">()</span>
-</div><div class="line-6">    <span class="p">{</span>
-</div><div class="line-7">        <span class="n">Hero</span> <span class="n">hero</span> <span class="p">=</span> <span class="n">XMLOp</span><span class="p">.</span><span class="n">Deserialize</span><span class="p">&lt;</span><span class="n">Hero</span><span class="p">&gt;(</span><span class="s">"hero.xml"</span><span class="p">);</span>
-</div><div class="line-8">        <span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="n">hero</span><span class="p">.</span><span class="n">name</span><span class="p">);</span>
-</div><div class="line-9">    <span class="p">}</span>
-</div><div class="line-10"><span class="p">}</span>
-</div></code></pre></figure>
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><div class="line-1"><span class="k">using</span> <span class="nn">System.IO</span><span class="p">;</span>
-</div><div class="line-2"><span class="k">using</span> <span class="nn">System.Xml.Serialization</span><span class="p">;</span>
-</div><div class="line-3">
-</div><div class="line-4"><span class="k">public</span> <span class="k">class</span> <span class="nc">XMLOp</span>
-</div><div class="line-5"><span class="p">{</span>
-</div><div class="line-6">    <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Serialize</span><span class="p">(</span><span class="kt">object</span> <span class="n">item</span><span class="p">,</span> <span class="kt">string</span> <span class="n">path</span><span class="p">)</span>
-</div><div class="line-7">    <span class="p">{</span>
-</div><div class="line-8">        <span class="n">XmlSerializer</span> <span class="n">serializer</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">XmlSerializer</span><span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="nf">GetType</span><span class="p">());</span>
-</div><div class="line-9">        <span class="n">StreamWriter</span> <span class="n">writer</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamWriter</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
-</div><div class="line-10">        <span class="n">serializer</span><span class="p">.</span><span class="nf">Serialize</span><span class="p">(</span><span class="n">writer</span><span class="p">.</span><span class="n">BaseStream</span><span class="p">,</span> <span class="n">item</span><span class="p">);</span>
-</div><div class="line-11">        <span class="n">writer</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
-</div><div class="line-12">    <span class="p">}</span>
-</div><div class="line-13">
-</div><div class="line-14">    <span class="k">public</span> <span class="k">static</span> <span class="n">T</span> <span class="n">Deserialize</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="kt">string</span> <span class="n">path</span><span class="p">)</span>
-</div><div class="line-15">    <span class="p">{</span>
-</div><div class="line-16">        <span class="n">XmlSerializer</span> <span class="n">serializer</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">XmlSerializer</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">T</span><span class="p">));</span>
-</div><div class="line-17">        <span class="n">StreamReader</span> <span class="n">reader</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamReader</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
-</div><div class="line-18">        <span class="n">T</span> <span class="n">deserialized</span> <span class="p">=</span> <span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="n">serializer</span><span class="p">.</span><span class="nf">Deserialize</span><span class="p">(</span><span class="n">reader</span><span class="p">.</span><span class="n">BaseStream</span><span class="p">);</span>
-</div><div class="line-19">        <span class="n">reader</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
-</div><div class="line-20">        <span class="k">return</span> <span class="n">deserialized</span><span class="p">;</span>
-</div><div class="line-21">    <span class="p">}</span>
-</div><div class="line-22"><span class="p">}</span>
-</div></code></pre></figure>
+<p>As always, here are the scripts in full, below. Until next time.</p><pre class=" language-csharp  line-numbers "><code>using System.Xml.Serialization;
+
+[XmlRoot(&quot;Knight&quot;)]
+public class Hero
+{
+    [XmlElement(&quot;n&quot;)]
+    public string name;
+
+    [XmlAttribute(&quot;boss&quot;)]
+    public bool isBoss;
+
+    [XmlIgnore]
+    public int hitPoints;
+
+    public float baseDamage;
+
+    [XmlArray(&quot;rewards&quot;), XmlArrayItem(&quot;reward&quot;)]
+    public int[] comboRewards;
+}</code></pre><pre class=" language-csharp  line-numbers "><code>using UnityEngine;
+
+public class XMLSerializer : MonoBehaviour
+{
+    private void Start()
+    {
+        Hero knight = new Hero();
+        knight.name = &quot;Knight of Solamnia&quot;;
+        knight.hitPoints = 100;
+        knight.baseDamage = 50f;
+        knight.isBoss = true;
+        knight.comboRewards = new int[] { 1, 3, 5 };
+
+        XMLOp.Serialize(knight, &quot;hero.xml&quot;);
+    }
+}</code></pre><pre class=" language-csharp  line-numbers "><code>using UnityEngine;
+
+public class XMLDeserializer : MonoBehaviour
+{
+    private void Start()
+    {
+        Hero hero = XMLOp.Deserialize&lt;Hero&gt;(&quot;hero.xml&quot;);
+        Debug.Log(hero.name);
+    }
+}</code></pre><pre class=" language-csharp  line-numbers "><code>using System.IO;
+using System.Xml.Serialization;
+
+public class XMLOp
+{
+    public static void Serialize(object item, string path)
+    {
+        XmlSerializer serializer = new XmlSerializer(item.GetType());
+        StreamWriter writer = new StreamWriter(path);
+        serializer.Serialize(writer.BaseStream, item);
+        writer.Close();
+    }
+
+    public static T Deserialize&lt;T&gt;(string path)
+    {
+        XmlSerializer serializer = new XmlSerializer(typeof(T));
+        StreamReader reader = new StreamReader(path);
+        T deserialized = (T)serializer.Deserialize(reader.BaseStream);
+        reader.Close();
+        return deserialized;
+    }
+}</code></pre>
  </div>
  <div class="post-footer">
 <div class="post-filed">
@@ -482,24 +431,11 @@
     <a href="/creating-node-based-editor-unity/">&#8672;&nbsp;Creating a Node Based Editor in Unity</a>
  </p>
  <p>
+    <a href="/serializing-node-based-editor-unity/">Serializing a Node Based Editor in Unity&nbsp;&#8674;</a>
  </p>
 </div>
  </div>
  <div class="comments">
- <div id="disqus_thread"></div>
-  <script>
-    var disqus_config = function () {
-      this.page.url = 'https://oguzkonya.github.io/xml-serialization-and-deserialization-in-unity/';
-      this.page.identifier = 'https://oguzkonya.github.io/xml-serialization-and-deserialization-in-unity/';
-    };
-    (function() {
-      var d = document, s = d.createElement('script');
-      s.src = 'https://oguzkonya.disqus.com/embed.js';
-      s.setAttribute('data-timestamp', +new Date());
-      (d.head || d.body).appendChild(s);
-    })();
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
  </div>
 </article>
    </div>
@@ -518,9 +454,9 @@
       © 2019 oguzkonya
    </div>
  </div>
-  <script src="/assets/js/anchorize.js"></script>
 </footer>
-  <script src="/assets/js/instantpage.js" type="module" integrity="sha384-/IkE5iZAM/RxPto8B0nvKlMzIyCWtYocF01PbGGp1qElJuxv9J4whdWBRtzZltWn"></script>
+  <script src="/assets/js/instantpage.js" type="module" defer integrity="sha384-D7B5eODAUd397+f4zNFAVlnDNDtO1ppV8rPnfygILQXhqu3cUndgHvlcJR2Bhig8"></script>
+  <script src="/assets/js/prism.js"></script>
   <script id="dsq-count-scr" src="//oguzkonya.disqus.com/count.js" async></script>
 </body>
 </html>

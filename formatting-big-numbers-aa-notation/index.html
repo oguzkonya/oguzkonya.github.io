@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Formatting Big Numbers: The aa Notation | oguzkonya</title>
+<link rel="stylesheet" href="/assets/main.css">
+<link rel="stylesheet" href="/assets/prism.css">
+<link rel="alternate" type="application/rss+xml" title="oguzkonya" href="/feed.xml">
+<script src="/assets/js/prism.js"></script>
+<title>Formatting Big Numbers: The aa Notation | oguzkonya</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Formatting Big Numbers: The aa Notation" />
+<meta name="author" content="Oguz Konya" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="If you are dealing with big numbers in your game, you might have encountered the issue of properly formatting them. Small numbers such as 1.000, 10.000 or even 100.000 are OK, but as you go larger, you’ll run out of space quickly. I mean, how can you fit 1.000.000.000.000.000.000 in a button?" />
+<meta property="og:description" content="If you are dealing with big numbers in your game, you might have encountered the issue of properly formatting them. Small numbers such as 1.000, 10.000 or even 100.000 are OK, but as you go larger, you’ll run out of space quickly. I mean, how can you fit 1.000.000.000.000.000.000 in a button?" />
+<link rel="canonical" href="https://oguzkonya.github.io/formatting-big-numbers-aa-notation/" />
+<meta property="og:url" content="https://oguzkonya.github.io/formatting-big-numbers-aa-notation/" />
+<meta property="og:site_name" content="oguzkonya" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-09-05T00:00:00+00:00" />
+<script type="application/ld+json">
+{"headline":"Formatting Big Numbers: The aa Notation","dateModified":"2019-09-05T00:00:00+00:00","datePublished":"2019-09-05T00:00:00+00:00","url":"https://oguzkonya.github.io/formatting-big-numbers-aa-notation/","mainEntityOfPage":{"@type":"WebPage","@id":"https://oguzkonya.github.io/formatting-big-numbers-aa-notation/"},"author":{"@type":"Person","name":"Oguz Konya"},"description":"If you are dealing with big numbers in your game, you might have encountered the issue of properly formatting them. Small numbers such as 1.000, 10.000 or even 100.000 are OK, but as you go larger, you’ll run out of space quickly. I mean, how can you fit 1.000.000.000.000.000.000 in a button?","@type":"BlogPosting","@context":"https://schema.org"}</script>
+</head>
+<body data-instant-allow-query-string data-instant-allow-external-links>
+<header class="site-header">
+ <div class="wrapper-header">
+   <div class="header-left">
+      <a class="site-title" href="/">oguzkonya</a>
+   </div>
+   <div class="header-right">
+        <a class="page-link" href="/">all&nbsp;posts</a>
+        <a class="page-link" href="/categories/">categories</a>
+        <a class="page-link" href="/about/">about</a>
+   </div>
+ </div>
+</header>
+ <main class="page-content" aria-label="Content">
+   <div class="wrapper-content">
+     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<header class="post-header">
+   <h1 class="post-title" itemprop="name headline">Formatting Big Numbers: The aa Notation</h1>
+   <p class="post-meta">
+      <time datetime="2019-09-05T00:00:00+00:00" itemprop="datePublished">
+        Sep 5, 2019
+      </time>
+      •
+      [
+<a href="/category/maths/" rel="category">maths</a>,
+<a href="/category/programming/" rel="category">programming</a>
+]
+      •
+      <a href="#disqus_thread" data-disqus-identifier="">0 comments</a>
+   </p>
+ </header>
+ <div class="post-content" itemprop="articleBody">
+   <p>If you are dealing with big numbers in your game, you might have encountered the issue of properly formatting them. Small numbers such as 1.000, 10.000 or even 100.000 are OK, but as you go larger, you’ll run out of space quickly. I mean, how can you fit <strong>1.000.000.000.000.000.000</strong> in a button?</p>
+<p>But let’s say, you found a way. Let’s say you were able to put <strong>1.000.000.000.000.000.000</strong> in a button properly and it looks good (I can’t imagine how, but for the sake of the argument let’s assume it is possible). However, you still have the UX problem of clarity. No one will be able to see this number and say “oh my gosh, I have one quintillion cookies!”. I am a mathematician and even I can’t read it without counting zeros first.</p>
+<p>There are two solutions to this problem and they both have pros and cons:</p>
+<h2 id="scientific-notation">Scientific notation</h2>
+<p>Mostly used by scientists and engineers, this notation is formatted as follows:</p>
+<table>
+ <tbody>
+   <tr>
+     <td>m x 10<sup>n</sup></td>
+   </tr>
+ </tbody>
+</table>
+<p>Where <strong>m</strong> is a real number called <em>coefficient</em>, and <strong>n</strong> is an integer called <em>mantissa</em>. In order to make this more concrete, let’s have a look at some examples:</p>
+<table>
+<thead>
+   <tr>
+     <th>Number</th>
+     <th>Scientific notation</th>
+   </tr>
+ </thead>
+ <tbody>
+   <tr>
+     <td>1</td>
+     <td>1</td>
+   </tr>
+   <tr>
+     <td>1.000</td>
+     <td>1x10<sup>3</sup></td>
+   </tr>
+   <tr>
+     <td>5.000</td>
+     <td>5x10<sup>3</sup></td>
+   </tr>
+   <tr>
+     <td>1.250.000</td>
+     <td>1,25x10<sup>6</sup></td>
+   </tr>
+   <tr>
+     <td>1.254.678</td>
+     <td>1,254678x10<sup>6</sup></td>
+   </tr>
+   <tr>
+     <td>1.500.000.000</td>
+     <td>1,5x10<sup>9</sup></td>
+   </tr>
+ </tbody>
+</table>
+<p>The good thing about this notation is that you can format any number. Moreover, by using only 2 (or as much as you want) digits after the decimal point, you can make your numbers fit in a limited amount of space.</p>
+<p>The problem is that this notation is used by scientists and engineers (as I mentioned earlier), and it will not make any sense to most people. Even if it does, superscripts (I mean <sup>this</sup>) would look really tiny on mobile screens and would cause minor UX problems.</p>
+<h2 id="single-letter-notation">Single letter notation</h2>
+<p>There is no science backing up this notation, it’s something purely linguistic: single letter after the number. This is the notation you use in your daily life.</p>
+<table>
+<thead>
+   <tr>
+     <th>Number</th>
+     <th>Single letter notation</th>
+   </tr>
+ </thead>
+ <tbody>
+   <tr>
+     <td>1</td>
+     <td>1</td>
+   </tr>
+   <tr>
+     <td>1.000</td>
+     <td>1k</td>
+   </tr>
+   <tr>
+     <td>5.000</td>
+     <td>5k</td>
+   </tr>
+   <tr>
+     <td>1.250.000</td>
+     <td>1,25m</td>
+   </tr>
+   <tr>
+     <td>1.254.678</td>
+     <td>1,254678m</td>
+   </tr>
+   <tr>
+     <td>1.500.000.000</td>
+     <td>1,5x10b</td>
+   </tr>
+ </tbody>
+</table>
+<p>Since it’s already used by everyone, this notation has the advantage of being accessible. Almost everyone can tell 1.25m means <em>one million two hundred fifty thousand</em>. However, not many people would know that <strong>q</strong> in <strong>1.25q</strong> stands for <em>quadrillion</em> and it becomes more of an issue as you go larger. See for yourself: quintillion, sextillion, septillion, octillion, nonillion. Do you see anything familiar? Probably no, because these units are not used in daily life unless you are a scientist or a mathematician. We need something more intuitive.</p>
+<h2 id="the-aa-notation">The “aa” notation</h2>
+<p>A better solution is the combination of the two: single letter notation up until (but not including) quadrillion and a two letter representation of scientific notation after trillion. It may sound confusing, but you’ll agree that it’s actually rather clear when you see it in action:</p>
+<table>
+<thead>
+   <tr>
+     <th>Number</th>
+     <th>Written</th>
+     <th>Scientific</th>
+     <th>Single letter</th>
+     <th>“aa”</th>
+   </tr>
+ </thead>
+ <tbody>
+   <tr>
+     <td>1</td>
+     <td>one</td>
+     <td>1</td>
+     <td>1</td>
+     <td>1</td>
+   </tr>
+   <tr>
+     <td>1.000</td>
+     <td>one thousand</td>
+     <td>1x103</td>
+     <td>1k</td>
+     <td>1k</td>
+   </tr>
+   <tr>
+     <td>1.000.000</td>
+     <td>one million</td>
+     <td>1x106</td>
+     <td>1m</td>
+     <td>1m</td>
+   </tr>
+   <tr>
+     <td>1.000.000.000</td>
+     <td>one billion</td>
+     <td>1x109</td>
+     <td>1b</td>
+     <td>1b</td>
+   </tr>
+   <tr>
+     <td>1.000.000.000.000</td>
+     <td>one trillion</td>
+     <td>1x1012</td>
+     <td>1t</td>
+     <td>1t</td>
+   </tr>
+   <tr>
+     <td>1.000.000.000.000.000</td>
+     <td>one quadrillion</td>
+     <td>1x1015</td>
+     <td>1q</td>
+     <td>1aa</td>
+   </tr>
+   <tr>
+     <td>1.000.000.000.000.000.000</td>
+     <td>one quintillion</td>
+     <td>1x1018</td>
+     <td>1?</td>
+     <td>1ab</td>
+   </tr>
+ </tbody>
+</table>
+<p>So, one quadrillion (10<sup>15</sup>) will be represented with <strong>aa</strong>. For every power of 1000 we’ll move the second letter up, so one quintillion (10<sup>18</sup>) will be <strong>ab</strong>, one sextillion will be <strong>ac</strong>, and so on. After <strong>az</strong>, we’ll move to <strong>ba</strong>, <strong>bb</strong>, <strong>bc</strong> etc. This algorithm provides an incremental representation of big numbers and it does not require any scientific or mathematical knowledge. The algorithm for this notation is rather simple and it’s really easy to implement in any programming language.</p>
+<p>First we need to represent the number in a slightly modified scientific notation. Since we change the unit for every power of 1000 we’ll convert our number to this: m x 1000<sup>n </sup>. In order to find m and n, all we have to do is revert the formula and apply it:</p><pre class=" language-csharp  line-numbers "><code>n = (int) log(value, 1000);
+m = value / pow(1000, n);</code></pre>
+<p>If n is less than 5 (i.e the number is less than 1x10<sup>15</sup>), we will use the single letter notation (K, M, B, or T). If it is greater than or equal to 5, we’ll convert this number to “aa” notation. So 5 (10<sup>15</sup>) will be <strong>aa</strong>, 6 (10<sup>18</sup>) will be <strong>ab</strong>, 7 (10<sup>21</sup>) will be <strong>ac</strong> and so on. Since there are 26 letters in English language, converting n to a two letter representation would require one modulo and one division operations:</p><pre class=" language-csharp  line-numbers "><code>secondUnit = n % 26; 
+firstUnit = n / 26; 
+unit = firstUnit.toChar() + secondUnit.toChar();</code></pre>
+<p>That’s all there is to it. And here is the implementation in C#:</p><pre class=" language-csharp  line-numbers "><code>public static class CalcUtils
+{
+    private static readonly int charA = Convert.ToInt32(&#39;a&#39;);
+
+    private static readonly Dictionary&lt;int, string&gt; units = new Dictionary&lt;int, string&gt;
+    {
+        {0, &quot;&quot;},
+        {1, &quot;K&quot;},
+        {2, &quot;M&quot;},
+        {3, &quot;B&quot;},
+        {4, &quot;T&quot;}
+    };
+
+    public static string FormatNumber(double value)
+    {
+        if (value &lt; 1d)
+        {
+            return &quot;0&quot;;
+        }
+
+        var n = (int) Math.Log(value, 1000);
+        var m = value / Math.Pow(1000, n);
+        var unit = &quot;&quot;;
+
+        if (n &lt; units.Count)
+        {
+            unit = units[n];
+        }
+        else
+        {
+            var unitInt = n - units.Count;
+            var secondUnit = unitInt % 26;
+            var firstUnit = unitInt / 26;
+            unit = Convert.ToChar(firstUnit + charA).ToString() + Convert.ToChar(secondUnit + charA).ToString();
+        }
+
+        // Math.Floor(m * 100) / 100) fixes rounding errors
+        return (Math.Floor(m * 100) / 100).ToString(&quot;0.##&quot;) + unit;
+    }
+}</code></pre>
+ </div>
+ <div class="post-footer">
+<div class="post-filed">
+ <p>
+    Filed under
+<a href="/category/maths/" rel="category">maths</a>,
+<a href="/category/programming/" rel="category">programming</a>.
+ </p>
+ <p>
+    <a href="#top">top&nbsp;&#8673;</a>
+ </p>
+</div>
+<div class="post-nav">
+ <p>
+    <a href="/serializing-node-based-editor-unity/">&#8672;&nbsp;Serializing a Node Based Editor in Unity</a>
+ </p>
+ <p>
+ </p>
+</div>
+ </div>
+ <div class="comments">
+ </div>
+</article>
+   </div>
+ </main>
+ <footer class="site-footer">
+ <div class="wrapper-footer">
+   <div class="footer-col-wrapper">
+      <a href="/">home</a>
+      •
+      <a href="https://github.com/oguzkonya/oguzkonya.github.io"><span class="icon icon--github"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">github</span></a>
+      •
+      <a href="/feed.xml">rss</a>
+   </div>
+   <div class="copyright">
+      © 2019 oguzkonya
+   </div>
+ </div>
+</footer>
+  <script src="/assets/js/instantpage.js" type="module" defer integrity="sha384-D7B5eODAUd397+f4zNFAVlnDNDtO1ppV8rPnfygILQXhqu3cUndgHvlcJR2Bhig8"></script>
+  <script src="/assets/js/prism.js"></script>
+  <script id="dsq-count-scr" src="//oguzkonya.disqus.com/count.js" async></script>
+</body>
+</html>
