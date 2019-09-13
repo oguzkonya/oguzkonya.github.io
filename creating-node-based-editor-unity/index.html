@@ -16,13 +16,13 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Node based editors are frequently used in game engines; Unity has Animator window, Unreal Engine has blueprint system, some other game engines have dialogue systems. In this blog post, we will create our own node based editor in Unity. It’s going to be simple node editor that you’ll be able to improve upon later (see the below image for an example). I am going to assume that you are already familiar with editor scripting, but if you are not, please take your time to have a look at this post and this post." />
 <meta property="og:description" content="Node based editors are frequently used in game engines; Unity has Animator window, Unreal Engine has blueprint system, some other game engines have dialogue systems. In this blog post, we will create our own node based editor in Unity. It’s going to be simple node editor that you’ll be able to improve upon later (see the below image for an example). I am going to assume that you are already familiar with editor scripting, but if you are not, please take your time to have a look at this post and this post." />
-<link rel="canonical" href="https://oguzkonya.github.io/creating-node-based-editor-unity/" />
-<meta property="og:url" content="https://oguzkonya.github.io/creating-node-based-editor-unity/" />
+<link rel="canonical" href="http://localhost:4000/creating-node-based-editor-unity/" />
+<meta property="og:url" content="http://localhost:4000/creating-node-based-editor-unity/" />
 <meta property="og:site_name" content="oguzkonya" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2019-08-15T00:00:00+00:00" />
 <script type="application/ld+json">
-{"headline":"Creating a Node Based Editor in Unity","dateModified":"2019-08-15T00:00:00+00:00","datePublished":"2019-08-15T00:00:00+00:00","url":"https://oguzkonya.github.io/creating-node-based-editor-unity/","mainEntityOfPage":{"@type":"WebPage","@id":"https://oguzkonya.github.io/creating-node-based-editor-unity/"},"author":{"@type":"Person","name":"Oguz Konya"},"description":"Node based editors are frequently used in game engines; Unity has Animator window, Unreal Engine has blueprint system, some other game engines have dialogue systems. In this blog post, we will create our own node based editor in Unity. It’s going to be simple node editor that you’ll be able to improve upon later (see the below image for an example). I am going to assume that you are already familiar with editor scripting, but if you are not, please take your time to have a look at this post and this post.","@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"headline":"Creating a Node Based Editor in Unity","dateModified":"2019-08-15T00:00:00+00:00","datePublished":"2019-08-15T00:00:00+00:00","url":"http://localhost:4000/creating-node-based-editor-unity/","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/creating-node-based-editor-unity/"},"author":{"@type":"Person","name":"Oguz Konya"},"description":"Node based editors are frequently used in game engines; Unity has Animator window, Unreal Engine has blueprint system, some other game engines have dialogue systems. In this blog post, we will create our own node based editor in Unity. It’s going to be simple node editor that you’ll be able to improve upon later (see the below image for an example). I am going to assume that you are already familiar with editor scripting, but if you are not, please take your time to have a look at this post and this post.","@type":"BlogPosting","@context":"https://schema.org"}</script>
 </head>
 <body data-instant-allow-query-string data-instant-allow-external-links>
 <header class="site-header">
@@ -1659,6 +1659,20 @@ public class ConnectionPoint
 </div>
  </div>
  <div class="comments">
+ <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'http://localhost:4000/creating-node-based-editor-unity/';
+      this.page.identifier = 'http://localhost:4000/creating-node-based-editor-unity/';
+    };
+    (function() {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://oguzkonya.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
  </div>
 </article>
    </div>
