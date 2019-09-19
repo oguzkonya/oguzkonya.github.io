@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="https://oguzkonya.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://oguzkonya.github.io/" rel="alternate" type="text/html" /><updated>2019-09-16T19:07:12+00:00</updated><id>https://oguzkonya.github.io/feed.xml</id><title type="html">oguzkonya</title><subtitle>Game Developer
-</subtitle><author><name>Oguz Konya</name></author><entry><title type="html">Formatting Big Numbers: The aa Notation</title><link href="https://oguzkonya.github.io/formatting-big-numbers-aa-notation/" rel="alternate" type="text/html" title="Formatting Big Numbers: The aa Notation" /><published>2019-09-05T00:00:00+00:00</published><updated>2019-09-05T00:00:00+00:00</updated><id>https://oguzkonya.github.io/formatting-big-numbers-aa-notation</id><content type="html" xml:base="https://oguzkonya.github.io/formatting-big-numbers-aa-notation/">&lt;p&gt;If you are dealing with big numbers in your game, you might have encountered the issue of properly formatting them. Small numbers such as 1.000, 10.000 or even 100.000 are OK, but as you go larger, you’ll run out of space quickly. I mean, how can you fit &lt;strong&gt;1.000.000.000.000.000.000&lt;/strong&gt; in a button?&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-09-19T22:28:58+00:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">oguzkonya</title><subtitle>Game Developer
+</subtitle><author><name>Oguz Konya</name></author><entry><title type="html">Formatting Big Numbers: The aa Notation</title><link href="http://localhost:4000/formatting-big-numbers-aa-notation/" rel="alternate" type="text/html" title="Formatting Big Numbers: The aa Notation" /><published>2019-09-05T00:00:00+00:00</published><updated>2019-09-05T00:00:00+00:00</updated><id>http://localhost:4000/formatting-big-numbers-aa-notation</id><content type="html" xml:base="http://localhost:4000/formatting-big-numbers-aa-notation/">&lt;p&gt;If you are dealing with big numbers in your game, you might have encountered the issue of properly formatting them. Small numbers such as 1.000, 10.000 or even 100.000 are OK, but as you go larger, you’ll run out of space quickly. I mean, how can you fit &lt;strong&gt;1.000.000.000.000.000.000&lt;/strong&gt; in a button?&lt;/p&gt;
 
 &lt;p&gt;But let’s say, you found a way. Let’s say you were able to put &lt;strong&gt;1.000.000.000.000.000.000&lt;/strong&gt; in a button properly and it looks good (I can’t imagine how, but for the sake of the argument let’s assume it is possible). However, you still have the UX problem of clarity. No one will be able to see this number and say “oh my gosh, I have one quintillion cookies!”. I am a mathematician and even I can’t read it without counting zeros first.&lt;/p&gt;
 
@@ -170,18 +170,18 @@
 
 &lt;p&gt;First we need to represent the number in a slightly modified scientific notation. Since we change the unit for every power of 1000 we’ll convert our number to this: m x 1000&lt;sup&gt;n &lt;/sup&gt;. In order to find m and n, all we have to do is revert the formula and apply it:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;n = (int) log(value, 1000);
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;n = (int) log(value, 1000);
 m = value / pow(1000, n);&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;If n is less than 5 (i.e the number is less than 1x10&lt;sup&gt;15&lt;/sup&gt;), we will use the single letter notation (K, M, B, or T). If it is greater than or equal to 5, we’ll convert this number to “aa” notation. So 5 (10&lt;sup&gt;15&lt;/sup&gt;) will be &lt;strong&gt;aa&lt;/strong&gt;, 6 (10&lt;sup&gt;18&lt;/sup&gt;) will be &lt;strong&gt;ab&lt;/strong&gt;, 7 (10&lt;sup&gt;21&lt;/sup&gt;) will be &lt;strong&gt;ac&lt;/strong&gt; and so on. Since there are 26 letters in English language, converting n to a two letter representation would require one modulo and one division operations:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;secondUnit = n % 26; 
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;secondUnit = n % 26; 
 firstUnit = n / 26; 
 unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;That’s all there is to it. And here is the implementation in C#:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;public static class CalcUtils
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;public static class CalcUtils
 {
     private static readonly int charA = Convert.ToInt32(&amp;#39;a&amp;#39;);
 
@@ -220,7 +220,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
         // Math.Floor(m * 100) / 100) fixes rounding errors
         return (Math.Floor(m * 100) / 100).ToString(&amp;quot;0.##&amp;quot;) + unit;
     }
-}&lt;/code&gt;&lt;/pre&gt;</content><author><name>Oguz Konya</name></author><summary type="html">If you are dealing with big numbers in your game, you might have encountered the issue of properly formatting them. Small numbers such as 1.000, 10.000 or even 100.000 are OK, but as you go larger, you’ll run out of space quickly. I mean, how can you fit 1.000.000.000.000.000.000 in a button?</summary></entry><entry><title type="html">Serializing a Node Based Editor in Unity</title><link href="https://oguzkonya.github.io/serializing-node-based-editor-unity/" rel="alternate" type="text/html" title="Serializing a Node Based Editor in Unity" /><published>2019-08-29T00:00:00+00:00</published><updated>2019-08-29T00:00:00+00:00</updated><id>https://oguzkonya.github.io/serializing-node-based-editor-unity</id><content type="html" xml:base="https://oguzkonya.github.io/serializing-node-based-editor-unity/">&lt;p&gt;I actually don’t get a lot of feedback on my posts, but one post stood out: &lt;a href=&quot;/creating-node-based-editor-unity/&quot;&gt;Creating a Node Based Editor in Unity&lt;/a&gt;. Some people asked for a more advanced version and some asked how they can save and load data to the editor. I can make an advanced version, but it probably wouldn’t cover all usage cases. On the other hand, serializing (and deserializing) a node list is a more common problem. Although I addressed some issues in &lt;a href=&quot;/xml-serialization-and-deserialization-in-unity/&quot;&gt;XML Serialization in Unity&lt;/a&gt; post, I would like to complete the node based editor by adding save and load features in this post.&lt;/p&gt;
+}&lt;/code&gt;&lt;/pre&gt;</content><author><name>Oguz Konya</name></author><summary type="html">If you are dealing with big numbers in your game, you might have encountered the issue of properly formatting them. Small numbers such as 1.000, 10.000 or even 100.000 are OK, but as you go larger, you’ll run out of space quickly. I mean, how can you fit 1.000.000.000.000.000.000 in a button?</summary></entry><entry><title type="html">Serializing a Node Based Editor in Unity</title><link href="http://localhost:4000/serializing-node-based-editor-unity/" rel="alternate" type="text/html" title="Serializing a Node Based Editor in Unity" /><published>2019-08-29T00:00:00+00:00</published><updated>2019-08-29T00:00:00+00:00</updated><id>http://localhost:4000/serializing-node-based-editor-unity</id><content type="html" xml:base="http://localhost:4000/serializing-node-based-editor-unity/">&lt;p&gt;I actually don’t get a lot of feedback on my posts, but one post stood out: &lt;a href=&quot;/creating-node-based-editor-unity/&quot;&gt;Creating a Node Based Editor in Unity&lt;/a&gt;. Some people asked for a more advanced version and some asked how they can save and load data to the editor. I can make an advanced version, but it probably wouldn’t cover all usage cases. On the other hand, serializing (and deserializing) a node list is a more common problem. Although I addressed some issues in &lt;a href=&quot;/xml-serialization-and-deserialization-in-unity/&quot;&gt;XML Serialization in Unity&lt;/a&gt; post, I would like to complete the node based editor by adding save and load features in this post.&lt;/p&gt;
 
 &lt;p&gt;So, in this post we’ll have a look at those two posts, merge them together and fix some issues. We might even end up revisiting &lt;a href=&quot;/creating-clone-unitys-console-window/&quot;&gt;Creating a Clone of Unity’s Console Window&lt;/a&gt;. After this tutorial, you’ll have a node based editor which can restore its last state after it is closed.&lt;/p&gt;
 
@@ -261,10 +261,10 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;We’ll start with adding a menu bar, and we’ll copy it from the console window clone:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private float menuBarHeight = 20f;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private float menuBarHeight = 20f;
     private Rect menuBar;&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnGUI()
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void OnGUI()
     {
         DrawGrid(20, 0.2f, Color.gray);
         DrawGrid(100, 0.4f, Color.gray);
@@ -322,7 +322,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Rule number 1 doesn’t cause that many problems (it still causes some but we’ll get to that), but rule number 2 is problematic. Both of our classes have constructors &lt;strong&gt;with&lt;/strong&gt; parameters. Let’s fix that first:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    public Node() { }
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    public Node() { }
     
     public Node(Vector2 position, float width, float height, GUIStyle nodeStyle, GUIStyle selectedStyle, GUIStyle inPointStyle, GUIStyle outPointStyle, Action&amp;lt;ConnectionPoint&amp;gt; OnClickInPoint, Action&amp;lt;ConnectionPoint&amp;gt; OnClickOutPoint, Action&amp;lt;Node&amp;gt; OnClickRemoveNode)
     {
@@ -335,7 +335,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
         OnRemoveNode = OnClickRemoveNode;
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    public Connection() { }
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    public Connection() { }
     
     public Connection(ConnectionPoint inPoint, ConnectionPoint outPoint, Action&amp;lt;Connection&amp;gt; OnClickRemoveConnection)
     {
@@ -346,7 +346,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Next, we are going to &lt;strong&gt;ignore&lt;/strong&gt; the properties that can’t be serialized or don’t need to be serialized. For example, in &lt;code class=&quot;highlighter-rouge&quot;&gt;Node&lt;/code&gt; class, &lt;code class=&quot;highlighter-rouge&quot;&gt;GUIStyle&lt;/code&gt;s can be left out of serialization, because they are already provided by the editor itself. We don’t need &lt;code class=&quot;highlighter-rouge&quot;&gt;isDragged&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;isSelected&lt;/code&gt; either. Actually, Node class has only one property that needs to be serialized: the &lt;code class=&quot;highlighter-rouge&quot;&gt;rect&lt;/code&gt;. Let’s see how &lt;code class=&quot;highlighter-rouge&quot;&gt;Node&lt;/code&gt; class looks like after properly &lt;strong&gt;ignoring&lt;/strong&gt; unnecessary and unserializable properties:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;public class Node
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;public class Node
 {
 	public Rect rect;
 
@@ -373,14 +373,14 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Remember the save button which did nothing at all? Well, it should at least save nodes, since they are now serializable. The method for saving nodes is really simple:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void Save()
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void Save()
     {
         XMLOp.Serialize(nodes, &amp;quot;Assets/Resources/nodes.xml&amp;quot;);
     }&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;And we are going to call that method when the user clicks Save button:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void DrawMenuBar()
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void DrawMenuBar()
     {
         menuBar = new Rect(0, 0, position.width, menuBarHeight);
 
@@ -401,7 +401,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Now, open up your Node Based Editor, place a couple of nodes, and then hit Save (you must have a Resources folder under Assets before doing that). Unity will create a file called &lt;code class=&quot;highlighter-rouge&quot;&gt;nodes.xml&lt;/code&gt; in Resources, if you can’t see it, simply right-click on Resources and then click Reimport. Contents of the nodes.xml file should be something like this:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
 &amp;lt;ArrayOfNode xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xmlns:xsd=&amp;quot;http://www.w3.org/2001/XMLSchema&amp;quot;&amp;gt;
   &amp;lt;Node&amp;gt;
     &amp;lt;rect&amp;gt;
@@ -488,7 +488,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;In order to solve this issue, we need some kind of an identifier for a connection point, i.e a unique ID, so that after deserializing, we can look for those connection points by their IDs and give reference to actual objects to restore connections.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;public class ConnectionPoint
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;public class ConnectionPoint
 {
     public string id;
     
@@ -515,13 +515,13 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
         this.id = id ?? Guid.NewGuid().ToString();
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;public class Connection
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;public class Connection
 {
     public ConnectionPoint inPoint;
     public ConnectionPoint outPoint;
     [XmlIgnore] public Action&amp;lt;Connection&amp;gt; OnClickRemoveConnection;&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;public class Node
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;public class Node
 {
 	public Rect rect;
 
@@ -540,7 +540,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Of course, we need to update our &lt;code class=&quot;highlighter-rouge&quot;&gt;Save&lt;/code&gt; method to include connections as well:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void Save()
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void Save()
     {
         XMLOp.Serialize(nodes, &amp;quot;Assets/Resources/nodes.xml&amp;quot;);
         XMLOp.Serialize(connections, &amp;quot;Assets/Resources/connections.xml&amp;quot;);
@@ -552,7 +552,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;First things first: the Load button should be functional.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void DrawMenuBar()
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void DrawMenuBar()
     {
         menuBar = new Rect(0, 0, position.width, menuBarHeight);
 
@@ -577,7 +577,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;We are going to deserialize the contents of the XML files in &lt;code class=&quot;highlighter-rouge&quot;&gt;Load()&lt;/code&gt; method, create nodes and connections and assign them to their respective properties. Deserializing the XML files is a pretty straightforward process; all we have to do is call &lt;code class=&quot;highlighter-rouge&quot;&gt;XMLOp.Deserialize&amp;lt;T&amp;gt;(string)&lt;/code&gt;:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void Load()
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void Load()
     {
         var nodesDeserialized = XMLOp.Deserialize&amp;lt;List&amp;lt;Node&amp;gt;&amp;gt;(&amp;quot;Assets/Resources/nodes.xml&amp;quot;);
         var connectionsDeserialized = XMLOp.Deserialize&amp;lt;List&amp;lt;Connection&amp;gt;&amp;gt;(&amp;quot;Assets/Resources/connections.xml&amp;quot;);
@@ -588,7 +588,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;However, deserializing the XML files alone is not enough to restore our editor to its last state, because as you can see in the figure above, we broke the relation between the nodes and connections while serializing and we need to reconnect them. This reconnection process requires finding nodes by IDs and creating a connection between them. This is why we added unique IDs to our &lt;code class=&quot;highlighter-rouge&quot;&gt;ConnectionPoint&lt;/code&gt; class. We need to recreate the &lt;code class=&quot;highlighter-rouge&quot;&gt;ConnectionPoint&lt;/code&gt;s with those IDs, so we are going to add another constructor to Node class:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    public Node(Vector2 position, float width, float height, GUIStyle nodeStyle, GUIStyle selectedStyle, GUIStyle inPointStyle, GUIStyle outPointStyle, Action&amp;lt;ConnectionPoint&amp;gt; OnClickInPoint,
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    public Node(Vector2 position, float width, float height, GUIStyle nodeStyle, GUIStyle selectedStyle, GUIStyle inPointStyle, GUIStyle outPointStyle, Action&amp;lt;ConnectionPoint&amp;gt; OnClickInPoint,
 		Action&amp;lt;ConnectionPoint&amp;gt; OnClickOutPoint, Action&amp;lt;Node&amp;gt; OnClickRemoveNode, string inPointID, string outPointID)
 	{
 		rect = new Rect(position.x, position.y, width, height);
@@ -602,7 +602,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;This is a new constructor, and it will create a &lt;code class=&quot;highlighter-rouge&quot;&gt;Node&lt;/code&gt; with two &lt;code class=&quot;highlighter-rouge&quot;&gt;ConnectionPoints&lt;/code&gt; with given (instead of generated) IDs. Now we are going to create new nodes based on deserialized nodes:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void Load()
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void Load()
     {
         var nodesDeserialized = XMLOp.Deserialize&amp;lt;List&amp;lt;Node&amp;gt;&amp;gt;(&amp;quot;Assets/Resources/nodes.xml&amp;quot;);
         var connectionsDeserialized = XMLOp.Deserialize&amp;lt;List&amp;lt;Connection&amp;gt;&amp;gt;(&amp;quot;Assets/Resources/connections.xml&amp;quot;);
@@ -632,7 +632,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Go ahead and try it. Create a couple of nodes, save it, close the editor, open it again and hit the Load button. You’ll see that your nodes return back to their positions. Let’s deserialize connections and finalize our node based editor:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void Load()
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void Load()
     {
         var nodesDeserialized = XMLOp.Deserialize&amp;lt;List&amp;lt;Node&amp;gt;&amp;gt;(&amp;quot;Assets/Resources/nodes.xml&amp;quot;);
         var connectionsDeserialized = XMLOp.Deserialize&amp;lt;List&amp;lt;Connection&amp;gt;&amp;gt;(&amp;quot;Assets/Resources/connections.xml&amp;quot;);
@@ -671,13 +671,13 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;This concludes our tutorial on serializing a node based editor. You now have a fully functioning node based editor with save and load features. If you have any questions or feedback, leave a comment.&lt;/p&gt;
 
-&lt;p&gt;As always, here are the scripts in full, below. Until next time.&lt;/p&gt;</content><author><name>Oguz Konya</name></author><summary type="html">I actually don’t get a lot of feedback on my posts, but one post stood out: Creating a Node Based Editor in Unity. Some people asked for a more advanced version and some asked how they can save and load data to the editor. I can make an advanced version, but it probably wouldn’t cover all usage cases. On the other hand, serializing (and deserializing) a node list is a more common problem. Although I addressed some issues in XML Serialization in Unity post, I would like to complete the node based editor by adding save and load features in this post.</summary></entry><entry><title type="html">XML Serialization in Unity</title><link href="https://oguzkonya.github.io/xml-serialization-and-deserialization-in-unity/" rel="alternate" type="text/html" title="XML Serialization in Unity" /><published>2019-08-22T00:00:00+00:00</published><updated>2019-08-22T00:00:00+00:00</updated><id>https://oguzkonya.github.io/xml-serialization-and-deserialization-in-unity</id><content type="html" xml:base="https://oguzkonya.github.io/xml-serialization-and-deserialization-in-unity/">&lt;p&gt;Unity stores contents of a scene in a custom YAML file called a &lt;strong&gt;Unity scene file&lt;/strong&gt;. While this is convenient for levels which are designed in Unity’s scene editor, it is not very useful for levels which are built at runtime. Moreover, it is not possible to store game related data in scene files, such as properties of weapons, cars, NPCs, etc. (actually, it is possible, but not feasible). Even though there are a few solutions for that kind of data storage in Unity, such as JSON, or SQL, the easiest of them to implement is XML. In this post, I will show you how to store your game data in XML files and read them at runtime.&lt;/p&gt;
+&lt;p&gt;As always, here are the scripts in full, below. Until next time.&lt;/p&gt;</content><author><name>Oguz Konya</name></author><summary type="html">I actually don’t get a lot of feedback on my posts, but one post stood out: Creating a Node Based Editor in Unity. Some people asked for a more advanced version and some asked how they can save and load data to the editor. I can make an advanced version, but it probably wouldn’t cover all usage cases. On the other hand, serializing (and deserializing) a node list is a more common problem. Although I addressed some issues in XML Serialization in Unity post, I would like to complete the node based editor by adding save and load features in this post.</summary></entry><entry><title type="html">XML Serialization in Unity</title><link href="http://localhost:4000/xml-serialization-and-deserialization-in-unity/" rel="alternate" type="text/html" title="XML Serialization in Unity" /><published>2019-08-22T00:00:00+00:00</published><updated>2019-08-22T00:00:00+00:00</updated><id>http://localhost:4000/xml-serialization-and-deserialization-in-unity</id><content type="html" xml:base="http://localhost:4000/xml-serialization-and-deserialization-in-unity/">&lt;p&gt;Unity stores contents of a scene in a custom YAML file called a &lt;strong&gt;Unity scene file&lt;/strong&gt;. While this is convenient for levels which are designed in Unity’s scene editor, it is not very useful for levels which are built at runtime. Moreover, it is not possible to store game related data in scene files, such as properties of weapons, cars, NPCs, etc. (actually, it is possible, but not feasible). Even though there are a few solutions for that kind of data storage in Unity, such as JSON, or SQL, the easiest of them to implement is XML. In this post, I will show you how to store your game data in XML files and read them at runtime.&lt;/p&gt;
 
 &lt;p&gt;To be able to save data in XML files, first we need to be able to convert objects into XML format and then convert XML format back into objects. This process is called &lt;abbr title=&quot;Converting objects into a form (such as JSON, or XML) that can be easily transported.&quot;&gt;serialization&lt;/abbr&gt; and &lt;abbr title=&quot;Creating objects from transport formats such as JSON, or XML.&quot;&gt;deserialization&lt;/abbr&gt;. C# already has great tools for XML &lt;abbr title=&quot;Converting objects into a form (such as JSON, or XML) that can be easily transported.&quot;&gt;serialization&lt;/abbr&gt;, and we will build upon them to create XML serializer we need.&lt;/p&gt;
 
 &lt;p&gt;First, let’s create a sample class to start serializing:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;public class Hero
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;public class Hero
 {
     public string name;
 
@@ -698,7 +698,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;In our case, &lt;code class=&quot;highlighter-rouge&quot;&gt;Hero&lt;/code&gt; class already has nothing but public fields and since there isn’t any kind of constructor, it implicitly has a parameterless default constructor.&lt;/p&gt;
 
 &lt;p&gt;Let’s say we want this class to output an XML file just like the following:&lt;/p&gt;
-&lt;pre class=&quot; language-xml  line-numbers &quot;&gt;&lt;code&gt;&amp;lt;Hero&amp;gt;
+&lt;pre class=&quot;language-xml  line-numbers&quot;&gt;&lt;code&gt;&amp;lt;Hero&amp;gt;
     &amp;lt;name&amp;gt;&amp;lt;/name&amp;gt;
     &amp;lt;isBoss&amp;gt;&amp;lt;/isBoss&amp;gt;
     &amp;lt;hitPoints&amp;gt;&amp;lt;/hitPoints&amp;gt;
@@ -707,7 +707,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Generally, producing an XML file in a certain format requires some modification to target class. But, in our case we are not looking for a specific format. All our fields we want to serialize are public and there is a default constructor, therefore, we can start creating the XML file:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using UnityEngine;
 using System.Xml.Serialization;
 using System.IO;
 
@@ -742,7 +742,7 @@ public class XMLSerializer : MonoBehaviour
 
 &lt;p&gt;When you drag&amp;amp;drop this code on an empty game object in Unity and run it, you will see that a file named &lt;code class=&quot;highlighter-rouge&quot;&gt;hero.xml&lt;/code&gt; is created in your Unity project folder and its contents hold Hero data:&lt;/p&gt;
 
-&lt;pre class=&quot; language-xml  line-numbers &quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
+&lt;pre class=&quot;language-xml  line-numbers&quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
 &amp;lt;Hero xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xmlns:xsd=&amp;quot;http://www.w3.org/2001/XMLSchema&amp;quot;&amp;gt;
     &amp;lt;name&amp;gt;Knight of Solamnia&amp;lt;/name&amp;gt;
     &amp;lt;isBoss&amp;gt;true&amp;lt;/isBoss&amp;gt;
@@ -752,7 +752,7 @@ public class XMLSerializer : MonoBehaviour
 
 &lt;p&gt;As you can see, creating an XML file required no more than a few lines of code. But, what if we want to have different tag names in the XML file? Or, to use XML &lt;abbr title=&quot;A method to associate declarative information with the code&quot;&gt;attributes&lt;/abbr&gt; instead of XML elements to store data? Or, to use arrays in our class? To achieve these, we need to modify our base class by adding some XML &lt;abbr title=&quot;A method to associate declarative information with the code&quot;&gt;attributes&lt;/abbr&gt; to our fields. But first, we should change something in our code. I like my code well organized and I favor OOP’s single responsibility principle, so I will move XML &lt;abbr title=&quot;Converting objects into a form (such as JSON, or XML) that can be easily transported.&quot;&gt;serialization&lt;/abbr&gt; part into its own class. This way, we will be able to serialize any type of object with a single line of code:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System.IO;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using System.IO;
 using System.Xml.Serialization;
 
 public class XMLOp
@@ -768,7 +768,7 @@ public class XMLOp
 
 &lt;p&gt;Now our &lt;code class=&quot;highlighter-rouge&quot;&gt;XMLSerializer&lt;/code&gt; looks like this:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using UnityEngine;
 
 public class XMLSerializer : MonoBehaviour
 {
@@ -799,14 +799,14 @@ public class XMLSerializer : MonoBehaviour
 
 &lt;p&gt;Usage of an XML attribute is very simple: you type the necessary attribute above your field or class just like the following:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;[XmlElement(&amp;quot;Name&amp;quot;)]
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;[XmlElement(&amp;quot;Name&amp;quot;)]
 public string Name;&lt;/code&gt;&lt;/pre&gt;
 
 &lt;h3 id=&quot;xmlelementstring&quot;&gt;[XmlElement(String)]&lt;/h3&gt;
 
 &lt;p&gt;This attribute indicates that a field will be represented as an XML element. Fields of an object is serialized as XMLElement as default, so this attribute is necessary only to change the name of a field (or force an array to act like an element but we will get to that later). Let’s modify our script file and see what kind of XML file it produces:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System.Xml.Serialization;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using System.Xml.Serialization;
 
 public class Hero
 {
@@ -822,7 +822,7 @@ public class Hero
 
 &lt;p&gt;And the output becomes:&lt;/p&gt;
 
-&lt;pre class=&quot; language-xml  line-numbers &quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
+&lt;pre class=&quot;language-xml  line-numbers&quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
 &amp;lt;Hero xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xmlns:xsd=&amp;quot;http://www.w3.org/2001/XMLSchema&amp;quot;&amp;gt;
     &amp;lt;n&amp;gt;Knight of Solamnia&amp;lt;/n&amp;gt;
     &amp;lt;hitPoints&amp;gt;100&amp;lt;/hitPoints&amp;gt;
@@ -836,7 +836,7 @@ public class Hero
 
 &lt;p&gt;This attribute indicates that a field will be represented as an XML attribute.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System.Xml.Serialization;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using System.Xml.Serialization;
 
 public class Hero
 {
@@ -853,7 +853,7 @@ public class Hero
 
 &lt;p&gt;And the output becomes:&lt;/p&gt;
 
-&lt;pre class=&quot; language-xml  line-numbers &quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
+&lt;pre class=&quot;language-xml  line-numbers&quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
 &amp;lt;Hero xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xmlns:xsd=&amp;quot;http://www.w3.org/2001/XMLSchema&amp;quot; boss=&amp;quot;true&amp;quot;&amp;gt;
     &amp;lt;n&amp;gt;Knight of Solamnia&amp;lt;/n&amp;gt;
     &amp;lt;hitPoints&amp;gt;100&amp;lt;/hitPoints&amp;gt;
@@ -864,7 +864,7 @@ public class Hero
 
 &lt;p&gt;As I have mentioned before, a field must be public in order to be serialized. This also means that all the public fields will be serialized by the XML serializer. But sometimes, we might need a field to be &lt;strong&gt;not&lt;/strong&gt; serialized without making it private. This is where &lt;code class=&quot;highlighter-rouge&quot;&gt;[XmlIgnore]&lt;/code&gt; comes into play. It indicates that a field will not be represented in the XML file at all.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System.Xml.Serialization;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using System.Xml.Serialization;
 
 public class Hero
 {
@@ -882,7 +882,7 @@ public class Hero
 
 &lt;p&gt;And the output becomes:&lt;/p&gt;
 
-&lt;pre class=&quot; language-xml  line-numbers &quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
+&lt;pre class=&quot;language-xml  line-numbers&quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
 &amp;lt;Hero xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xmlns:xsd=&amp;quot;http://www.w3.org/2001/XMLSchema&amp;quot; boss=&amp;quot;true&amp;quot;&amp;gt;
     &amp;lt;n&amp;gt;Knight of Solamnia&amp;lt;/n&amp;gt;
     &amp;lt;baseDamage&amp;gt;50&amp;lt;/baseDamage&amp;gt;
@@ -892,7 +892,7 @@ public class Hero
 
 &lt;p&gt;The object that is serialized by the XML serializer becomes the root of the XML file. As a result, object’s class name becomes the name of the root tag. Sometimes, we want to use some other name in order to provide clarification. This attribute indicates that the name of the root tag will be the provided string. It should be noted that &lt;code class=&quot;highlighter-rouge&quot;&gt;[XmlRoot]&lt;/code&gt; attribute can only be used on classes, structs, enumerations or interfaces unlike the previous &lt;abbr title=&quot;A method to associate declarative information with the code&quot;&gt;attributes&lt;/abbr&gt;.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System.Xml.Serialization;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using System.Xml.Serialization;
 
 [XmlRoot(&amp;quot;Knight&amp;quot;)]
 public class Hero
@@ -911,7 +911,7 @@ public class Hero
 
 &lt;p&gt;And the output becomes:&lt;/p&gt;
 
-&lt;pre class=&quot; language-xml  line-numbers &quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
+&lt;pre class=&quot;language-xml  line-numbers&quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
 &amp;lt;Knight xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xmlns:xsd=&amp;quot;http://www.w3.org/2001/XMLSchema&amp;quot; boss=&amp;quot;true&amp;quot;&amp;gt;
     &amp;lt;n&amp;gt;Knight of Solamnia&amp;lt;/n&amp;gt;
     &amp;lt;baseDamage&amp;gt;50&amp;lt;/baseDamage&amp;gt;
@@ -920,7 +920,7 @@ public class Hero
 &lt;h3 id=&quot;xmlarraystring-and-xmlarrayitemstring&quot;&gt;[XmlArray(String)] and [XmlArrayItem(String)]&lt;/h3&gt;
 &lt;p&gt;But, how about arrays? What if our Hero has a int array which includes combo rewards?&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System.Xml.Serialization;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using System.Xml.Serialization;
 
 public class Hero
 {
@@ -938,7 +938,7 @@ public class Hero
     public int[] comboRewards;
 }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using UnityEngine;
 
 public class XMLSerializer : MonoBehaviour
 {
@@ -957,7 +957,7 @@ public class XMLSerializer : MonoBehaviour
 
 &lt;p&gt;Output of this code would be:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
 &amp;lt;Knight xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xmlns:xsd=&amp;quot;http://www.w3.org/2001/XMLSchema&amp;quot; boss=&amp;quot;true&amp;quot;&amp;gt;
     &amp;lt;n&amp;gt;Knight of Solamnia&amp;lt;/n&amp;gt;
     &amp;lt;baseDamage&amp;gt;50&amp;lt;/baseDamage&amp;gt;
@@ -970,7 +970,7 @@ public class XMLSerializer : MonoBehaviour
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;comboRewards&amp;gt;&lt;/code&gt; tag is OK, but those &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;int&amp;gt;&lt;/code&gt; tags don’t look nice, do they? Fortunately, there are two XML &lt;abbr title=&quot;A method to associate declarative information with the code&quot;&gt;attributes&lt;/abbr&gt; which modify the XML output of an array: &lt;code class=&quot;highlighter-rouge&quot;&gt;[XmlArray(string)]&lt;/code&gt; which modifies the name of the array, and &lt;code class=&quot;highlighter-rouge&quot;&gt;[XmlArrayItem(string)]&lt;/code&gt; which, as you might have guessed, modifies the name of the array items.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System.Xml.Serialization;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using System.Xml.Serialization;
 
 public class Hero
 {
@@ -991,7 +991,7 @@ public class Hero
 
 &lt;p&gt;And this would produce a better output:&lt;/p&gt;
 
-&lt;pre class=&quot; language-xml  line-numbers &quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
+&lt;pre class=&quot;language-xml  line-numbers&quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
 &amp;lt;Knight xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xmlns:xsd=&amp;quot;http://www.w3.org/2001/XMLSchema&amp;quot; boss=&amp;quot;true&amp;quot;&amp;gt;
     &amp;lt;n&amp;gt;Knight of Solamnia&amp;lt;/n&amp;gt;
     &amp;lt;baseDamage&amp;gt;50&amp;lt;/baseDamage&amp;gt;
@@ -1006,7 +1006,7 @@ public class Hero
 
 &lt;p&gt;We have successfully saved our game data in an XML file, but currently it is pretty useless, because we can’t take that data back into our game. In order to do that, we need to read the XML file and create objects (namely, deserialize it). Deserialization is simpler than &lt;abbr title=&quot;Converting objects into a form (such as JSON, or XML) that can be easily transported.&quot;&gt;serialization&lt;/abbr&gt;, because we already defined the structure in our class. All we need to do is just add a few lines of code to our &lt;code class=&quot;highlighter-rouge&quot;&gt;XMLOp.cs&lt;/code&gt;:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System.IO;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using System.IO;
 using System.Xml.Serialization;
 
 public class XMLOp
@@ -1041,7 +1041,7 @@ public class XMLOp
 
 &lt;p&gt;Let’s say, we have already serialized our weapon object and created the XML file. Now we can deserialize it in another script:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using UnityEngine;
 
 public class XMLDeserializer : MonoBehaviour
 {
@@ -1057,7 +1057,7 @@ public class XMLDeserializer : MonoBehaviour
 
 &lt;p&gt;As always, here are the scripts in full, below. Until next time.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System.Xml.Serialization;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using System.Xml.Serialization;
 
 [XmlRoot(&amp;quot;Knight&amp;quot;)]
 public class Hero
@@ -1077,7 +1077,7 @@ public class Hero
     public int[] comboRewards;
 }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using UnityEngine;
 
 public class XMLSerializer : MonoBehaviour
 {
@@ -1094,7 +1094,7 @@ public class XMLSerializer : MonoBehaviour
     }
 }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using UnityEngine;
 
 public class XMLDeserializer : MonoBehaviour
 {
@@ -1105,7 +1105,7 @@ public class XMLDeserializer : MonoBehaviour
     }
 }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System.IO;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using System.IO;
 using System.Xml.Serialization;
 
 public class XMLOp
@@ -1126,7 +1126,7 @@ public class XMLOp
         reader.Close();
         return deserialized;
     }
-}&lt;/code&gt;&lt;/pre&gt;</content><author><name>Oguz Konya</name></author><summary type="html"></summary></entry><entry><title type="html">Creating a Node Based Editor in Unity</title><link href="https://oguzkonya.github.io/creating-node-based-editor-unity/" rel="alternate" type="text/html" title="Creating a Node Based Editor in Unity" /><published>2019-08-15T00:00:00+00:00</published><updated>2019-08-15T00:00:00+00:00</updated><id>https://oguzkonya.github.io/creating-node-based-editor-unity</id><content type="html" xml:base="https://oguzkonya.github.io/creating-node-based-editor-unity/">&lt;p&gt;Node based editors are frequently used in game engines; Unity has Animator window, Unreal Engine has blueprint system, some other game engines have dialogue systems. In this blog post, we will create our own node based editor in Unity. It’s going to be simple node editor that you’ll be able to improve upon later (see the below image for an example). I am going to assume that you are already familiar with editor scripting, but if you are not, please take your time to have a look at &lt;a href=&quot;/creating-editor-windows-in-unity/&quot;&gt;this&lt;/a&gt; post and &lt;a href=&quot;/creating-clone-unitys-console-window/&quot;&gt;this&lt;/a&gt; post.&lt;/p&gt;
+}&lt;/code&gt;&lt;/pre&gt;</content><author><name>Oguz Konya</name></author><summary type="html"></summary></entry><entry><title type="html">Creating a Node Based Editor in Unity</title><link href="http://localhost:4000/creating-node-based-editor-unity/" rel="alternate" type="text/html" title="Creating a Node Based Editor in Unity" /><published>2019-08-15T00:00:00+00:00</published><updated>2019-08-15T00:00:00+00:00</updated><id>http://localhost:4000/creating-node-based-editor-unity</id><content type="html" xml:base="http://localhost:4000/creating-node-based-editor-unity/">&lt;p&gt;Node based editors are frequently used in game engines; Unity has Animator window, Unreal Engine has blueprint system, some other game engines have dialogue systems. In this blog post, we will create our own node based editor in Unity. It’s going to be simple node editor that you’ll be able to improve upon later (see the below image for an example). I am going to assume that you are already familiar with editor scripting, but if you are not, please take your time to have a look at &lt;a href=&quot;/creating-editor-windows-in-unity/&quot;&gt;this&lt;/a&gt; post and &lt;a href=&quot;/creating-clone-unitys-console-window/&quot;&gt;this&lt;/a&gt; post.&lt;/p&gt;
 
 &lt;div class=&quot;img-wrapper&quot;&gt;
     
@@ -1143,7 +1143,7 @@ public class XMLOp
 
 &lt;p&gt;Let’s start by creating a simple editor window. The structure of the code will be similar to that of the console clone we developed in the previous posts: draw the elements first, and then process input, and if the GUI is changed due to input events, force the window to repaint.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
@@ -1178,7 +1178,7 @@ public class NodeBasedEditor : EditorWindow
 
 &lt;p&gt;Well, since this is a node editor, it should contain a list of nodes, which requires us to define a List&lt;Node&gt;. But first we should define __Node__ class. A __Node__ will be responsible for drawing itself and processing its own events. Unlike __ProcessEvents(Event e)__ in __NodeBasedEditor__, __ProcessEvents(Event e)__ in __Node__ will return a boolean so that we can check whether we should repaint the GUI or not.&lt;/Node&gt;&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -1211,7 +1211,7 @@ public class Node
     }
 }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
@@ -1255,7 +1255,7 @@ public class NodeBasedEditor : EditorWindow
 
 &lt;p&gt;Nodes are drawn in the editor now, but we can’t see them if we don’t create them. We should display a context menu with an “Add node” item when the user right clicks in the editor. When the user clicks “Add node”, we will create a &lt;strong&gt;Node&lt;/strong&gt; and add it to the list of nodes, so that it is drawn. A &lt;strong&gt;Node&lt;/strong&gt; requires a position, a width, a height and a styling; position will be the mouse’s current position, width will be 200, height will be 50 (yes, I don’t like using magic numbers in code, but this is going to be a simple editor, so the size doesn’t matter for the moment) and we will replicate the Animator window’s node style for styling.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
@@ -1334,7 +1334,7 @@ public class NodeBasedEditor : EditorWindow
 
 &lt;p&gt;Alright, now we are able to add nodes, but we can’t drag them around. As I mentioned earlier, nodes will be processing their own events, hence we will be handling drag event in &lt;strong&gt;Node&lt;/strong&gt; class. One important thing to note here is that we should be “using” the drag event with &lt;strong&gt;Use()&lt;/strong&gt; method. Later on, we will be adding canvas dragging, and we wouldn’t want to drag a node and the whole canvas at the same time (“using” an event prevents it being used by other processes, i.e. it stops event bubbling). Also note that the for loop in &lt;strong&gt;ProcessNodeEvents(Event e)&lt;/strong&gt; traverses the node list backwards, because the last node is drawn at the top, so it should process the events first.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -1399,7 +1399,7 @@ public class Node
     }
 }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnGUI()
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void OnGUI()
     {
         DrawNodes();
 
@@ -1462,7 +1462,7 @@ public class Node
 
 &lt;p&gt;On the other hand, a connection has two connection points and an action to remove it. &lt;strong&gt;Connection&lt;/strong&gt; class is much simpler than &lt;strong&gt;ConnectionPoint&lt;/strong&gt;, however, it introduces a new concept: &lt;strong&gt;Handles&lt;/strong&gt;. This class is actually used to draw 3D GUI controls in the &lt;strong&gt;Scene&lt;/strong&gt; view, but it is the only class with a bezier drawing method: &lt;strong&gt;Handles.DrawBezier(Vector3, Vector3, Vector3, Vector3, Color, Texture2D, float).&lt;/strong&gt; It takes 7 parameters and the first 4 parameters are the position controls (start position, end position, start tangent, and end tangent), while the rest determine how the bezier looks.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using System;
 using UnityEngine;
 
 public enum ConnectionPointType { In, Out }
@@ -1513,7 +1513,7 @@ public class ConnectionPoint
     }
 }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -1570,7 +1570,7 @@ public class Connection
 
 &lt;p&gt;And lastly, we need to draw connections in &lt;strong&gt;OnGUI()&lt;/strong&gt; just like we draw nodes.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -1642,7 +1642,7 @@ public class Node
     }
 }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
@@ -1828,7 +1828,7 @@ public class NodeBasedEditor : EditorWindow
 
 &lt;p&gt;We should provide feedback when the user clicks on a node so that they would know which node they selected (or if a node is selected at all). This is going to be useful when a user wants to remove a node.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -1909,7 +1909,7 @@ public class Node
     }
 }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
@@ -1956,7 +1956,7 @@ public class NodeBasedEditor : EditorWindow
 
     ...&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnClickAddNode(Vector2 mousePosition)
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void OnClickAddNode(Vector2 mousePosition)
     {
         if (nodes == null)
         {
@@ -1970,7 +1970,7 @@ public class NodeBasedEditor : EditorWindow
 
 &lt;p&gt;Some node editors prefer to put the &lt;strong&gt;remove node&lt;/strong&gt; button on the node itself, but in our case it might be dangerous: the user might remove a node accidentally. So, we are going to do the next best thing: put that button on a context menu. Users should select the node first and then right click on it in order to access the &lt;strong&gt;remove node&lt;/strong&gt; button. When the user clicks &lt;strong&gt;remove node&lt;/strong&gt;, we will remove the node from the nodes list. However, the node might have connections to other nodes, so we should remove those connections first.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -2075,7 +2075,7 @@ public class Node
     }
 }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnClickAddNode(Vector2 mousePosition)
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void OnClickAddNode(Vector2 mousePosition)
     {
         if (nodes == null)
         {
@@ -2085,7 +2085,7 @@ public class Node
         nodes.Add(new Node(mousePosition, 200, 50, nodeStyle, selectedNodeStyle, inPointStyle, outPointStyle, OnClickInPoint, OnClickOutPoint, OnClickRemoveNode));
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnClickRemoveNode(Node node)
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void OnClickRemoveNode(Node node)
     {
         if (connections != null)
         {
@@ -2122,7 +2122,7 @@ public class Node
 
 &lt;p&gt;Making our canvas draggable is the easiest one, so let’s start with that. All we have to do is just apply mouse drag to every single node in the node list.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;public class NodeBasedEditor : EditorWindow
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;public class NodeBasedEditor : EditorWindow
 {
     private List&amp;lt;Node&amp;gt; nodes;
     private List&amp;lt;Connection&amp;gt; connections;
@@ -2139,7 +2139,7 @@ public class Node
 
     ...&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void ProcessEvents(Event e)
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void ProcessEvents(Event e)
     {
         drag = Vector2.zero;
 
@@ -2166,7 +2166,7 @@ public class Node
         }
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnDrag(Vector2 delta)
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void OnDrag(Vector2 delta)
     {
         drag = delta;
 
@@ -2183,7 +2183,7 @@ public class Node
 
 &lt;p&gt;Next up, drawing the bezier from selected connection point to the mouse position. By drawing this bezier, we will let users know which connection point selected and how their connection will look like.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnGUI()
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void OnGUI()
     {
         DrawNodes();
         DrawConnections();
@@ -2196,7 +2196,7 @@ public class Node
         if (GUI.changed) Repaint();
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void DrawConnectionLine(Event e)
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void DrawConnectionLine(Event e)
     {
         if (selectedInPoint != null &amp;amp;amp;&amp;amp;amp; selectedOutPoint == null)
         {
@@ -2231,7 +2231,7 @@ public class Node
 
 &lt;p&gt;And finally, drawing the grid:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;public class NodeBasedEditor : EditorWindow
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;public class NodeBasedEditor : EditorWindow
 {
     private List&amp;lt;Node&amp;gt; nodes;
     private List&amp;lt;Connection&amp;gt; connections;
@@ -2249,7 +2249,7 @@ public class Node
 
     ...&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnGUI()
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void OnGUI()
     {
         DrawGrid(20, 0.2f, Color.gray);
         DrawGrid(100, 0.4f, Color.gray);
@@ -2303,7 +2303,7 @@ public class Node
 
 &lt;p&gt;And as always, here is the script in full, below. Until next time.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
@@ -2605,7 +2605,7 @@ public class NodeBasedEditor : EditorWindow
     }
 }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -2710,7 +2710,7 @@ public class Node
     }
 }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -2749,7 +2749,7 @@ public class Connection
     }
 }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using System;
 using UnityEngine;
 
 public enum ConnectionPointType { In, Out }
@@ -2798,7 +2798,7 @@ public class ConnectionPoint
             }
         }
     }
-}&lt;/code&gt;&lt;/pre&gt;</content><author><name>Oguz Konya</name></author><summary type="html">Node based editors are frequently used in game engines; Unity has Animator window, Unreal Engine has blueprint system, some other game engines have dialogue systems. In this blog post, we will create our own node based editor in Unity. It’s going to be simple node editor that you’ll be able to improve upon later (see the below image for an example). I am going to assume that you are already familiar with editor scripting, but if you are not, please take your time to have a look at this post and this post.</summary></entry><entry><title type="html">Creating a Clone of Unity’s Console Window</title><link href="https://oguzkonya.github.io/creating-clone-unitys-console-window/" rel="alternate" type="text/html" title="Creating a Clone of Unity's Console Window" /><published>2019-08-08T00:00:00+00:00</published><updated>2019-08-08T00:00:00+00:00</updated><id>https://oguzkonya.github.io/creating-clone-unitys-console-window</id><content type="html" xml:base="https://oguzkonya.github.io/creating-clone-unitys-console-window/">&lt;p&gt;In our last &lt;a href=&quot;/creating-editor-windows-in-unity/&quot;&gt;post&lt;/a&gt; we created a Unity window and added two resizable panels. In this post, we will improve upon it and make it a clone of Unity’s console window. This post is going to be a little bit longer, so I will omit the previously written code, but the final version will still be available in full at the end.&lt;/p&gt;
+}&lt;/code&gt;&lt;/pre&gt;</content><author><name>Oguz Konya</name></author><summary type="html">Node based editors are frequently used in game engines; Unity has Animator window, Unreal Engine has blueprint system, some other game engines have dialogue systems. In this blog post, we will create our own node based editor in Unity. It’s going to be simple node editor that you’ll be able to improve upon later (see the below image for an example). I am going to assume that you are already familiar with editor scripting, but if you are not, please take your time to have a look at this post and this post.</summary></entry><entry><title type="html">Creating a Clone of Unity’s Console Window</title><link href="http://localhost:4000/creating-clone-unitys-console-window/" rel="alternate" type="text/html" title="Creating a Clone of Unity's Console Window" /><published>2019-08-08T00:00:00+00:00</published><updated>2019-08-08T00:00:00+00:00</updated><id>http://localhost:4000/creating-clone-unitys-console-window</id><content type="html" xml:base="http://localhost:4000/creating-clone-unitys-console-window/">&lt;p&gt;In our last &lt;a href=&quot;/creating-editor-windows-in-unity/&quot;&gt;post&lt;/a&gt; we created a Unity window and added two resizable panels. In this post, we will improve upon it and make it a clone of Unity’s console window. This post is going to be a little bit longer, so I will omit the previously written code, but the final version will still be available in full at the end.&lt;/p&gt;
 
 &lt;p&gt;Before we start coding, let’s examine the console window and see what we should add.&lt;/p&gt;
 
@@ -2813,7 +2813,7 @@ public class ConnectionPoint
 
 &lt;p&gt;Alright then, we can start. But, before we do, I would like to fix a tiny issue from the previous post’s code. I left a magic number as the height of the resizer area, and I would like to convert it to a proper variable:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private Rect upperPanel;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private Rect upperPanel;
     private Rect lowerPanel; 
     private Rect resizer; 
 
@@ -2826,7 +2826,7 @@ public class ConnectionPoint
 
 &lt;p&gt;And, further down the code, once again replace the magic number with the variable:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void DrawLowerPanel()
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void DrawLowerPanel()
     {
         lowerPanel = new Rect(0, (position.height * sizeRatio) + resizerHeight, position.width, (position.height * (1 - sizeRatio)) - resizerHeight);
 
@@ -2849,7 +2849,7 @@ public class ConnectionPoint
 
 &lt;p&gt;Now we can start adding our menu bar. We will draw this bar just as we drew other panels: by feeding &lt;strong&gt;GUILayout.BeginArea()&lt;/strong&gt; a rectangle which would define its position and size (basically, its area). I am going to steal this area  from the upper panel, so that we won’t have to change other panels’ positions or heights. You can make this bar as tall as you would like, but since we are cloning Unity’s console window, we should stick to default and make it 20 pixels in height. Also, please note that this time, &lt;strong&gt;GUILayout.BeginArea()&lt;/strong&gt; takes a second parameter: &lt;strong&gt;EditorStyles.toolbar&lt;/strong&gt;. As the name suggests, this parameter tells Unity to draw this area in toolbar style. &lt;strong&gt;EditorStyles&lt;/strong&gt; has many other options to choose from which affects how the GUI elements are displayed, so I would suggest checking them out and see Unity team used them in their own editor windows.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private Rect upperPanel;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private Rect upperPanel;
     private Rect lowerPanel; 
     private Rect resizer; 
     private Rect menuBar;
@@ -2862,7 +2862,7 @@ public class ConnectionPoint
 
     private GUIStyle resizerStyle;&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnGUI()
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void OnGUI()
     {
         DrawMenuBar();
         DrawUpperPanel();
@@ -2893,7 +2893,7 @@ public class ConnectionPoint
 
 &lt;p&gt;OK, we are ready to add our buttons and toggles. I could have added them in the code above, but there are a couple of new concepts that I should explain beforehand. First of all, there is &lt;strong&gt;GUILayout.BeginHorizontal()&lt;/strong&gt;. You see, &lt;strong&gt;GUILayout&lt;/strong&gt;, as the name suggests, lays out the GUI automatically &lt;strong&gt;&lt;em&gt;vertically&lt;/em&gt;&lt;/strong&gt;. However, a toolbar is laid out horizontally, so we need to use &lt;strong&gt;GUILayout.BeginHorizontal()&lt;/strong&gt; and then use &lt;strong&gt;GUILayout.EndHorizontal()&lt;/strong&gt; so that Unity stops horizontal layout and continues automatic vertical layout. Then, there is &lt;strong&gt;GUILayout.FlexibleSpace()&lt;/strong&gt; which acts like a spring and pushes other UI elements to the edges of its container by filling the space between them. On the other hand, &lt;strong&gt;GUILayout.Space(int)&lt;/strong&gt; creates just the amount of space you need. &lt;strong&gt;GUILayout.Button()&lt;/strong&gt; returns true when it is clicked and &lt;strong&gt;GUILayout.Toggle()&lt;/strong&gt; returns a boolean depending on the status of the toggle: true when it is on and false when it is off.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private Rect upperPanel;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private Rect upperPanel;
     private Rect lowerPanel;
     private Rect resizer;
     private Rect menuBar;
@@ -2913,7 +2913,7 @@ public class ConnectionPoint
 
     private GUIStyle resizerStyle;&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void DrawMenuBar()
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void DrawMenuBar()
     {
         menuBar = new Rect(0, 0, position.width, menuBarHeight);
 
@@ -2939,7 +2939,7 @@ public class ConnectionPoint
 
 &lt;p&gt;It looks pretty good, but the toggles on the right are missing their icons. Adding icons and textures to GUI elements is rather easy, but Unity lacks the documentation on how to do it. Here’s a piece of information you probably can’t find on the internet: Unity uses &lt;strong&gt;EditorGUIUtility.Load(string)&lt;/strong&gt; to load editor resources and &lt;a href=&quot;https://gist.github.com/masa795/5797164&quot;&gt;this&lt;/a&gt; piece of script lists some of the default Unity editor textures (all the icons). I checked the list and found the icons used in the console editor, so let’s add them into our own clone.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private Rect upperPanel;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private Rect upperPanel;
     private Rect lowerPanel;
     private Rect resizer;
     private Rect menuBar;
@@ -2966,7 +2966,7 @@ public class ConnectionPoint
     private Texture2D infoIcon;
     private Texture2D infoIconSmall;&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnEnable()
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void OnEnable()
     {
         errorIcon = EditorGUIUtility.Load(&amp;quot;icons/console.erroricon.png&amp;quot;) as Texture2D;
         warningIcon = EditorGUIUtility.Load(&amp;quot;icons/console.warnicon.png&amp;quot;) as Texture2D;
@@ -2980,7 +2980,7 @@ public class ConnectionPoint
         resizerStyle.normal.background = EditorGUIUtility.Load(&amp;quot;icons/d_AvatarBlendBackground.png&amp;quot;) as Texture2D;
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void DrawMenuBar()
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void DrawMenuBar()
     {
         menuBar = new Rect(0, 0, position.width, menuBarHeight);
 
@@ -3017,7 +3017,7 @@ public class ConnectionPoint
 
 &lt;p&gt;Let’s move on to the upper panel. This panel should be scrollable, because it could contain more content than it can display. Here is another new concept: &lt;strong&gt;GUILayout.BeginScrollView(Vector2 scroll)&lt;/strong&gt; creates a scroll view in the area it is defined. All the GUI elements between &lt;strong&gt;GUILayout.BeginScrollView(Vector2 scroll)&lt;/strong&gt; and &lt;strong&gt;GUILayout.EndScrollView()&lt;/strong&gt; will be displayed in this scroll area.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private Rect upperPanel;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private Rect upperPanel;
     private Rect lowerPanel;
     private Rect resizer;
     private Rect menuBar;
@@ -3046,7 +3046,7 @@ public class ConnectionPoint
     private Texture2D infoIcon;
     private Texture2D infoIconSmall;&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void DrawUpperPanel()
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void DrawUpperPanel()
     {
         upperPanel = new Rect(0, menuBarHeight, position.width, (position.height * sizeRatio) - menuBarHeight);
 
@@ -3059,7 +3059,7 @@ public class ConnectionPoint
 
 &lt;p&gt;Unity’s console window displays boxes in this panel, so will we. However, it is not going to be one liner, because we need to know what kind of content needs to be displayed (info, warning or error), and what its index number is (so that we can do a zebra effect on the boxes). For these reasons, it is going to be a little more work than we did previously. First of all, we need an &lt;strong&gt;enum&lt;/strong&gt; for the content type of the box, which fortunately exists: &lt;strong&gt;LogType&lt;/strong&gt;. Then, we should create a method for drawing boxes. This method will draw a box, add an icon to the left of the content based on its type, set the background color to a lighter or darker color based on its index (lighter if the index is odd, darker if the index is even) and then display a text.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private Rect upperPanel;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private Rect upperPanel;
     private Rect lowerPanel;
     private Rect resizer;
     private Rect menuBar;
@@ -3093,7 +3093,7 @@ public class ConnectionPoint
     private Texture2D infoIcon;
     private Texture2D infoIconSmall;&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnEnable()
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void OnEnable()
     {
         errorIcon = EditorGUIUtility.Load(&amp;quot;icons/console.erroricon.png&amp;quot;) as Texture2D;
         warningIcon = EditorGUIUtility.Load(&amp;quot;icons/console.warnicon.png&amp;quot;) as Texture2D;
@@ -3114,7 +3114,7 @@ public class ConnectionPoint
         boxBgSelected = EditorGUIUtility.Load(&amp;quot;builtin skins/darkskin/images/menuitemhover.png&amp;quot;) as Texture2D;
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void DrawResizer()
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void DrawResizer()
     {
         resizer = new Rect(0, (position.height * sizeRatio) - resizerHeight, position.width, resizerHeight * 2);
 
@@ -3160,7 +3160,7 @@ public class ConnectionPoint
 
 &lt;p&gt;Now we can use &lt;strong&gt;DrawBox()&lt;/strong&gt; method in &lt;strong&gt;DrawUpperPanel()&lt;/strong&gt; to actually display some content:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void DrawUpperPanel()
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void DrawUpperPanel()
     {
         upperPanel = new Rect(0, menuBarHeight, position.width, (position.height * sizeRatio) - menuBarHeight);
 
@@ -3190,7 +3190,7 @@ public class ConnectionPoint
 
 &lt;p&gt;Up next is the lower panel. All this panel does is to display a message, so we will just add a scroll view and a text area.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private Rect upperPanel;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private Rect upperPanel;
     private Rect lowerPanel;
     private Rect resizer;
     private Rect menuBar;
@@ -3226,7 +3226,7 @@ public class ConnectionPoint
     private Texture2D infoIcon;
     private Texture2D infoIconSmall;&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnEnable()
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void OnEnable()
     {
         errorIcon = EditorGUIUtility.Load(&amp;quot;icons/console.erroricon.png&amp;quot;) as Texture2D;
         warningIcon = EditorGUIUtility.Load(&amp;quot;icons/console.warnicon.png&amp;quot;) as Texture2D;
@@ -3251,7 +3251,7 @@ public class ConnectionPoint
         textAreaStyle.normal.background = EditorGUIUtility.Load(&amp;quot;builtin skins/darkskin/images/projectbrowsericonareabg.png&amp;quot;) as Texture2D;
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void DrawLowerPanel()
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void DrawLowerPanel()
     {
         lowerPanel = new Rect(0, (position.height * sizeRatio) + resizerHeight, position.width, (position.height * (1 - sizeRatio)) - resizerHeight);
 
@@ -3277,7 +3277,7 @@ public class ConnectionPoint
 
 &lt;p&gt;Yes, our window looks good, but it doesn’t do anything useful right now. Since this is a console window clone, I would like it to receive log messages from Unity’s own &lt;strong&gt;Debug&lt;/strong&gt; class and display them in a similar manner. A log contains some data, such as a log string, a stack trace and a type, hence we need a class for it. We will be keeping the instances of this class in a list and a reference to the selected log. When we modify the upper and lower panel code, our window will start behaving exactly like the console window.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;public class Log
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;public class Log
 {
     public bool isSelected;
     public string info;
@@ -3293,7 +3293,7 @@ public class ConnectionPoint
     }
 }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
@@ -3338,7 +3338,7 @@ public class ResizablePanels : EditorWindow
     private List&amp;lt;Log&amp;gt; logs;
     private Log selectedLog;&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnEnable()
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void OnEnable()
     {
         errorIcon = EditorGUIUtility.Load(&amp;quot;icons/console.erroricon.png&amp;quot;) as Texture2D;
         warningIcon = EditorGUIUtility.Load(&amp;quot;icons/console.warnicon.png&amp;quot;) as Texture2D;
@@ -3366,7 +3366,7 @@ public class ResizablePanels : EditorWindow
         selectedLog = null;
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void DrawUpperPanel()
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void DrawUpperPanel()
     {
         upperPanel = new Rect(0, menuBarHeight, position.width, (position.height * sizeRatio) - menuBarHeight);
 
@@ -3410,7 +3410,7 @@ public class ResizablePanels : EditorWindow
 
 &lt;p&gt;In order to receive logs from &lt;strong&gt;Debug.Log()&lt;/strong&gt; calls, we need to tap into Unity’s log message event. Generally, we can’t access parts of Unity API that are restricted to main thread but, fortunately, Unity exposes an application event called &lt;strong&gt;logMessageReceived&lt;/strong&gt;. We are going to subscribe to this event in &lt;strong&gt;OnEnable()&lt;/strong&gt; and in the subscriber method we will create a &lt;strong&gt;Log&lt;/strong&gt; object and add it the list of logs.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnEnable()
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void OnEnable()
     {
         errorIcon = EditorGUIUtility.Load(&amp;quot;icons/console.erroricon.png&amp;quot;) as Texture2D;
         warningIcon = EditorGUIUtility.Load(&amp;quot;icons/console.warnicon.png&amp;quot;) as Texture2D;
@@ -3450,7 +3450,7 @@ public class ResizablePanels : EditorWindow
         Application.logMessageReceived -= LogMessageReceived;
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void LogMessageReceived(string condition, string stackTrace, LogType type)
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;    private void LogMessageReceived(string condition, string stackTrace, LogType type)
     {
         Log l = new Log(false, condition, stackTrace, type);
         logs.Add(l);
@@ -3480,7 +3480,7 @@ public class ResizablePanels : EditorWindow
 
 &lt;p&gt;It doesn’t seem like a lot, but believe me, we have covered everything you need to know in order to build your own editor windows. In the next blog post, we will have a look at node-based editors and start creating them for ourselves. And as I promised, here is the script in full, below. Until next time.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers&quot;&gt;&lt;code&gt;using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
@@ -3739,7 +3739,7 @@ public class Log
         this.message = message;
         this.type = type;
     }
-}&lt;/code&gt;&lt;/pre&gt;</content><author><name>Oguz Konya</name></author><summary type="html">In our last post we created a Unity window and added two resizable panels. In this post, we will improve upon it and make it a clone of Unity’s console window. This post is going to be a little bit longer, so I will omit the previously written code, but the final version will still be available in full at the end.</summary></entry><entry><title type="html">Creating Editor Windows in Unity</title><link href="https://oguzkonya.github.io/creating-editor-windows-in-unity/" rel="alternate" type="text/html" title="Creating Editor Windows in Unity" /><published>2019-08-01T00:00:00+00:00</published><updated>2019-08-01T00:00:00+00:00</updated><id>https://oguzkonya.github.io/creating-editor-windows-in-unity</id><content type="html" xml:base="https://oguzkonya.github.io/creating-editor-windows-in-unity/">&lt;p&gt;For the last decade, Unity has been a great platform for developing games that provides a large number of tools to developers: rendering engine, physics engine, animation systems, audio mixers etc. However, when creating levels or generating in-game data, Unity falls short, because each game is unique and requires different kinds of tools. Thankfully, Unity has an API available to us developers to create our own editor windows, custom drawers and inspector panels. In this series of blog posts, I am going to show you how I develop custom editors in Unity for designers and artists. We will start by creating an editor window, put two panels in it, and then make it resizable. In the &lt;a href=&quot;/creating-clone-unitys-console-window/&quot;&gt;next&lt;/a&gt; post, we will turn that window into a clone of Unity’s own Console window.&lt;/p&gt;
+}&lt;/code&gt;&lt;/pre&gt;</content><author><name>Oguz Konya</name></author><summary type="html">In our last post we created a Unity window and added two resizable panels. In this post, we will improve upon it and make it a clone of Unity’s console window. This post is going to be a little bit longer, so I will omit the previously written code, but the final version will still be available in full at the end.</summary></entry><entry><title type="html">Creating Editor Windows in Unity</title><link href="http://localhost:4000/creating-editor-windows-in-unity/" rel="alternate" type="text/html" title="Creating Editor Windows in Unity" /><published>2019-08-01T00:00:00+00:00</published><updated>2019-08-01T00:00:00+00:00</updated><id>http://localhost:4000/creating-editor-windows-in-unity</id><content type="html" xml:base="http://localhost:4000/creating-editor-windows-in-unity/">&lt;p&gt;For the last decade, Unity has been a great platform for developing games that provides a large number of tools to developers: rendering engine, physics engine, animation systems, audio mixers etc. However, when creating levels or generating in-game data, Unity falls short, because each game is unique and requires different kinds of tools. Thankfully, Unity has an API available to us developers to create our own editor windows, custom drawers and inspector panels. In this series of blog posts, I am going to show you how I develop custom editors in Unity for designers and artists. We will start by creating an editor window, put two panels in it, and then make it resizable. In the &lt;a href=&quot;/creating-clone-unitys-console-window/&quot;&gt;next&lt;/a&gt; post, we will turn that window into a clone of Unity’s own Console window.&lt;/p&gt;
 
 &lt;h2 id=&quot;creating-an-editor-window&quot;&gt;Creating an Editor Window&lt;/h2&gt;
 
@@ -3747,7 +3747,7 @@ public class Log
 
 &lt;p&gt;Since this is going to be an editor window, the class should derive from &lt;code class=&quot;highlighter-rouge&quot;&gt;EditorWindow&lt;/code&gt; instead of &lt;code class=&quot;highlighter-rouge&quot;&gt;MonoBehaviour&lt;/code&gt;. The &lt;code class=&quot;highlighter-rouge&quot;&gt;EditorWindow&lt;/code&gt; class resides in &lt;code class=&quot;highlighter-rouge&quot;&gt;UnityEditor&lt;/code&gt; namespace, so we will need to add it as well.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers&quot; data-filename=&quot;ResizablePanels.cs&quot;&gt;&lt;code&gt;using UnityEngine;
 using UnityEditor;
 
 public class ResizablePanels : EditorWindow
@@ -3759,7 +3759,7 @@ public class ResizablePanels : EditorWindow
 
 &lt;p&gt;However, a static method on its own will not be enough, we also need to add a button, or something like it, to let our users open the window within Unity. Thankfully there is already an attribute called &lt;code class=&quot;highlighter-rouge&quot;&gt;MenuItem&lt;/code&gt; which adds a menu item to Unity’s menu bar and runs the method it is applied to. So, the following code will create the most basic editor window you can create in Unity.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers&quot; data-line=&quot;6-11&quot;&gt;&lt;code&gt;using UnityEngine;
 using UnityEditor;
 
 public class ResizablePanels : EditorWindow
@@ -3792,7 +3792,7 @@ public class ResizablePanels : EditorWindow
 
 &lt;p&gt;In order to draw in this window, we will use the &lt;code class=&quot;highlighter-rouge&quot;&gt;OnGUI()&lt;/code&gt; method (yes, Unity’s own editor system still uses the old GUI system and it probably won’t change for a long time). But first, we need two rectangles to define our panels. I will also draw these panels in their own methods, so while we are at it, we should add those methods, too.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers&quot; data-line=&quot;6,7,16-28&quot;&gt;&lt;code&gt;using UnityEngine;
 using UnityEditor;
 
 public class ResizablePanels : EditorWindow
@@ -3824,23 +3824,45 @@ public class ResizablePanels : EditorWindow
 
 &lt;p&gt;Our editor window is starting to shape up. All we need to do now is to draw the panels and check if they work correctly. &lt;code class=&quot;highlighter-rouge&quot;&gt;GUILayout.BeginArea(Rect rect)&lt;/code&gt; would create a rectangle area to draw in and &lt;code class=&quot;highlighter-rouge&quot;&gt;GUILayout.EndArea()&lt;/code&gt; marks the end. These areas will define our panels. I am also going to add a label in both areas so that we can see how they look. Let’s fill in &lt;code class=&quot;highlighter-rouge&quot;&gt;DrawUpperPanel()&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;DrawLowerPanel()&lt;/code&gt;:&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void DrawUpperPanel()
+&lt;pre class=&quot;language-csharp  line-numbers&quot; data-line=&quot;24-28,33-37&quot;&gt;&lt;code&gt;using UnityEngine;
+using UnityEditor;
+
+public class ResizablePanels : EditorWindow
+{
+    private Rect upperPanel;
+    private Rect lowerPanel;
+
+    [MenuItem(&amp;quot;Window/Resizable Panels&amp;quot;)]
+    private static void OpenWindow()
+    {
+        ResizablePanels window = GetWindow&amp;lt;ResizablePanels&amp;gt;();
+        window.titleContent = new GUIContent(&amp;quot;Resizable Panels&amp;quot;);
+    }
+
+    private void OnGUI()
+    {
+        DrawUpperPanel();
+        DrawLowerPanel();
+    }
+
+    private void DrawUpperPanel()
     {
         upperPanel = new Rect(0, 0, position.width, position.height * 0.5f);
-    
+
         GUILayout.BeginArea(upperPanel);
         GUILayout.Label(&amp;quot;Upper Panel&amp;quot;);
         GUILayout.EndArea();
     }
-    
+
     private void DrawLowerPanel()
     {
         lowerPanel = new Rect(0, position.height * 0.5f, position.width, position.height * 0.5f);
-    
+
         GUILayout.BeginArea(lowerPanel);
         GUILayout.Label(&amp;quot;Lower Panel&amp;quot;);
         GUILayout.EndArea();
-    }&lt;/code&gt;&lt;/pre&gt;
+    }
+}&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Well, they seem to be working:&lt;/p&gt;
 
@@ -3853,25 +3875,47 @@ public class ResizablePanels : EditorWindow
 
 &lt;p&gt;However, those two panels are set to cover half of the window each, but if we want them to be resizable, they need to have variable heights. So, I am going to add a size ratio variable; this way, when one panel covers a certain amount of the window, the other can cover the remaining part.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private float sizeRatio = 0.5f;
+&lt;pre class=&quot;language-csharp  line-numbers&quot; data-line=&quot;9,26,35&quot;&gt;&lt;code&gt;using UnityEngine;
+using UnityEditor;
+
+public class ResizablePanels : EditorWindow
+{
+    private Rect upperPanel;
+    private Rect lowerPanel;
+
+    private float sizeRatio = 0.5f;
+
+    [MenuItem(&amp;quot;Window/Resizable Panels&amp;quot;)]
+    private static void OpenWindow()
+    {
+        ResizablePanels window = GetWindow&amp;lt;ResizablePanels&amp;gt;();
+        window.titleContent = new GUIContent(&amp;quot;Resizable Panels&amp;quot;);
+    }
+
+    private void OnGUI()
+    {
+        DrawUpperPanel();
+        DrawLowerPanel();
+    }
 
     private void DrawUpperPanel()
     {
         upperPanel = new Rect(0, 0, position.width, position.height * sizeRatio);
-    
+
         GUILayout.BeginArea(upperPanel);
         GUILayout.Label(&amp;quot;Upper Panel&amp;quot;);
         GUILayout.EndArea();
     }
-    
+
     private void DrawLowerPanel()
     {
         lowerPanel = new Rect(0, (position.height * sizeRatio), position.width, position.height * (1 - sizeRatio));
-    
+
         GUILayout.BeginArea(lowerPanel);
         GUILayout.Label(&amp;quot;Lower Panel&amp;quot;);
         GUILayout.EndArea();
-    }&lt;/code&gt;&lt;/pre&gt;
+    }
+}&lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id=&quot;resizing-panels&quot;&gt;Resizing Panels&lt;/h2&gt;
 
@@ -3881,32 +3925,68 @@ public class ResizablePanels : EditorWindow
 
 &lt;p&gt;There is one more thing we need to show the user: where the resizing area begins. This is going to look like magic, but I assure you, it is not: we will use one of Unity’s own icons and stretch it and place it so that it looks like a line between upper and lower panels.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private bool isResizing;
-    
+&lt;pre class=&quot;language-csharp  line-numbers&quot; data-line=&quot;11,13,22-26,32,53-61&quot;&gt;&lt;code&gt;using UnityEngine;
+using UnityEditor;
+
+public class ResizablePanels : EditorWindow
+{
+    private Rect upperPanel;
+    private Rect lowerPanel;
+    private Rect resizer;
+
+    private float sizeRatio = 0.5f;
+    private bool isResizing;
+
     private GUIStyle resizerStyle;
-    
+
+    [MenuItem(&amp;quot;Window/Resizable Panels&amp;quot;)]
+    private static void OpenWindow()
+    {
+        ResizablePanels window = GetWindow&amp;lt;ResizablePanels&amp;gt;();
+        window.titleContent = new GUIContent(&amp;quot;Resizable Panels&amp;quot;);
+    }
+
     private void OnEnable()
     {
         resizerStyle = new GUIStyle();
         resizerStyle.normal.background = EditorGUIUtility.Load(&amp;quot;icons/d_AvatarBlendBackground.png&amp;quot;) as Texture2D;
     }
-    
+
     private void OnGUI()
     {
         DrawUpperPanel();
         DrawLowerPanel();
         DrawResizer();
     }
-    
+
+    private void DrawUpperPanel()
+    {
+        upperPanel = new Rect(0, 0, position.width, position.height * sizeRatio);
+
+        GUILayout.BeginArea(upperPanel);
+        GUILayout.Label(&amp;quot;Upper Panel&amp;quot;);
+        GUILayout.EndArea();
+    }
+
+    private void DrawLowerPanel()
+    {
+        lowerPanel = new Rect(0, (position.height * sizeRatio) + 5, position.width, position.height * (1 - sizeRatio) - 5);
+
+        GUILayout.BeginArea(lowerPanel);
+        GUILayout.Label(&amp;quot;Lower Panel&amp;quot;);
+        GUILayout.EndArea();
+    }
+
     private void DrawResizer()
     {
         resizer = new Rect(0, (position.height * sizeRatio) - 5f, position.width, 10f);
-    
+
         GUILayout.BeginArea(new Rect(resizer.position + (Vector2.up * 5f), new Vector2(position.width, 2)), resizerStyle);
         GUILayout.EndArea();
-    
+
         EditorGUIUtility.AddCursorRect(resizer, MouseCursor.ResizeVertical);
-    }&lt;/code&gt;&lt;/pre&gt;
+    }
+}&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Almost finished:&lt;/p&gt;
 
@@ -3919,15 +3999,70 @@ public class ResizablePanels : EditorWindow
 
 &lt;p&gt;And now, we will finalize it by adding the actual interaction. We will process the incoming events and if the event is a &lt;code class=&quot;highlighter-rouge&quot;&gt;mouse down&lt;/code&gt; event and it is in the resizing area, we will start resizing.&lt;/p&gt;
 
-&lt;pre class=&quot; language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnGUI()
+&lt;pre class=&quot;language-csharp  line-numbers&quot; data-line=&quot;34,36,67-93&quot;&gt;&lt;code&gt;using UnityEngine;
+using UnityEditor;
+
+public class ResizablePanels : EditorWindow
+{
+    private Rect upperPanel;
+    private Rect lowerPanel;
+    private Rect resizer;
+
+    private float sizeRatio = 0.5f;
+    private bool isResizing;
+
+    private GUIStyle resizerStyle;
+
+    [MenuItem(&amp;quot;Window/Resizable Panels&amp;quot;)]
+    private static void OpenWindow()
+    {
+        ResizablePanels window = GetWindow&amp;lt;ResizablePanels&amp;gt;();
+        window.titleContent = new GUIContent(&amp;quot;Resizable Panels&amp;quot;);
+    }
+
+    private void OnEnable()
+    {
+        resizerStyle = new GUIStyle();
+        resizerStyle.normal.background = EditorGUIUtility.Load(&amp;quot;icons/d_AvatarBlendBackground.png&amp;quot;) as Texture2D;
+    }
+
+    private void OnGUI()
     {
         DrawUpperPanel();
         DrawLowerPanel();
         DrawResizer();
-    
+
         ProcessEvents(Event.current);
-    
+
         if (GUI.changed) Repaint();
+    }
+
+    private void DrawUpperPanel()
+    {
+        upperPanel = new Rect(0, 0, position.width, position.height * sizeRatio);
+
+        GUILayout.BeginArea(upperPanel);
+        GUILayout.Label(&amp;quot;Upper Panel&amp;quot;);
+        GUILayout.EndArea();
+    }
+
+    private void DrawLowerPanel()
+    {
+        lowerPanel = new Rect(0, (position.height * sizeRatio) + 5, position.width, position.height * (1 - sizeRatio) - 5);
+
+        GUILayout.BeginArea(lowerPanel);
+        GUILayout.Label(&amp;quot;Lower Panel&amp;quot;);
+        GUILayout.EndArea();
+    }
+
+    private void DrawResizer()
+    {
+        resizer = new Rect(0, (position.height * sizeRatio) - 5f, position.width, 10f);
+
+        GUILayout.BeginArea(new Rect(resizer.position + (Vector2.up * 5f), new Vector2(position.width, 2)), resizerStyle);
+        GUILayout.EndArea();
+
+        EditorGUIUtility.AddCursorRect(resizer, MouseCursor.ResizeVertical);
     }
 
     private void ProcessEvents(Event e)
@@ -3935,20 +4070,20 @@ public class ResizablePanels : EditorWindow
         switch (e.type)
         {
             case EventType.MouseDown:
-                if (e.button == 0 &amp;amp;amp;&amp;amp;amp; resizer.Contains(e.mousePosition))
+                if (e.button == 0 &amp;amp;&amp;amp; resizer.Contains(e.mousePosition))
                 {
                     isResizing = true;
                 }
                 break;
-    
+
             case EventType.MouseUp:
                 isResizing = false;
                 break;
         }
-    
+
         Resize(e);
     }
-    
+
     private void Resize(Event e)
     {
         if (isResizing)
@@ -3956,7 +4091,8 @@ public class ResizablePanels : EditorWindow
             sizeRatio = e.mousePosition.y / position.height;
             Repaint();
         }
-    }&lt;/code&gt;&lt;/pre&gt;
+    }
+}&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;And here is the finished version:&lt;/p&gt;
 

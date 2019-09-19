@@ -45,8 +45,6 @@ pre[class*="language-"]>code {
 	position: relative;
 	border-left: 2px solid #2a7ae2;
 	box-shadow: -1px 0px 0px 0px #2a7ae2, 0px 0px 0px 1px #dfdfdf;
-	background-color: #fdfdfd;
-	/* background-image: linear-gradient(transparent 50%, rgba(69, 142, 209, 0.04) 50%); */
 	background-size: 3em 3em;
 	background-origin: content-box;
 	background-attachment: local;
@@ -215,12 +213,28 @@ pre[data-line] code {
 	padding-left: 4em;
 }
 pre .line-highlight {
-	margin-top: 0;
+	margin-top: 0.5em;
+}
+
+pre[data-filename] > div.line-highlight {
+	margin-top: 2.5em;
 }
 
 pre[data-line] {
 	position: relative;
 	padding: 1em 0 1em 3em;
+}
+
+pre[data-filename]::before {
+	content: attr(data-filename);
+	position: absolute;
+	top: 0.25em;
+	right: 0;
+	width: 100%;
+	text-indent: 1em;
+	color: #999;
+	border-bottom: solid 1px #dfdfdf;
+	line-height: 2em;
 }
 
 .line-highlight {
@@ -229,12 +243,8 @@ pre[data-line] {
 	right: 0;
 	padding: inherit 0;
 	margin-top: 1em; /* Same as .prism’s padding-top */
-
-	background: hsla(24, 20%, 50%,.08);
-	background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
-
+	background: hsla(201.6, 100%, 50%, 0.08);
 	pointer-events: none;
-
 	line-height: inherit;
 	white-space: pre;
 }
@@ -279,6 +289,14 @@ pre[class*="language-"].line-numbers > code {
 	white-space: inherit;
 }
 
+pre[data-filename].line-numbers > code > span.line-numbers-rows {
+	margin-top: 2.5em !important;
+}
+
+pre[data-filename].line-numbers > code {
+	padding-top: 2.5em !important;
+}
+
 .line-numbers .line-numbers-rows {
 	position: absolute;
 	pointer-events: none;
@@ -287,7 +305,7 @@ pre[class*="language-"].line-numbers > code {
 	left: -3.8em;
 	width: 3em; /* works for line-numbers below 1000 lines */
 	letter-spacing: -1px;
-	border-right: 1px solid #999;
+	border-right: 1px solid #dfdfdf;
 
 	-webkit-user-select: none;
 	-moz-user-select: none;
