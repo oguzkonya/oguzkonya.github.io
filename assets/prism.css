@@ -216,10 +216,6 @@ pre .line-highlight {
 	margin-top: 0.5em;
 }
 
-pre[data-filename] > div.line-highlight {
-	margin-top: 2.5em;
-}
-
 pre[data-line] {
 	position: relative;
 	padding: 1em 0 1em 3em;
@@ -228,13 +224,16 @@ pre[data-line] {
 pre[data-filename]::before {
 	content: attr(data-filename);
 	position: absolute;
-	top: 0.25em;
+	top: 0;
 	right: 0;
-	width: 100%;
+	padding-right: 1em;
 	text-indent: 1em;
 	color: #999;
 	border-bottom: solid 1px #dfdfdf;
+	border-left: solid 1px #dfdfdf;
+	border-bottom-left-radius: 5px;
 	line-height: 2em;
+	height: 2em;
 }
 
 .line-highlight {
@@ -287,14 +286,6 @@ pre[class*="language-"].line-numbers {
 pre[class*="language-"].line-numbers > code {
 	position: relative;
 	white-space: inherit;
-}
-
-pre[data-filename].line-numbers > code > span.line-numbers-rows {
-	margin-top: 2.5em !important;
-}
-
-pre[data-filename].line-numbers > code {
-	padding-top: 2.5em !important;
 }
 
 .line-numbers .line-numbers-rows {

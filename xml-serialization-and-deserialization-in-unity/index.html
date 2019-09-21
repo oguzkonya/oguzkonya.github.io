@@ -16,13 +16,13 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Game Developer" />
 <meta property="og:description" content="Game Developer" />
-<link rel="canonical" href="http://localhost:4000/xml-serialization-and-deserialization-in-unity/" />
-<meta property="og:url" content="http://localhost:4000/xml-serialization-and-deserialization-in-unity/" />
+<link rel="canonical" href="https://oguzkonya.github.io/xml-serialization-and-deserialization-in-unity/" />
+<meta property="og:url" content="https://oguzkonya.github.io/xml-serialization-and-deserialization-in-unity/" />
 <meta property="og:site_name" content="oguzkonya" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2019-08-22T00:00:00+00:00" />
 <script type="application/ld+json">
-{"headline":"XML Serialization in Unity","dateModified":"2019-08-22T00:00:00+00:00","datePublished":"2019-08-22T00:00:00+00:00","url":"http://localhost:4000/xml-serialization-and-deserialization-in-unity/","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/xml-serialization-and-deserialization-in-unity/"},"author":{"@type":"Person","name":"Oguz Konya"},"description":"Game Developer","@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"headline":"XML Serialization in Unity","dateModified":"2019-08-22T00:00:00+00:00","datePublished":"2019-08-22T00:00:00+00:00","url":"https://oguzkonya.github.io/xml-serialization-and-deserialization-in-unity/","mainEntityOfPage":{"@type":"WebPage","@id":"https://oguzkonya.github.io/xml-serialization-and-deserialization-in-unity/"},"author":{"@type":"Person","name":"Oguz Konya"},"description":"Game Developer","@type":"BlogPosting","@context":"https://schema.org"}</script>
 </head>
 <body data-instant-allow-query-string data-instant-allow-external-links>
 <header class="site-header">
@@ -58,7 +58,7 @@
  <div class="post-content" itemprop="articleBody">
 <p>Unity stores contents of a scene in a custom YAML file called a <strong>Unity scene file</strong>. While this is convenient for levels which are designed in Unity’s scene editor, it is not very useful for levels which are built at runtime. Moreover, it is not possible to store game related data in scene files, such as properties of weapons, cars, NPCs, etc. (actually, it is possible, but not feasible). Even though there are a few solutions for that kind of data storage in Unity, such as JSON, or SQL, the easiest of them to implement is XML. In this post, I will show you how to store your game data in XML files and read them at runtime.</p>
 <p>To be able to save data in XML files, first we need to be able to convert objects into XML format and then convert XML format back into objects. This process is called <abbr title="Converting objects into a form (such as JSON, or XML) that can be easily transported.">serialization</abbr> and <abbr title="Creating objects from transport formats such as JSON, or XML.">deserialization</abbr>. C# already has great tools for XML <abbr title="Converting objects into a form (such as JSON, or XML) that can be easily transported.">serialization</abbr>, and we will build upon them to create XML serializer we need.</p>
-<p>First, let’s create a sample class to start serializing:</p><pre class="language-csharp  line-numbers"><code>public class Hero
+<p>First, let’s create a sample class to start serializing:</p><pre class="language-csharp  line-numbers "><code>public class Hero
 {
     public string name;
 
@@ -74,13 +74,13 @@
  <li>Class to be serialized should have a parameterless constructor.</li>
 </ol>
 <p>In our case, <code class="highlighter-rouge">Hero</code> class already has nothing but public fields and since there isn’t any kind of constructor, it implicitly has a parameterless default constructor.</p>
-<p>Let’s say we want this class to output an XML file just like the following:</p><pre class="language-xml  line-numbers"><code>&lt;Hero&gt;
+<p>Let’s say we want this class to output an XML file just like the following:</p><pre class="language-xml  line-numbers "><code>&lt;Hero&gt;
     &lt;name&gt;&lt;/name&gt;
     &lt;isBoss&gt;&lt;/isBoss&gt;
     &lt;hitPoints&gt;&lt;/hitPoints&gt;
     &lt;baseDamage&gt;&lt;/baseDamage&gt;
 &lt;/Hero&gt;</code></pre>
-<p>Generally, producing an XML file in a certain format requires some modification to target class. But, in our case we are not looking for a specific format. All our fields we want to serialize are public and there is a default constructor, therefore, we can start creating the XML file:</p><pre class="language-csharp  line-numbers"><code>using UnityEngine;
+<p>Generally, producing an XML file in a certain format requires some modification to target class. But, in our case we are not looking for a specific format. All our fields we want to serialize are public and there is a default constructor, therefore, we can start creating the XML file:</p><pre class="language-csharp  line-numbers "><code>using UnityEngine;
 using System.Xml.Serialization;
 using System.IO;
 
@@ -106,14 +106,14 @@ public class XMLSerializer : MonoBehaviour
 <p>On <strong>Line 16</strong>, we create a <code class="highlighter-rouge">StreamWriter</code> instance which would create the XML file itself and do the actual writing. <code class="highlighter-rouge">StreamWriter</code> is also a C# class and it can be found under <code class="highlighter-rouge">System.IO</code></p>
 <p>On <strong>Line 17</strong>, we tell the <code class="highlighter-rouge">XmlSerializer</code> to serialize knight (our <code class="highlighter-rouge">Hero</code>), and send it to a stream.</p>
 <p>And finally, on <strong>Line 18</strong>, we tell writer to close streaming (i.e stop reading input and create the file).</p>
-<p>When you drag&amp;drop this code on an empty game object in Unity and run it, you will see that a file named <code class="highlighter-rouge">hero.xml</code> is created in your Unity project folder and its contents hold Hero data:</p><pre class="language-xml  line-numbers"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+<p>When you drag&amp;drop this code on an empty game object in Unity and run it, you will see that a file named <code class="highlighter-rouge">hero.xml</code> is created in your Unity project folder and its contents hold Hero data:</p><pre class="language-xml  line-numbers "><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
 &lt;Hero xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
     &lt;name&gt;Knight of Solamnia&lt;/name&gt;
     &lt;isBoss&gt;true&lt;/isBoss&gt;
     &lt;hitPoints&gt;100&lt;/hitPoints&gt;
     &lt;baseDamage&gt;50&lt;/baseDamage&gt;
 &lt;/Hero&gt;</code></pre>
-<p>As you can see, creating an XML file required no more than a few lines of code. But, what if we want to have different tag names in the XML file? Or, to use XML <abbr title="A method to associate declarative information with the code">attributes</abbr> instead of XML elements to store data? Or, to use arrays in our class? To achieve these, we need to modify our base class by adding some XML <abbr title="A method to associate declarative information with the code">attributes</abbr> to our fields. But first, we should change something in our code. I like my code well organized and I favor OOP’s single responsibility principle, so I will move XML <abbr title="Converting objects into a form (such as JSON, or XML) that can be easily transported.">serialization</abbr> part into its own class. This way, we will be able to serialize any type of object with a single line of code:</p><pre class="language-csharp  line-numbers"><code>using System.IO;
+<p>As you can see, creating an XML file required no more than a few lines of code. But, what if we want to have different tag names in the XML file? Or, to use XML <abbr title="A method to associate declarative information with the code">attributes</abbr> instead of XML elements to store data? Or, to use arrays in our class? To achieve these, we need to modify our base class by adding some XML <abbr title="A method to associate declarative information with the code">attributes</abbr> to our fields. But first, we should change something in our code. I like my code well organized and I favor OOP’s single responsibility principle, so I will move XML <abbr title="Converting objects into a form (such as JSON, or XML) that can be easily transported.">serialization</abbr> part into its own class. This way, we will be able to serialize any type of object with a single line of code:</p><pre class="language-csharp  line-numbers "><code>using System.IO;
 using System.Xml.Serialization;
 
 public class XMLOp
@@ -126,7 +126,7 @@ public class XMLOp
         writer.Close();
     }
 }</code></pre>
-<p>Now our <code class="highlighter-rouge">XMLSerializer</code> looks like this:</p><pre class="language-csharp  line-numbers"><code>using UnityEngine;
+<p>Now our <code class="highlighter-rouge">XMLSerializer</code> looks like this:</p><pre class="language-csharp  line-numbers "><code>using UnityEngine;
 
 public class XMLSerializer : MonoBehaviour
 {
@@ -151,10 +151,10 @@ public class XMLSerializer : MonoBehaviour
  <li>[XmlArray]</li>
  <li>[XmlArrayItem]</li>
 </ul>
-<p>Usage of an XML attribute is very simple: you type the necessary attribute above your field or class just like the following:</p><pre class="language-csharp  line-numbers"><code>[XmlElement(&quot;Name&quot;)]
+<p>Usage of an XML attribute is very simple: you type the necessary attribute above your field or class just like the following:</p><pre class="language-csharp  line-numbers "><code>[XmlElement(&quot;Name&quot;)]
 public string Name;</code></pre>
 <h3 id="xmlelementstring">[XmlElement(String)]</h3>
-<p>This attribute indicates that a field will be represented as an XML element. Fields of an object is serialized as XMLElement as default, so this attribute is necessary only to change the name of a field (or force an array to act like an element but we will get to that later). Let’s modify our script file and see what kind of XML file it produces:</p><pre class="language-csharp  line-numbers"><code>using System.Xml.Serialization;
+<p>This attribute indicates that a field will be represented as an XML element. Fields of an object is serialized as XMLElement as default, so this attribute is necessary only to change the name of a field (or force an array to act like an element but we will get to that later). Let’s modify our script file and see what kind of XML file it produces:</p><pre class="language-csharp  line-numbers "><code>using System.Xml.Serialization;
 
 public class Hero
 {
@@ -167,7 +167,7 @@ public class Hero
 
     public float baseDamage;
 }</code></pre>
-<p>And the output becomes:</p><pre class="language-xml  line-numbers"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+<p>And the output becomes:</p><pre class="language-xml  line-numbers "><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
 &lt;Hero xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
     &lt;n&gt;Knight of Solamnia&lt;/n&gt;
     &lt;hitPoints&gt;100&lt;/hitPoints&gt;
@@ -176,7 +176,7 @@ public class Hero
 &lt;/Hero&gt;</code></pre>
 <p><strong>NOTE</strong>: XML <abbr title="A method to associate declarative information with the code">attributes</abbr> have more constructors with different signatures than this tutorial covers. For example, <code class="highlighter-rouge">XmlElement</code> also has <code class="highlighter-rouge">XmlElement(String, Type)</code> and <code class="highlighter-rouge">XmlElement(Type)</code>. However, since this tutorial is planned to be an introductory one, I am not going to cover them here.</p>
 <h3 id="xmlattributestring">[XmlAttribute(String)]</h3>
-<p>This attribute indicates that a field will be represented as an XML attribute.</p><pre class="language-csharp  line-numbers"><code>using System.Xml.Serialization;
+<p>This attribute indicates that a field will be represented as an XML attribute.</p><pre class="language-csharp  line-numbers "><code>using System.Xml.Serialization;
 
 public class Hero
 {
@@ -190,14 +190,14 @@ public class Hero
 
     public float baseDamage;
 }</code></pre>
-<p>And the output becomes:</p><pre class="language-xml  line-numbers"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+<p>And the output becomes:</p><pre class="language-xml  line-numbers "><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
 &lt;Hero xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; boss=&quot;true&quot;&gt;
     &lt;n&gt;Knight of Solamnia&lt;/n&gt;
     &lt;hitPoints&gt;100&lt;/hitPoints&gt;
     &lt;baseDamage&gt;50&lt;/baseDamage&gt;
 &lt;/Hero&gt;</code></pre>
 <h3 id="xmlignore">[XmlIgnore]</h3>
-<p>As I have mentioned before, a field must be public in order to be serialized. This also means that all the public fields will be serialized by the XML serializer. But sometimes, we might need a field to be <strong>not</strong> serialized without making it private. This is where <code class="highlighter-rouge">[XmlIgnore]</code> comes into play. It indicates that a field will not be represented in the XML file at all.</p><pre class="language-csharp  line-numbers"><code>using System.Xml.Serialization;
+<p>As I have mentioned before, a field must be public in order to be serialized. This also means that all the public fields will be serialized by the XML serializer. But sometimes, we might need a field to be <strong>not</strong> serialized without making it private. This is where <code class="highlighter-rouge">[XmlIgnore]</code> comes into play. It indicates that a field will not be represented in the XML file at all.</p><pre class="language-csharp  line-numbers "><code>using System.Xml.Serialization;
 
 public class Hero
 {
@@ -212,13 +212,13 @@ public class Hero
 
     public float baseDamage;
 }</code></pre>
-<p>And the output becomes:</p><pre class="language-xml  line-numbers"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+<p>And the output becomes:</p><pre class="language-xml  line-numbers "><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
 &lt;Hero xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; boss=&quot;true&quot;&gt;
     &lt;n&gt;Knight of Solamnia&lt;/n&gt;
     &lt;baseDamage&gt;50&lt;/baseDamage&gt;
 &lt;/Hero&gt;</code></pre>
 <h3 id="xmlrootstring">[XmlRoot(String)]</h3>
-<p>The object that is serialized by the XML serializer becomes the root of the XML file. As a result, object’s class name becomes the name of the root tag. Sometimes, we want to use some other name in order to provide clarification. This attribute indicates that the name of the root tag will be the provided string. It should be noted that <code class="highlighter-rouge">[XmlRoot]</code> attribute can only be used on classes, structs, enumerations or interfaces unlike the previous <abbr title="A method to associate declarative information with the code">attributes</abbr>.</p><pre class="language-csharp  line-numbers"><code>using System.Xml.Serialization;
+<p>The object that is serialized by the XML serializer becomes the root of the XML file. As a result, object’s class name becomes the name of the root tag. Sometimes, we want to use some other name in order to provide clarification. This attribute indicates that the name of the root tag will be the provided string. It should be noted that <code class="highlighter-rouge">[XmlRoot]</code> attribute can only be used on classes, structs, enumerations or interfaces unlike the previous <abbr title="A method to associate declarative information with the code">attributes</abbr>.</p><pre class="language-csharp  line-numbers "><code>using System.Xml.Serialization;
 
 [XmlRoot(&quot;Knight&quot;)]
 public class Hero
@@ -234,13 +234,13 @@ public class Hero
 
     public float baseDamage;
 }</code></pre>
-<p>And the output becomes:</p><pre class="language-xml  line-numbers"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+<p>And the output becomes:</p><pre class="language-xml  line-numbers "><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
 &lt;Knight xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; boss=&quot;true&quot;&gt;
     &lt;n&gt;Knight of Solamnia&lt;/n&gt;
     &lt;baseDamage&gt;50&lt;/baseDamage&gt;
 &lt;/Knight&gt;</code></pre>
 <h3 id="xmlarraystring-and-xmlarrayitemstring">[XmlArray(String)] and [XmlArrayItem(String)]</h3>
-<p>But, how about arrays? What if our Hero has a int array which includes combo rewards?</p><pre class="language-csharp  line-numbers"><code>using System.Xml.Serialization;
+<p>But, how about arrays? What if our Hero has a int array which includes combo rewards?</p><pre class="language-csharp  line-numbers "><code>using System.Xml.Serialization;
 
 public class Hero
 {
@@ -256,7 +256,7 @@ public class Hero
     public float baseDamage;
 
     public int[] comboRewards;
-}</code></pre><pre class="language-csharp  line-numbers"><code>using UnityEngine;
+}</code></pre><pre class="language-csharp  line-numbers "><code>using UnityEngine;
 
 public class XMLSerializer : MonoBehaviour
 {
@@ -272,7 +272,7 @@ public class XMLSerializer : MonoBehaviour
         XMLOp.Serialize(knight, &quot;hero.xml&quot;);
     }
 }</code></pre>
-<p>Output of this code would be:</p><pre class="language-csharp  line-numbers"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+<p>Output of this code would be:</p><pre class="language-csharp  line-numbers "><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
 &lt;Knight xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; boss=&quot;true&quot;&gt;
     &lt;n&gt;Knight of Solamnia&lt;/n&gt;
     &lt;baseDamage&gt;50&lt;/baseDamage&gt;
@@ -282,7 +282,7 @@ public class XMLSerializer : MonoBehaviour
         &lt;int&gt;5&lt;/int&gt;
     &lt;/comboRewards&gt;
 &lt;/Knight&gt;</code></pre>
-<p><code class="highlighter-rouge">&lt;comboRewards&gt;</code> tag is OK, but those <code class="highlighter-rouge">&lt;int&gt;</code> tags don’t look nice, do they? Fortunately, there are two XML <abbr title="A method to associate declarative information with the code">attributes</abbr> which modify the XML output of an array: <code class="highlighter-rouge">[XmlArray(string)]</code> which modifies the name of the array, and <code class="highlighter-rouge">[XmlArrayItem(string)]</code> which, as you might have guessed, modifies the name of the array items.</p><pre class="language-csharp  line-numbers"><code>using System.Xml.Serialization;
+<p><code class="highlighter-rouge">&lt;comboRewards&gt;</code> tag is OK, but those <code class="highlighter-rouge">&lt;int&gt;</code> tags don’t look nice, do they? Fortunately, there are two XML <abbr title="A method to associate declarative information with the code">attributes</abbr> which modify the XML output of an array: <code class="highlighter-rouge">[XmlArray(string)]</code> which modifies the name of the array, and <code class="highlighter-rouge">[XmlArrayItem(string)]</code> which, as you might have guessed, modifies the name of the array items.</p><pre class="language-csharp  line-numbers "><code>using System.Xml.Serialization;
 
 public class Hero
 {
@@ -300,7 +300,7 @@ public class Hero
     [XmlArray(&quot;rewards&quot;), XmlArrayItem(&quot;reward&quot;)]
     public int[] comboRewards;
 }</code></pre>
-<p>And this would produce a better output:</p><pre class="language-xml  line-numbers"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+<p>And this would produce a better output:</p><pre class="language-xml  line-numbers "><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
 &lt;Knight xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; boss=&quot;true&quot;&gt;
     &lt;n&gt;Knight of Solamnia&lt;/n&gt;
     &lt;baseDamage&gt;50&lt;/baseDamage&gt;
@@ -311,7 +311,7 @@ public class Hero
     &lt;/rewards&gt;
 &lt;/Knight&gt;</code></pre>
 <h2 id="xml-deserialization">XML Deserialization</h2>
-<p>We have successfully saved our game data in an XML file, but currently it is pretty useless, because we can’t take that data back into our game. In order to do that, we need to read the XML file and create objects (namely, deserialize it). Deserialization is simpler than <abbr title="Converting objects into a form (such as JSON, or XML) that can be easily transported.">serialization</abbr>, because we already defined the structure in our class. All we need to do is just add a few lines of code to our <code class="highlighter-rouge">XMLOp.cs</code>:</p><pre class="language-csharp  line-numbers"><code>using System.IO;
+<p>We have successfully saved our game data in an XML file, but currently it is pretty useless, because we can’t take that data back into our game. In order to do that, we need to read the XML file and create objects (namely, deserialize it). Deserialization is simpler than <abbr title="Converting objects into a form (such as JSON, or XML) that can be easily transported.">serialization</abbr>, because we already defined the structure in our class. All we need to do is just add a few lines of code to our <code class="highlighter-rouge">XMLOp.cs</code>:</p><pre class="language-csharp  line-numbers "><code>using System.IO;
 using System.Xml.Serialization;
 
 public class XMLOp
@@ -338,7 +338,7 @@ public class XMLOp
 <p>On <strong>Line 17</strong>, we create a <code class="highlighter-rouge">StreamReader</code> instance which would read the XML file.</p>
 <p>On <strong>Line 18</strong>, we tell the <code class="highlighter-rouge">XmlSerializer</code> to deserialize the stream and cast it to our target type T.</p>
 <p>On <strong>Line 19</strong>, we tell reader to close streaming and then on <strong>Line 20</strong> we return the deserialized object.</p>
-<p>Let’s say, we have already serialized our weapon object and created the XML file. Now we can deserialize it in another script:</p><pre class="language-csharp  line-numbers"><code>using UnityEngine;
+<p>Let’s say, we have already serialized our weapon object and created the XML file. Now we can deserialize it in another script:</p><pre class="language-csharp  line-numbers "><code>using UnityEngine;
 
 public class XMLDeserializer : MonoBehaviour
 {
@@ -350,7 +350,7 @@ public class XMLDeserializer : MonoBehaviour
 }</code></pre>
 <h2 id="conclusion">Conclusion</h2>
 <p>This concludes our tutorial, and as you can see, XML <abbr title="Converting objects into a form (such as JSON, or XML) that can be easily transported.">serialization</abbr> in Unity (in C# actually) is pretty easy. All you have to do is to use XML <abbr title="A method to associate declarative information with the code">attributes</abbr> in your classes to modify <abbr title="Converting objects into a form (such as JSON, or XML) that can be easily transported.">serialization</abbr> behaviour.</p>
-<p>As always, here are the scripts in full, below. Until next time.</p><pre class="language-csharp  line-numbers"><code>using System.Xml.Serialization;
+<p>As always, here are the scripts in full, below. Until next time.</p><pre class="language-csharp  line-numbers "><code>using System.Xml.Serialization;
 
 [XmlRoot(&quot;Knight&quot;)]
 public class Hero
@@ -368,7 +368,7 @@ public class Hero
 
     [XmlArray(&quot;rewards&quot;), XmlArrayItem(&quot;reward&quot;)]
     public int[] comboRewards;
-}</code></pre><pre class="language-csharp  line-numbers"><code>using UnityEngine;
+}</code></pre><pre class="language-csharp  line-numbers "><code>using UnityEngine;
 
 public class XMLSerializer : MonoBehaviour
 {
@@ -383,7 +383,7 @@ public class XMLSerializer : MonoBehaviour
 
         XMLOp.Serialize(knight, &quot;hero.xml&quot;);
     }
-}</code></pre><pre class="language-csharp  line-numbers"><code>using UnityEngine;
+}</code></pre><pre class="language-csharp  line-numbers "><code>using UnityEngine;
 
 public class XMLDeserializer : MonoBehaviour
 {
@@ -392,7 +392,7 @@ public class XMLDeserializer : MonoBehaviour
         Hero hero = XMLOp.Deserialize&lt;Hero&gt;(&quot;hero.xml&quot;);
         Debug.Log(hero.name);
     }
-}</code></pre><pre class="language-csharp  line-numbers"><code>using System.IO;
+}</code></pre><pre class="language-csharp  line-numbers "><code>using System.IO;
 using System.Xml.Serialization;
 
 public class XMLOp
@@ -439,8 +439,8 @@ public class XMLOp
  <div id="disqus_thread"></div>
   <script>
     var disqus_config = function () {
-      this.page.url = 'http://localhost:4000/xml-serialization-and-deserialization-in-unity/';
-      this.page.identifier = 'http://localhost:4000/xml-serialization-and-deserialization-in-unity/';
+      this.page.url = 'https://oguzkonya.github.io/xml-serialization-and-deserialization-in-unity/';
+      this.page.identifier = 'https://oguzkonya.github.io/xml-serialization-and-deserialization-in-unity/';
     };
     (function() {
       var d = document, s = d.createElement('script');

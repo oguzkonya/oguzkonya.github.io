@@ -16,13 +16,13 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Node based editors are frequently used in game engines; Unity has Animator window, Unreal Engine has blueprint system, some other game engines have dialogue systems. In this blog post, we will create our own node based editor in Unity. It’s going to be simple node editor that you’ll be able to improve upon later (see the below image for an example). I am going to assume that you are already familiar with editor scripting, but if you are not, please take your time to have a look at this post and this post." />
 <meta property="og:description" content="Node based editors are frequently used in game engines; Unity has Animator window, Unreal Engine has blueprint system, some other game engines have dialogue systems. In this blog post, we will create our own node based editor in Unity. It’s going to be simple node editor that you’ll be able to improve upon later (see the below image for an example). I am going to assume that you are already familiar with editor scripting, but if you are not, please take your time to have a look at this post and this post." />
-<link rel="canonical" href="http://localhost:4000/creating-node-based-editor-unity/" />
-<meta property="og:url" content="http://localhost:4000/creating-node-based-editor-unity/" />
+<link rel="canonical" href="https://oguzkonya.github.io/creating-node-based-editor-unity/" />
+<meta property="og:url" content="https://oguzkonya.github.io/creating-node-based-editor-unity/" />
 <meta property="og:site_name" content="oguzkonya" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2019-08-15T00:00:00+00:00" />
 <script type="application/ld+json">
-{"headline":"Creating a Node Based Editor in Unity","dateModified":"2019-08-15T00:00:00+00:00","datePublished":"2019-08-15T00:00:00+00:00","url":"http://localhost:4000/creating-node-based-editor-unity/","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/creating-node-based-editor-unity/"},"author":{"@type":"Person","name":"Oguz Konya"},"description":"Node based editors are frequently used in game engines; Unity has Animator window, Unreal Engine has blueprint system, some other game engines have dialogue systems. In this blog post, we will create our own node based editor in Unity. It’s going to be simple node editor that you’ll be able to improve upon later (see the below image for an example). I am going to assume that you are already familiar with editor scripting, but if you are not, please take your time to have a look at this post and this post.","@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"headline":"Creating a Node Based Editor in Unity","dateModified":"2019-08-15T00:00:00+00:00","datePublished":"2019-08-15T00:00:00+00:00","url":"https://oguzkonya.github.io/creating-node-based-editor-unity/","mainEntityOfPage":{"@type":"WebPage","@id":"https://oguzkonya.github.io/creating-node-based-editor-unity/"},"author":{"@type":"Person","name":"Oguz Konya"},"description":"Node based editors are frequently used in game engines; Unity has Animator window, Unreal Engine has blueprint system, some other game engines have dialogue systems. In this blog post, we will create our own node based editor in Unity. It’s going to be simple node editor that you’ll be able to improve upon later (see the below image for an example). I am going to assume that you are already familiar with editor scripting, but if you are not, please take your time to have a look at this post and this post.","@type":"BlogPosting","@context":"https://schema.org"}</script>
 </head>
 <body data-instant-allow-query-string data-instant-allow-external-links>
 <header class="site-header">
@@ -64,7 +64,7 @@
     <em>We will be creating this window in this post (click to see the gif in action)</em>
 </div>
 <h3 id="creating-the-window">Creating the Window</h3>
-<p>Let’s start by creating a simple editor window. The structure of the code will be similar to that of the console clone we developed in the previous posts: draw the elements first, and then process input, and if the GUI is changed due to input events, force the window to repaint.</p><pre class="language-csharp  line-numbers"><code>using UnityEngine;
+<p>Let’s start by creating a simple editor window. The structure of the code will be similar to that of the console clone we developed in the previous posts: draw the elements first, and then process input, and if the GUI is changed due to input events, force the window to repaint.</p><pre class="language-csharp  line-numbers "><code>using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
@@ -95,7 +95,7 @@ public class NodeBasedEditor : EditorWindow
     }
 }</code></pre>
 <h3 id="drawing-nodes">Drawing Nodes</h3>
-<p>Well, since this is a node editor, it should contain a list of nodes, which requires us to define a List<Node>. But first we should define __Node__ class. A __Node__ will be responsible for drawing itself and processing its own events. Unlike __ProcessEvents(Event e)__ in __NodeBasedEditor__, __ProcessEvents(Event e)__ in __Node__ will return a boolean so that we can check whether we should repaint the GUI or not.</Node></p><pre class="language-csharp  line-numbers"><code>using System;
+<p>Well, since this is a node editor, it should contain a list of nodes, which requires us to define a List<Node>. But first we should define __Node__ class. A __Node__ will be responsible for drawing itself and processing its own events. Unlike __ProcessEvents(Event e)__ in __NodeBasedEditor__, __ProcessEvents(Event e)__ in __Node__ will return a boolean so that we can check whether we should repaint the GUI or not.</Node></p><pre class="language-csharp  line-numbers "><code>using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -126,7 +126,7 @@ public class Node
     {
         return false;
     }
-}</code></pre><pre class="language-csharp  line-numbers"><code>using UnityEngine;
+}</code></pre><pre class="language-csharp  line-numbers "><code>using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
@@ -166,7 +166,7 @@ public class NodeBasedEditor : EditorWindow
     }
 }</code></pre>
 <h3 id="creating-nodes">Creating Nodes</h3>
-<p>Nodes are drawn in the editor now, but we can’t see them if we don’t create them. We should display a context menu with an “Add node” item when the user right clicks in the editor. When the user clicks “Add node”, we will create a <strong>Node</strong> and add it to the list of nodes, so that it is drawn. A <strong>Node</strong> requires a position, a width, a height and a styling; position will be the mouse’s current position, width will be 200, height will be 50 (yes, I don’t like using magic numbers in code, but this is going to be a simple editor, so the size doesn’t matter for the moment) and we will replicate the Animator window’s node style for styling.</p><pre class="language-csharp  line-numbers"><code>using UnityEngine;
+<p>Nodes are drawn in the editor now, but we can’t see them if we don’t create them. We should display a context menu with an “Add node” item when the user right clicks in the editor. When the user clicks “Add node”, we will create a <strong>Node</strong> and add it to the list of nodes, so that it is drawn. A <strong>Node</strong> requires a position, a width, a height and a styling; position will be the mouse’s current position, width will be 200, height will be 50 (yes, I don’t like using magic numbers in code, but this is going to be a simple editor, so the size doesn’t matter for the moment) and we will replicate the Animator window’s node style for styling.</p><pre class="language-csharp  line-numbers "><code>using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
@@ -241,7 +241,7 @@ public class NodeBasedEditor : EditorWindow
     }
 }</code></pre>
 <h3 id="making-nodes-draggable">Making Nodes Draggable</h3>
-<p>Alright, now we are able to add nodes, but we can’t drag them around. As I mentioned earlier, nodes will be processing their own events, hence we will be handling drag event in <strong>Node</strong> class. One important thing to note here is that we should be “using” the drag event with <strong>Use()</strong> method. Later on, we will be adding canvas dragging, and we wouldn’t want to drag a node and the whole canvas at the same time (“using” an event prevents it being used by other processes, i.e. it stops event bubbling). Also note that the for loop in <strong>ProcessNodeEvents(Event e)</strong> traverses the node list backwards, because the last node is drawn at the top, so it should process the events first.</p><pre class="language-csharp  line-numbers"><code>using System;
+<p>Alright, now we are able to add nodes, but we can’t drag them around. As I mentioned earlier, nodes will be processing their own events, hence we will be handling drag event in <strong>Node</strong> class. One important thing to note here is that we should be “using” the drag event with <strong>Use()</strong> method. Later on, we will be adding canvas dragging, and we wouldn’t want to drag a node and the whole canvas at the same time (“using” an event prevents it being used by other processes, i.e. it stops event bubbling). Also note that the for loop in <strong>ProcessNodeEvents(Event e)</strong> traverses the node list backwards, because the last node is drawn at the top, so it should process the events first.</p><pre class="language-csharp  line-numbers "><code>using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -304,7 +304,7 @@ public class Node
 
         return false;
     }
-}</code></pre><pre class="language-csharp  line-numbers"><code>    private void OnGUI()
+}</code></pre><pre class="language-csharp  line-numbers "><code>    private void OnGUI()
     {
         DrawNodes();
 
@@ -362,7 +362,7 @@ public class Node
     }</code></pre>
 <h3 id="creating-connections-between-nodes">Creating Connections Between Nodes</h3>
 <p>Our node editor now has nodes, but we should also be able to connect them. In order to do this, we need two connection points (in and out) on a node and a connection between them. A connection point has a rectangle (so that we can draw it), has a type (in or out), has a style and it references its parent node. Therefore, our <strong>ConnectionPoint</strong> class will be a very simple one; drawing a button at a specific position and doing an action when this button is clicked.</p>
-<p>On the other hand, a connection has two connection points and an action to remove it. <strong>Connection</strong> class is much simpler than <strong>ConnectionPoint</strong>, however, it introduces a new concept: <strong>Handles</strong>. This class is actually used to draw 3D GUI controls in the <strong>Scene</strong> view, but it is the only class with a bezier drawing method: <strong>Handles.DrawBezier(Vector3, Vector3, Vector3, Vector3, Color, Texture2D, float).</strong> It takes 7 parameters and the first 4 parameters are the position controls (start position, end position, start tangent, and end tangent), while the rest determine how the bezier looks.</p><pre class="language-csharp  line-numbers"><code>using System;
+<p>On the other hand, a connection has two connection points and an action to remove it. <strong>Connection</strong> class is much simpler than <strong>ConnectionPoint</strong>, however, it introduces a new concept: <strong>Handles</strong>. This class is actually used to draw 3D GUI controls in the <strong>Scene</strong> view, but it is the only class with a bezier drawing method: <strong>Handles.DrawBezier(Vector3, Vector3, Vector3, Vector3, Color, Texture2D, float).</strong> It takes 7 parameters and the first 4 parameters are the position controls (start position, end position, start tangent, and end tangent), while the rest determine how the bezier looks.</p><pre class="language-csharp  line-numbers "><code>using System;
 using UnityEngine;
 
 public enum ConnectionPointType { In, Out }
@@ -411,7 +411,7 @@ public class ConnectionPoint
             }
         }
     }
-}</code></pre><pre class="language-csharp  line-numbers"><code>using System;
+}</code></pre><pre class="language-csharp  line-numbers "><code>using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -460,7 +460,7 @@ public class Connection
  <li>CreateConnection() creates a connection when an <strong>in</strong> and an <strong>out</strong> point is selected.</li>
  <li>ClearConnectionSelection() clears selected points.</li>
 </ul>
-<p>And lastly, we need to draw connections in <strong>OnGUI()</strong> just like we draw nodes.</p><pre class="language-csharp  line-numbers"><code>using System;
+<p>And lastly, we need to draw connections in <strong>OnGUI()</strong> just like we draw nodes.</p><pre class="language-csharp  line-numbers "><code>using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -530,7 +530,7 @@ public class Node
 
         return false;
     }
-}</code></pre><pre class="language-csharp  line-numbers"><code>using UnityEngine;
+}</code></pre><pre class="language-csharp  line-numbers "><code>using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
@@ -712,7 +712,7 @@ public class NodeBasedEditor : EditorWindow
     }
 }</code></pre>
 <h3 id="selecting-nodes">Selecting Nodes</h3>
-<p>We should provide feedback when the user clicks on a node so that they would know which node they selected (or if a node is selected at all). This is going to be useful when a user wants to remove a node.</p><pre class="language-csharp  line-numbers"><code>using System;
+<p>We should provide feedback when the user clicks on a node so that they would know which node they selected (or if a node is selected at all). This is going to be useful when a user wants to remove a node.</p><pre class="language-csharp  line-numbers "><code>using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -791,7 +791,7 @@ public class Node
 
         return false;
     }
-}</code></pre><pre class="language-csharp  line-numbers"><code>using UnityEngine;
+}</code></pre><pre class="language-csharp  line-numbers "><code>using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
@@ -836,7 +836,7 @@ public class NodeBasedEditor : EditorWindow
         outPointStyle.border = new RectOffset(4, 4, 12, 12);
     }
 
-    ...</code></pre><pre class="language-csharp  line-numbers"><code>    private void OnClickAddNode(Vector2 mousePosition)
+    ...</code></pre><pre class="language-csharp  line-numbers "><code>    private void OnClickAddNode(Vector2 mousePosition)
     {
         if (nodes == null)
         {
@@ -846,7 +846,7 @@ public class NodeBasedEditor : EditorWindow
         nodes.Add(new Node(mousePosition, 200, 50, nodeStyle, selectedNodeStyle, inPointStyle, outPointStyle, OnClickInPoint, OnClickOutPoint));
     }</code></pre>
 <h3 id="removing-nodes">Removing Nodes</h3>
-<p>Some node editors prefer to put the <strong>remove node</strong> button on the node itself, but in our case it might be dangerous: the user might remove a node accidentally. So, we are going to do the next best thing: put that button on a context menu. Users should select the node first and then right click on it in order to access the <strong>remove node</strong> button. When the user clicks <strong>remove node</strong>, we will remove the node from the nodes list. However, the node might have connections to other nodes, so we should remove those connections first.</p><pre class="language-csharp  line-numbers"><code>using System;
+<p>Some node editors prefer to put the <strong>remove node</strong> button on the node itself, but in our case it might be dangerous: the user might remove a node accidentally. So, we are going to do the next best thing: put that button on a context menu. Users should select the node first and then right click on it in order to access the <strong>remove node</strong> button. When the user clicks <strong>remove node</strong>, we will remove the node from the nodes list. However, the node might have connections to other nodes, so we should remove those connections first.</p><pre class="language-csharp  line-numbers "><code>using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -949,7 +949,7 @@ public class Node
             OnRemoveNode(this);
         }
     }
-}</code></pre><pre class="language-csharp  line-numbers"><code>    private void OnClickAddNode(Vector2 mousePosition)
+}</code></pre><pre class="language-csharp  line-numbers "><code>    private void OnClickAddNode(Vector2 mousePosition)
     {
         if (nodes == null)
         {
@@ -957,7 +957,7 @@ public class Node
         }
 
         nodes.Add(new Node(mousePosition, 200, 50, nodeStyle, selectedNodeStyle, inPointStyle, outPointStyle, OnClickInPoint, OnClickOutPoint, OnClickRemoveNode));
-    }</code></pre><pre class="language-csharp  line-numbers"><code>    private void OnClickRemoveNode(Node node)
+    }</code></pre><pre class="language-csharp  line-numbers "><code>    private void OnClickRemoveNode(Node node)
     {
         if (connections != null)
         {
@@ -988,7 +988,7 @@ public class Node
  <li>A bezier from selected connection point to the mouse position,</li>
  <li>A grid in the background.</li>
 </ul>
-<p>Making our canvas draggable is the easiest one, so let’s start with that. All we have to do is just apply mouse drag to every single node in the node list.</p><pre class="language-csharp  line-numbers"><code>public class NodeBasedEditor : EditorWindow
+<p>Making our canvas draggable is the easiest one, so let’s start with that. All we have to do is just apply mouse drag to every single node in the node list.</p><pre class="language-csharp  line-numbers "><code>public class NodeBasedEditor : EditorWindow
 {
     private List&lt;Node&gt; nodes;
     private List&lt;Connection&gt; connections;
@@ -1003,7 +1003,7 @@ public class Node
     
     private Vector2 drag;
 
-    ...</code></pre><pre class="language-csharp  line-numbers"><code>    private void ProcessEvents(Event e)
+    ...</code></pre><pre class="language-csharp  line-numbers "><code>    private void ProcessEvents(Event e)
     {
         drag = Vector2.zero;
 
@@ -1028,7 +1028,7 @@ public class Node
                 }
             break;
         }
-    }</code></pre><pre class="language-csharp  line-numbers"><code>    private void OnDrag(Vector2 delta)
+    }</code></pre><pre class="language-csharp  line-numbers "><code>    private void OnDrag(Vector2 delta)
     {
         drag = delta;
 
@@ -1042,7 +1042,7 @@ public class Node
 
         GUI.changed = true;
     }</code></pre>
-<p>Next up, drawing the bezier from selected connection point to the mouse position. By drawing this bezier, we will let users know which connection point selected and how their connection will look like.</p><pre class="language-csharp  line-numbers"><code>    private void OnGUI()
+<p>Next up, drawing the bezier from selected connection point to the mouse position. By drawing this bezier, we will let users know which connection point selected and how their connection will look like.</p><pre class="language-csharp  line-numbers "><code>    private void OnGUI()
     {
         DrawNodes();
         DrawConnections();
@@ -1053,7 +1053,7 @@ public class Node
         ProcessEvents(Event.current);
 
         if (GUI.changed) Repaint();
-    }</code></pre><pre class="language-csharp  line-numbers"><code>    private void DrawConnectionLine(Event e)
+    }</code></pre><pre class="language-csharp  line-numbers "><code>    private void DrawConnectionLine(Event e)
     {
         if (selectedInPoint != null &amp;amp;&amp;amp; selectedOutPoint == null)
         {
@@ -1085,7 +1085,7 @@ public class Node
             GUI.changed = true;
         }
     }</code></pre>
-<p>And finally, drawing the grid:</p><pre class="language-csharp  line-numbers"><code>public class NodeBasedEditor : EditorWindow
+<p>And finally, drawing the grid:</p><pre class="language-csharp  line-numbers "><code>public class NodeBasedEditor : EditorWindow
 {
     private List&lt;Node&gt; nodes;
     private List&lt;Connection&gt; connections;
@@ -1101,7 +1101,7 @@ public class Node
     private Vector2 offset;
     private Vector2 drag;
 
-    ...</code></pre><pre class="language-csharp  line-numbers"><code>    private void OnGUI()
+    ...</code></pre><pre class="language-csharp  line-numbers "><code>    private void OnGUI()
     {
         DrawGrid(20, 0.2f, Color.gray);
         DrawGrid(100, 0.4f, Color.gray);
@@ -1147,7 +1147,7 @@ public class Node
         <img src="/assets/img/sample-node-based-editor.png" class="center" alt="Sample Node Based Editor" width="400px" />
    <div class="empty-caption"></div>
 </div>
-<p>And as always, here is the script in full, below. Until next time.</p><pre class="language-csharp  line-numbers"><code>using UnityEngine;
+<p>And as always, here is the script in full, below. Until next time.</p><pre class="language-csharp  line-numbers "><code>using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
@@ -1447,7 +1447,7 @@ public class NodeBasedEditor : EditorWindow
         selectedInPoint = null;
         selectedOutPoint = null;
     }
-}</code></pre><pre class="language-csharp  line-numbers"><code>using System;
+}</code></pre><pre class="language-csharp  line-numbers "><code>using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -1550,7 +1550,7 @@ public class Node
             OnRemoveNode(this);
         }
     }
-}</code></pre><pre class="language-csharp  line-numbers"><code>using System;
+}</code></pre><pre class="language-csharp  line-numbers "><code>using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -1587,7 +1587,7 @@ public class Connection
             }
         }
     }
-}</code></pre><pre class="language-csharp  line-numbers"><code>using System;
+}</code></pre><pre class="language-csharp  line-numbers "><code>using System;
 using UnityEngine;
 
 public enum ConnectionPointType { In, Out }
@@ -1662,8 +1662,8 @@ public class ConnectionPoint
  <div id="disqus_thread"></div>
   <script>
     var disqus_config = function () {
-      this.page.url = 'http://localhost:4000/creating-node-based-editor-unity/';
-      this.page.identifier = 'http://localhost:4000/creating-node-based-editor-unity/';
+      this.page.url = 'https://oguzkonya.github.io/creating-node-based-editor-unity/';
+      this.page.identifier = 'https://oguzkonya.github.io/creating-node-based-editor-unity/';
     };
     (function() {
       var d = document, s = d.createElement('script');
