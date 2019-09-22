@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="https://oguzkonya.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://oguzkonya.github.io/" rel="alternate" type="text/html" /><updated>2019-09-21T16:55:36+00:00</updated><id>https://oguzkonya.github.io/feed.xml</id><title type="html">oguzkonya</title><subtitle>Game Developer
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="https://oguzkonya.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://oguzkonya.github.io/" rel="alternate" type="text/html" /><updated>2019-09-22T11:28:17+00:00</updated><id>https://oguzkonya.github.io/feed.xml</id><title type="html">oguzkonya</title><subtitle>Game Developer
 </subtitle><author><name>Oguz Konya</name></author><entry><title type="html">Formatting Big Numbers: The aa Notation</title><link href="https://oguzkonya.github.io/formatting-big-numbers-aa-notation/" rel="alternate" type="text/html" title="Formatting Big Numbers: The aa Notation" /><published>2019-09-05T00:00:00+00:00</published><updated>2019-09-05T00:00:00+00:00</updated><id>https://oguzkonya.github.io/formatting-big-numbers-aa-notation</id><content type="html" xml:base="https://oguzkonya.github.io/formatting-big-numbers-aa-notation/">&lt;p&gt;If you are dealing with big numbers in your game, you might have encountered the issue of properly formatting them. Small numbers such as 1.000, 10.000 or even 100.000 are OK, but as you go larger, you’ll run out of space quickly. I mean, how can you fit &lt;strong&gt;1.000.000.000.000.000.000&lt;/strong&gt; in a button?&lt;/p&gt;
 
 &lt;p&gt;But let’s say, you found a way. Let’s say you were able to put &lt;strong&gt;1.000.000.000.000.000.000&lt;/strong&gt; in a button properly and it looks good (I can’t imagine how, but for the sake of the argument let’s assume it is possible). However, you still have the UX problem of clarity. No one will be able to see this number and say “oh my gosh, I have one quintillion cookies!”. I am a mathematician and even I can’t read it without counting zeros first.&lt;/p&gt;
@@ -2813,7 +2813,7 @@ public class ConnectionPoint
 
 &lt;p&gt;Alright then, we can start. But, before we do, I would like to fix a tiny issue from the previous post’s code. I left a magic number as the height of the resizer area, and I would like to convert it to a proper variable:&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private Rect upperPanel;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;6&quot; data-line=&quot;13&quot; data-filename=&quot;ResizablePanels.cs&quot;&gt;&lt;code&gt;    private Rect upperPanel;
     private Rect lowerPanel; 
     private Rect resizer; 
 
@@ -2826,7 +2826,7 @@ public class ConnectionPoint
 
 &lt;p&gt;And, further down the code, once again replace the magic number with the variable:&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void DrawLowerPanel()
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;50&quot; data-line=&quot;52,61,63&quot;&gt;&lt;code&gt;    private void DrawLowerPanel()
     {
         lowerPanel = new Rect(0, (position.height * sizeRatio) + resizerHeight, position.width, (position.height * (1 - sizeRatio)) - resizerHeight);
 
@@ -2847,9 +2847,9 @@ public class ConnectionPoint
 
 &lt;h3 id=&quot;menu-bar&quot;&gt;Menu Bar&lt;/h3&gt;
 
-&lt;p&gt;Now we can start adding our menu bar. We will draw this bar just as we drew other panels: by feeding &lt;strong&gt;GUILayout.BeginArea()&lt;/strong&gt; a rectangle which would define its position and size (basically, its area). I am going to steal this area  from the upper panel, so that we won’t have to change other panels’ positions or heights. You can make this bar as tall as you would like, but since we are cloning Unity’s console window, we should stick to default and make it 20 pixels in height. Also, please note that this time, &lt;strong&gt;GUILayout.BeginArea()&lt;/strong&gt; takes a second parameter: &lt;strong&gt;EditorStyles.toolbar&lt;/strong&gt;. As the name suggests, this parameter tells Unity to draw this area in toolbar style. &lt;strong&gt;EditorStyles&lt;/strong&gt; has many other options to choose from which affects how the GUI elements are displayed, so I would suggest checking them out and see Unity team used them in their own editor windows.&lt;/p&gt;
+&lt;p&gt;Now we can start adding our menu bar. We will draw this bar just as we drew other panels: by feeding &lt;code class=&quot;highlighter-rouge&quot;&gt;GUILayout.BeginArea()&lt;/code&gt; a rectangle which would define its position and size (basically, its area). I am going to steal this area  from the upper panel, so that we won’t have to change other panels’ positions or heights. You can make this bar as tall as you would like, but since we are cloning Unity’s console window, we should stick to default and make it 20 pixels in height. Also, please note that this time, &lt;code class=&quot;highlighter-rouge&quot;&gt;GUILayout.BeginArea()&lt;/code&gt; takes a second parameter: &lt;code class=&quot;highlighter-rouge&quot;&gt;EditorStyles.toolbar&lt;/code&gt;. As the name suggests, this parameter tells Unity to draw this area in toolbar style. &lt;code class=&quot;highlighter-rouge&quot;&gt;EditorStyles&lt;/code&gt; has many other options to choose from which affects how the GUI elements are displayed, so I would suggest checking them out and see Unity team used them in their own editor windows.&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private Rect upperPanel;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;6&quot; data-line=&quot;9,15&quot;&gt;&lt;code&gt;    private Rect upperPanel;
     private Rect lowerPanel; 
     private Rect resizer; 
     private Rect menuBar;
@@ -2862,7 +2862,7 @@ public class ConnectionPoint
 
     private GUIStyle resizerStyle;&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnGUI()
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;32&quot; data-line=&quot;34,44-50,54&quot;&gt;&lt;code&gt;    private void OnGUI()
     {
         DrawMenuBar();
         DrawUpperPanel();
@@ -2891,17 +2891,9 @@ public class ConnectionPoint
         GUILayout.EndArea();
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;OK, we are ready to add our buttons and toggles. I could have added them in the code above, but there are a couple of new concepts that I should explain beforehand. First of all, there is &lt;strong&gt;GUILayout.BeginHorizontal()&lt;/strong&gt;. You see, &lt;strong&gt;GUILayout&lt;/strong&gt;, as the name suggests, lays out the GUI automatically &lt;strong&gt;&lt;em&gt;vertically&lt;/em&gt;&lt;/strong&gt;. However, a toolbar is laid out horizontally, so we need to use &lt;strong&gt;GUILayout.BeginHorizontal()&lt;/strong&gt; and then use &lt;strong&gt;GUILayout.EndHorizontal()&lt;/strong&gt; so that Unity stops horizontal layout and continues automatic vertical layout. Then, there is &lt;strong&gt;GUILayout.FlexibleSpace()&lt;/strong&gt; which acts like a spring and pushes other UI elements to the edges of its container by filling the space between them. On the other hand, &lt;strong&gt;GUILayout.Space(int)&lt;/strong&gt; creates just the amount of space you need. &lt;strong&gt;GUILayout.Button()&lt;/strong&gt; returns true when it is clicked and &lt;strong&gt;GUILayout.Toggle()&lt;/strong&gt; returns a boolean depending on the status of the toggle: true when it is on and false when it is off.&lt;/p&gt;
+&lt;p&gt;OK, we are ready to add our buttons and toggles. I could have added them in the code above, but there are a couple of new concepts that I should explain beforehand. First of all, there is &lt;code class=&quot;highlighter-rouge&quot;&gt;GUILayout.BeginHorizontal()&lt;/code&gt;. You see, &lt;code class=&quot;highlighter-rouge&quot;&gt;GUILayout&lt;/code&gt;, as the name suggests, lays out the GUI automatically &lt;strong&gt;vertically&lt;/strong&gt;. However, a toolbar is laid out horizontally, so we need to use &lt;code class=&quot;highlighter-rouge&quot;&gt;GUILayout.BeginHorizontal()&lt;/code&gt; and then use &lt;code class=&quot;highlighter-rouge&quot;&gt;GUILayout.EndHorizontal()&lt;/code&gt; so that Unity stops horizontal layout and continues automatic vertical layout. Then, there is &lt;code class=&quot;highlighter-rouge&quot;&gt;GUILayout.FlexibleSpace()&lt;/code&gt; which acts like a spring and pushes other UI elements to the edges of its container by filling the space between them. On the other hand, &lt;code class=&quot;highlighter-rouge&quot;&gt;GUILayout.Space(int)&lt;/code&gt; creates just the amount of space you need. &lt;code class=&quot;highlighter-rouge&quot;&gt;GUILayout.Button()&lt;/code&gt; returns true when it is clicked and &lt;code class=&quot;highlighter-rouge&quot;&gt;GUILayout.Toggle()&lt;/code&gt; returns a boolean depending on the status of the toggle: true when it is on and false when it is off.&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private Rect upperPanel;
-    private Rect lowerPanel;
-    private Rect resizer;
-    private Rect menuBar;
-
-    private float sizeRatio = 0.5f;
-    private bool isResizing;
-
-    private float resizerHeight = 5f;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;14&quot; data-line=&quot;17-22&quot;&gt;&lt;code&gt;    private float resizerHeight = 5f;
     private float menuBarHeight = 20f;
 
     private bool collapse = false;
@@ -2913,7 +2905,7 @@ public class ConnectionPoint
 
     private GUIStyle resizerStyle;&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void DrawMenuBar()
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;51&quot; data-line=&quot;56-71&quot;&gt;&lt;code&gt;    private void DrawMenuBar()
     {
         menuBar = new Rect(0, 0, position.width, menuBarHeight);
 
@@ -2937,27 +2929,9 @@ public class ConnectionPoint
         GUILayout.EndArea();
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;It looks pretty good, but the toggles on the right are missing their icons. Adding icons and textures to GUI elements is rather easy, but Unity lacks the documentation on how to do it. Here’s a piece of information you probably can’t find on the internet: Unity uses &lt;strong&gt;EditorGUIUtility.Load(string)&lt;/strong&gt; to load editor resources and &lt;a href=&quot;https://gist.github.com/masa795/5797164&quot;&gt;this&lt;/a&gt; piece of script lists some of the default Unity editor textures (all the icons). I checked the list and found the icons used in the console editor, so let’s add them into our own clone.&lt;/p&gt;
+&lt;p&gt;It looks pretty good, but the toggles on the right are missing their icons. Adding icons and textures to GUI elements is rather easy, but Unity lacks the documentation on how to do it. Here’s a piece of information you probably can’t find on the internet: Unity uses &lt;code class=&quot;highlighter-rouge&quot;&gt;EditorGUIUtility.Load(string)&lt;/code&gt; to load editor resources and &lt;a href=&quot;https://gist.github.com/masa795/5797164&quot;&gt;this&lt;/a&gt; piece of script lists some of the default Unity editor textures (all the icons). I checked the list and found the icons used in the console editor, so let’s add them into our own clone.&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private Rect upperPanel;
-    private Rect lowerPanel;
-    private Rect resizer;
-    private Rect menuBar;
-
-    private float sizeRatio = 0.5f;
-    private bool isResizing;
-
-    private float resizerHeight = 5f;
-    private float menuBarHeight = 20f;
-
-    private bool collapse = false;
-    private bool clearOnPlay = false;
-    private bool errorPause = false;
-    private bool showLog = false;
-    private bool showWarnings = false;
-    private bool showErrors = false;
-
-    private GUIStyle resizerStyle;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;24&quot; data-line=&quot;26-31&quot;&gt;&lt;code&gt;    private GUIStyle resizerStyle;
 
     private Texture2D errorIcon;
     private Texture2D errorIconSmall;
@@ -2966,7 +2940,7 @@ public class ConnectionPoint
     private Texture2D infoIcon;
     private Texture2D infoIconSmall;&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnEnable()
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;40&quot; data-line=&quot;42-48&quot;&gt;&lt;code&gt;    private void OnEnable()
     {
         errorIcon = EditorGUIUtility.Load(&amp;quot;icons/console.erroricon.png&amp;quot;) as Texture2D;
         warningIcon = EditorGUIUtility.Load(&amp;quot;icons/console.warnicon.png&amp;quot;) as Texture2D;
@@ -2980,7 +2954,7 @@ public class ConnectionPoint
         resizerStyle.normal.background = EditorGUIUtility.Load(&amp;quot;icons/d_AvatarBlendBackground.png&amp;quot;) as Texture2D;
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void DrawMenuBar()
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;66&quot; data-line=&quot;82-84&quot;&gt;&lt;code&gt;    private void DrawMenuBar()
     {
         menuBar = new Rect(0, 0, position.width, menuBarHeight);
 
@@ -3015,27 +2989,9 @@ public class ConnectionPoint
 
 &lt;h3 id=&quot;upper-panel&quot;&gt;Upper Panel&lt;/h3&gt;
 
-&lt;p&gt;Let’s move on to the upper panel. This panel should be scrollable, because it could contain more content than it can display. Here is another new concept: &lt;strong&gt;GUILayout.BeginScrollView(Vector2 scroll)&lt;/strong&gt; creates a scroll view in the area it is defined. All the GUI elements between &lt;strong&gt;GUILayout.BeginScrollView(Vector2 scroll)&lt;/strong&gt; and &lt;strong&gt;GUILayout.EndScrollView()&lt;/strong&gt; will be displayed in this scroll area.&lt;/p&gt;
+&lt;p&gt;Let’s move on to the upper panel. This panel should be scrollable, because it could contain more content than it can display. Here is another new concept: &lt;code class=&quot;highlighter-rouge&quot;&gt;GUILayout.BeginScrollView(Vector2 scroll)&lt;/code&gt; creates a scroll view in the area it is defined. All the GUI elements between &lt;code class=&quot;highlighter-rouge&quot;&gt;GUILayout.BeginScrollView(Vector2 scroll)&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;GUILayout.EndScrollView()&lt;/code&gt; will be displayed in this scroll area.&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private Rect upperPanel;
-    private Rect lowerPanel;
-    private Rect resizer;
-    private Rect menuBar;
-
-    private float sizeRatio = 0.5f;
-    private bool isResizing;
-
-    private float resizerHeight = 5f;
-    private float menuBarHeight = 20f;
-
-    private bool collapse = false;
-    private bool clearOnPlay = false;
-    private bool errorPause = false;
-    private bool showLog = false;
-    private bool showWarnings = false;
-    private bool showErrors = false;
-
-    private Vector2 upperPanelScroll;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;24&quot; data-line=&quot;24&quot;&gt;&lt;code&gt;    private Vector2 upperPanelScroll;
 
     private GUIStyle resizerStyle;
 
@@ -3046,7 +3002,7 @@ public class ConnectionPoint
     private Texture2D infoIcon;
     private Texture2D infoIconSmall;&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void DrawUpperPanel()
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;92&quot; data-line=&quot;97-99&quot;&gt;&lt;code&gt;    private void DrawUpperPanel()
     {
         upperPanel = new Rect(0, menuBarHeight, position.width, (position.height * sizeRatio) - menuBarHeight);
 
@@ -3057,27 +3013,9 @@ public class ConnectionPoint
         GUILayout.EndArea();
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Unity’s console window displays boxes in this panel, so will we. However, it is not going to be one liner, because we need to know what kind of content needs to be displayed (info, warning or error), and what its index number is (so that we can do a zebra effect on the boxes). For these reasons, it is going to be a little more work than we did previously. First of all, we need an &lt;strong&gt;enum&lt;/strong&gt; for the content type of the box, which fortunately exists: &lt;strong&gt;LogType&lt;/strong&gt;. Then, we should create a method for drawing boxes. This method will draw a box, add an icon to the left of the content based on its type, set the background color to a lighter or darker color based on its index (lighter if the index is odd, darker if the index is even) and then display a text.&lt;/p&gt;
+&lt;p&gt;Unity’s console window displays boxes in this panel, so will we. However, it is not going to be one liner, because we need to know what kind of content needs to be displayed (info, warning or error), and what its index number is (so that we can do a zebra effect on the boxes). For these reasons, it is going to be a little more work than we did previously. First of all, we need an &lt;strong&gt;enum&lt;/strong&gt; for the content type of the box, which fortunately exists: &lt;code class=&quot;highlighter-rouge&quot;&gt;LogType&lt;/code&gt;. Then, we should create a method for drawing boxes. This method will draw a box, add an icon to the left of the content based on its type, set the background color to a lighter or darker color based on its index (lighter if the index is odd, darker if the index is even) and then display a text.&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private Rect upperPanel;
-    private Rect lowerPanel;
-    private Rect resizer;
-    private Rect menuBar;
-
-    private float sizeRatio = 0.5f;
-    private bool isResizing;
-
-    private float resizerHeight = 5f;
-    private float menuBarHeight = 20f;
-
-    private bool collapse = false;
-    private bool clearOnPlay = false;
-    private bool errorPause = false;
-    private bool showLog = false;
-    private bool showWarnings = false;
-    private bool showErrors = false;
-
-    private Vector2 upperPanelScroll;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;24&quot; data-line=&quot;27,29-32&quot;&gt;&lt;code&gt;    private Vector2 upperPanelScroll;
 
     private GUIStyle resizerStyle;
     private GUIStyle boxStyle;
@@ -3093,7 +3031,7 @@ public class ConnectionPoint
     private Texture2D infoIcon;
     private Texture2D infoIconSmall;&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnEnable()
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;47&quot; data-line=&quot;60-65&quot;&gt;&lt;code&gt;    private void OnEnable()
     {
         errorIcon = EditorGUIUtility.Load(&amp;quot;icons/console.erroricon.png&amp;quot;) as Texture2D;
         warningIcon = EditorGUIUtility.Load(&amp;quot;icons/console.warnicon.png&amp;quot;) as Texture2D;
@@ -3114,7 +3052,7 @@ public class ConnectionPoint
         boxBgSelected = EditorGUIUtility.Load(&amp;quot;builtin skins/darkskin/images/menuitemhover.png&amp;quot;) as Texture2D;
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void DrawResizer()
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;124&quot; data-line=&quot;134-162&quot;&gt;&lt;code&gt;    private void DrawResizer()
     {
         resizer = new Rect(0, (position.height * sizeRatio) - resizerHeight, position.width, resizerHeight * 2);
 
@@ -3158,9 +3096,9 @@ public class ConnectionPoint
     {
         ...&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Now we can use &lt;strong&gt;DrawBox()&lt;/strong&gt; method in &lt;strong&gt;DrawUpperPanel()&lt;/strong&gt; to actually display some content:&lt;/p&gt;
+&lt;p&gt;Now we can use &lt;code class=&quot;highlighter-rouge&quot;&gt;DrawBox()&lt;/code&gt; method in &lt;code class=&quot;highlighter-rouge&quot;&gt;DrawUpperPanel()&lt;/code&gt; to actually display some content:&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void DrawUpperPanel()
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;104&quot; data-line=&quot;111-115&quot;&gt;&lt;code&gt;    private void DrawUpperPanel()
     {
         upperPanel = new Rect(0, menuBarHeight, position.width, (position.height * sizeRatio) - menuBarHeight);
 
@@ -3190,43 +3128,14 @@ public class ConnectionPoint
 
 &lt;p&gt;Up next is the lower panel. All this panel does is to display a message, so we will just add a scroll view and a text area.&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private Rect upperPanel;
-    private Rect lowerPanel;
-    private Rect resizer;
-    private Rect menuBar;
-
-    private float sizeRatio = 0.5f;
-    private bool isResizing;
-
-    private float resizerHeight = 5f;
-    private float menuBarHeight = 20f;
-
-    private bool collapse = false;
-    private bool clearOnPlay = false;
-    private bool errorPause = false;
-    private bool showLog = false;
-    private bool showWarnings = false;
-    private bool showErrors = false;
-
-    private Vector2 upperPanelScroll;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;24&quot; data-line=&quot;25-29&quot;&gt;&lt;code&gt;    private Vector2 upperPanelScroll;
     private Vector2 lowerPanelScroll;
 
     private GUIStyle resizerStyle;
     private GUIStyle boxStyle;
-    private GUIStyle textAreaStyle;
+    private GUIStyle textAreaStyle;&lt;/code&gt;&lt;/pre&gt;
 
-    private Texture2D boxBgOdd;
-    private Texture2D boxBgEven;
-    private Texture2D boxBgSelected;
-    private Texture2D icon;
-    private Texture2D errorIcon;
-    private Texture2D errorIconSmall;
-    private Texture2D warningIcon;
-    private Texture2D warningIconSmall;
-    private Texture2D infoIcon;
-    private Texture2D infoIconSmall;&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnEnable()
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;49&quot; data-line=&quot;69-71&quot;&gt;&lt;code&gt;    private void OnEnable()
     {
         errorIcon = EditorGUIUtility.Load(&amp;quot;icons/console.erroricon.png&amp;quot;) as Texture2D;
         warningIcon = EditorGUIUtility.Load(&amp;quot;icons/console.warnicon.png&amp;quot;) as Texture2D;
@@ -3251,7 +3160,7 @@ public class ConnectionPoint
         textAreaStyle.normal.background = EditorGUIUtility.Load(&amp;quot;builtin skins/darkskin/images/projectbrowsericonareabg.png&amp;quot;) as Texture2D;
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void DrawLowerPanel()
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;127&quot; data-line=&quot;132-136&quot;&gt;&lt;code&gt;    private void DrawLowerPanel()
     {
         lowerPanel = new Rect(0, (position.height * sizeRatio) + resizerHeight, position.width, (position.height * (1 - sizeRatio)) - resizerHeight);
 
@@ -3275,9 +3184,9 @@ public class ConnectionPoint
 
 &lt;h3 id=&quot;adding-interaction&quot;&gt;Adding Interaction&lt;/h3&gt;
 
-&lt;p&gt;Yes, our window looks good, but it doesn’t do anything useful right now. Since this is a console window clone, I would like it to receive log messages from Unity’s own &lt;strong&gt;Debug&lt;/strong&gt; class and display them in a similar manner. A log contains some data, such as a log string, a stack trace and a type, hence we need a class for it. We will be keeping the instances of this class in a list and a reference to the selected log. When we modify the upper and lower panel code, our window will start behaving exactly like the console window.&lt;/p&gt;
+&lt;p&gt;Yes, our window looks good, but it doesn’t do anything useful right now. Since this is a console window clone, I would like it to receive log messages from Unity’s own &lt;code class=&quot;highlighter-rouge&quot;&gt;Debug&lt;/code&gt; class and display them in a similar manner. A log contains some data, such as a log string, a stack trace and a type, hence we need a class for it. We will be keeping the instances of this class in a list and a reference to the selected log. When we modify the upper and lower panel code, our window will start behaving exactly like the console window.&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;public class Log
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;209&quot; data-line=&quot;209-223&quot;&gt;&lt;code&gt;public class Log
 {
     public bool isSelected;
     public string info;
@@ -3293,52 +3202,14 @@ public class ConnectionPoint
     }
 }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-line=&quot;3&quot;&gt;&lt;code&gt;using UnityEngine;
 using UnityEditor;
-using System.Collections.Generic;
+using System.Collections.Generic;&lt;/code&gt;&lt;/pre&gt;
 
-public class ResizablePanels : EditorWindow
-{
-    private Rect upperPanel;
-    private Rect lowerPanel;
-    private Rect resizer;
-    private Rect menuBar;
-
-    private float sizeRatio = 0.5f;
-    private bool isResizing;
-
-    private float resizerHeight = 5f;
-    private float menuBarHeight = 20f;
-
-    private bool collapse = false;
-    private bool clearOnPlay = false;
-    private bool errorPause = false;
-    private bool showLog = false;
-    private bool showWarnings = false;
-    private bool showErrors = false;
-
-    private Vector2 upperPanelScroll;
-    private Vector2 lowerPanelScroll;
-
-    private GUIStyle resizerStyle;
-    private GUIStyle boxStyle;
-    private GUIStyle textAreaStyle;
-
-    private Texture2D boxBgOdd;
-    private Texture2D boxBgEven;
-    private Texture2D boxBgSelected;
-    private Texture2D icon;
-    private Texture2D errorIcon;
-    private Texture2D errorIconSmall;
-    private Texture2D warningIcon;
-    private Texture2D warningIconSmall;
-    private Texture2D infoIcon;
-    private Texture2D infoIconSmall;
-
-    private List&amp;lt;Log&amp;gt; logs;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;43&quot; data-line=&quot;43-44&quot;&gt;&lt;code&gt;    private List&amp;lt;Log&amp;gt; logs;
     private Log selectedLog;&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnEnable()
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;53&quot; data-line=&quot;77,78&quot;&gt;&lt;code&gt;    private void OnEnable()
     {
         errorIcon = EditorGUIUtility.Load(&amp;quot;icons/console.erroricon.png&amp;quot;) as Texture2D;
         warningIcon = EditorGUIUtility.Load(&amp;quot;icons/console.warnicon.png&amp;quot;) as Texture2D;
@@ -3366,7 +3237,7 @@ public class ResizablePanels : EditorWindow
         selectedLog = null;
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void DrawUpperPanel()
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;117&quot; data-line=&quot;124-137,150-153&quot;&gt;&lt;code&gt;    private void DrawUpperPanel()
     {
         upperPanel = new Rect(0, menuBarHeight, position.width, (position.height * sizeRatio) - menuBarHeight);
 
@@ -3408,9 +3279,9 @@ public class ResizablePanels : EditorWindow
         GUILayout.EndArea();
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;In order to receive logs from &lt;strong&gt;Debug.Log()&lt;/strong&gt; calls, we need to tap into Unity’s log message event. Generally, we can’t access parts of Unity API that are restricted to main thread but, fortunately, Unity exposes an application event called &lt;strong&gt;logMessageReceived&lt;/strong&gt;. We are going to subscribe to this event in &lt;strong&gt;OnEnable()&lt;/strong&gt; and in the subscriber method we will create a &lt;strong&gt;Log&lt;/strong&gt; object and add it the list of logs.&lt;/p&gt;
+&lt;p&gt;In order to receive logs from &lt;code class=&quot;highlighter-rouge&quot;&gt;Debug.Log()&lt;/code&gt; calls, we need to tap into Unity’s log message event. Generally, we can’t access parts of Unity API that are restricted to main thread but, fortunately, Unity exposes an application event called &lt;code class=&quot;highlighter-rouge&quot;&gt;logMessageReceived&lt;/code&gt;. We are going to subscribe to this event in &lt;code class=&quot;highlighter-rouge&quot;&gt;OnEnable()&lt;/code&gt; and in the subscriber method we will create a &lt;code class=&quot;highlighter-rouge&quot;&gt;Log&lt;/code&gt; object and add it the list of logs.&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnEnable()
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;53&quot; data-line=&quot;80,83-91&quot;&gt;&lt;code&gt;    private void OnEnable()
     {
         errorIcon = EditorGUIUtility.Load(&amp;quot;icons/console.erroricon.png&amp;quot;) as Texture2D;
         warningIcon = EditorGUIUtility.Load(&amp;quot;icons/console.warnicon.png&amp;quot;) as Texture2D;
@@ -3450,13 +3321,13 @@ public class ResizablePanels : EditorWindow
         Application.logMessageReceived -= LogMessageReceived;
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void LogMessageReceived(string condition, string stackTrace, LogType type)
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;239&quot; data-line=&quot;239-243&quot;&gt;&lt;code&gt;    private void LogMessageReceived(string condition, string stackTrace, LogType type)
     {
         Log l = new Log(false, condition, stackTrace, type);
         logs.Add(l);
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Time for the ultimate test: take your &lt;strong&gt;ResizablePanels.cs&lt;/strong&gt; code to a working application of yours or just create a new &lt;strong&gt;Monobehaviour&lt;/strong&gt; in your current project. Throw in a couple of &lt;strong&gt;Debug.Log()&lt;/strong&gt;, &lt;strong&gt;Debug.LogWarning()&lt;/strong&gt; and &lt;strong&gt;Debug.LogError()&lt;/strong&gt; calls and see how your window works.&lt;/p&gt;
+&lt;p&gt;Time for the ultimate test: take your &lt;strong&gt;ResizablePanels.cs&lt;/strong&gt; code to a working application of yours or just create a new &lt;code class=&quot;highlighter-rouge&quot;&gt;Monobehaviour&lt;/code&gt; in your current project. Throw in a couple of &lt;code class=&quot;highlighter-rouge&quot;&gt;Debug.Log()&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Debug.LogWarning()&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;Debug.LogError()&lt;/code&gt; calls and see how your window works.&lt;/p&gt;
 
 &lt;div class=&quot;img-wrapper&quot;&gt;
     
@@ -3478,268 +3349,7 @@ public class ResizablePanels : EditorWindow
   &lt;li&gt;Subscribing to Unity’s Debug events.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;It doesn’t seem like a lot, but believe me, we have covered everything you need to know in order to build your own editor windows. In the next blog post, we will have a look at node-based editors and start creating them for ourselves. And as I promised, here is the script in full, below. Until next time.&lt;/p&gt;
-
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
-using UnityEditor;
-using System.Collections.Generic;
-
-public class ResizablePanels : EditorWindow
-{
-    private Rect upperPanel;
-    private Rect lowerPanel;
-    private Rect resizer;
-    private Rect menuBar;
-
-    private float sizeRatio = 0.5f;
-    private bool isResizing;
- 
-    private float resizerHeight = 5f; 
-    private float menuBarHeight = 20f;
-     
-    private bool collapse = false;
-    private bool clearOnPlay = false;
-    private bool errorPause = false;
-    private bool showLog = false;
-    private bool showWarnings = false;
-    private bool showErrors = false;
- 
-    private Vector2 upperPanelScroll;;
-    private Vector2 lowerPanelScroll;
-
-    private GUIStyle resizerStyle;
-    private GUIStyle boxStyle;
-    private GUIStyle textAreaStyle;
- 
-    private Texture2D boxBgOdd;
-    private Texture2D boxBgEven;
-    private Texture2D boxBgSelected;
-    private Texture2D icon;
-    private Texture2D errorIcon;
-    private Texture2D errorIconSmall;
-    private Texture2D warningIcon;
-    private Texture2D warningIconSmall;
-    private Texture2D infoIcon;
-    private Texture2D infoIconSmall;
- 
-    private List&amp;lt;Log&amp;gt; logs;
-    private Log selectedLog;
-
-    [MenuItem(&amp;quot;Window/Resizable Panels&amp;quot;)]
-    private static void OpenWindow()
-    {
-        ResizablePanels window = GetWindow&amp;lt;ResizablePanels&amp;gt;();
-        window.titleContent = new GUIContent(&amp;quot;Resizable Panels&amp;quot;);
-    }
-
-    private void OnEnable()
-    {
-        errorIcon = EditorGUIUtility.Load(&amp;quot;icons/console.erroricon.png&amp;quot;) as Texture2D;
-        warningIcon = EditorGUIUtility.Load(&amp;quot;icons/console.warnicon.png&amp;quot;) as Texture2D;
-        infoIcon = EditorGUIUtility.Load(&amp;quot;icons/console.infoicon.png&amp;quot;) as Texture2D;
- 
-        errorIconSmall = EditorGUIUtility.Load(&amp;quot;icons/console.erroricon.sml.png&amp;quot;) as Texture2D;
-        warningIconSmall = EditorGUIUtility.Load(&amp;quot;icons/console.warnicon.sml.png&amp;quot;) as Texture2D;
-        infoIconSmall = EditorGUIUtility.Load(&amp;quot;icons/console.infoicon.sml.png&amp;quot;) as Texture2D;
- 
-        resizerStyle = new GUIStyle();
-        resizerStyle.normal.background = EditorGUIUtility.Load(&amp;quot;icons/d_AvatarBlendBackground.png&amp;quot;) as Texture2D;
-        
-        boxStyle = new GUIStyle();
-        boxStyle.normal.textColor = new Color(0.7f, 0.7f, 0.7f);
-        
-        boxBgOdd = EditorGUIUtility.Load(&amp;quot;builtin skins/darkskin/images/cn entrybackodd.png&amp;quot;) as Texture2D;
-        boxBgEven = EditorGUIUtility.Load(&amp;quot;builtin skins/darkskin/images/cnentrybackeven.png&amp;quot;) as Texture2D;
-        boxBgSelected = EditorGUIUtility.Load(&amp;quot;builtin skins/darkskin/images/menuitemhover.png&amp;quot;) as Texture2D;
-
-        textAreaStyle = new GUIStyle();
-        textAreaStyle.normal.textColor = new Color(0.9f, 0.9f, 0.9f);
-        textAreaStyle.normal.background = EditorGUIUtility.Load(&amp;quot;builtin skins/darkskin/images/projectbrowsericonareabg.png&amp;quot;) as Texture2D;
-
-        logs = new List&amp;lt;Log&amp;gt;();
-        selectedLog = null; 
-
-        Application.logMessageReceived += LogMessageReceived;
-    }
-
-    private void OnDisable()
-    {
-        Application.logMessageReceived -= LogMessageReceived;
-    }
- 
-    private void OnDestroy()
-    {
-        Application.logMessageReceived -= LogMessageReceived;
-    }
-
-    private void OnGUI()
-    {        
-        DrawMenuBar();
-        DrawUpperPanel();
-        DrawLowerPanel();
-        DrawResizer();
-
-        ProcessEvents(Event.current);
-
-        if (GUI.changed) Repaint();
-    }
-
-    private void DrawMenuBar()
-    {
-        menuBar = new Rect(0, 0, position.width, menuBarHeight);
- 
-        GUILayout.BeginArea(menuBar, EditorStyles.toolbar);
-        GUILayout.BeginHorizontal();
- 
-        GUILayout.Button(new GUIContent(&amp;quot;Clear&amp;quot;), EditorStyles.toolbarButton, GUILayout.Width(35));
-        GUILayout.Space(5);
- 
-        collapse = GUILayout.Toggle(collapse, new GUIContent(&amp;quot;Collapse&amp;quot;), EditorStyles.toolbarButton, GUILayout.Width(50));
-        clearOnPlay = GUILayout.Toggle(clearOnPlay, new GUIContent(&amp;quot;Clear On Play&amp;quot;), EditorStyles.toolbarButton, GUILayout.Width(70));
-        errorPause = GUILayout.Toggle(errorPause, new GUIContent(&amp;quot;Error Pause&amp;quot;), EditorStyles.toolbarButton, GUILayout.Width(60));
- 
-        GUILayout.FlexibleSpace();
- 
-        showLog = GUILayout.Toggle(showLog, new GUIContent(&amp;quot;L&amp;quot;, infoIconSmall), EditorStyles.toolbarButton, GUILayout.Width(30));
-        showWarnings = GUILayout.Toggle(showWarnings, new GUIContent(&amp;quot;W&amp;quot;, warningIconSmall), EditorStyles.toolbarButton, GUILayout.Width(30));
-        showErrors = GUILayout.Toggle(showErrors, new GUIContent(&amp;quot;E&amp;quot;, errorIconSmall), EditorStyles.toolbarButton, GUILayout.Width(30));
- 
-        GUILayout.EndHorizontal();
-        GUILayout.EndArea();
-    }
-
-    private void DrawUpperPanel()
-    {
-        upperPanel = new Rect(0, menuBarHeight, position.width, (position.height * sizeRatio) - menuBarHeight);
-
-        GUILayout.BeginArea(upperPanel);
-        upperPanelScroll = GUILayout.BeginScrollView(upperPanelScroll);
-        
-        for (int i = 0; i &amp;lt; logs.Count; i++)
-        {
-            if (DrawBox(logs[i].info, logs[i].type, i % 2 == 0, logs[i].isSelected))
-            {
-                if (selectedLog != null)
-                {
-                    selectedLog.isSelected = false;
-                }
- 
-                logs[i].isSelected = true;
-                selectedLog = logs[i];
-                GUI.changed = true;
-            }
-        }
- 
-        GUILayout.EndScrollView();
-        GUILayout.EndArea();
-    }
-
-    private void DrawLowerPanel()
-    {
-        lowerPanel = new Rect(0, (position.height * sizeRatio) + resizerHeight, position.width, (position.height * (1 - sizeRatio)) - resizerHeight);
-
-        GUILayout.BeginArea(lowerPanel);
-        lowerPanelScroll = GUILayout.BeginScrollView(lowerPanelScroll);
- 
-        if (selectedLog != null)
-        {
-            GUILayout.TextArea(selectedLog.message, textAreaStyle);
-        }
- 
-        GUILayout.EndScrollView();
-        GUILayout.EndArea();
-    }
-
-    private void DrawResizer()
-    {
-        resizer = new Rect(0, (position.height * sizeRatio) - resizerHeight, position.width, resizerHeight * 2);
-
-        GUILayout.BeginArea(new Rect(resizer.position + (Vector2.up * resizerHeight), new Vector2(position.width, 2)), resizerStyle);
-        GUILayout.EndArea();
-
-        EditorGUIUtility.AddCursorRect(resizer, MouseCursor.ResizeVertical);
-    }
-
-    private bool DrawBox(string content, BoxType boxType, bool isOdd, bool isSelected)
-    {
-        if (isSelected)
-        {
-            boxStyle.normal.background = boxBgSelected;
-        }
-        else 
-        {
-            if (isOdd)
-            {
-                boxStyle.normal.background = boxBgOdd;
-            }
-            else
-            {
-                boxStyle.normal.background = boxBgEven;
-            }
-        }
-
-        switch (boxType)
-        {
-            case LogType.Error: icon = errorIcon; break;
-            case LogType.Exception: icon = errorIcon; break;
-            case LogType.Assert: icon = errorIcon; break;
-            case LogType.Warning: icon = warningIcon; break;
-            case LogType.Log: icon = infoIcon; break;
-        }
-
-        return GUILayout.Button(new GUIContent(content, icon), boxStyle, GUILayout.ExpandWidth(true), GUILayout.Height(30));
-    }
-
-    private void ProcessEvents(Event e)
-    {
-        switch (e.type)
-        {
-            case EventType.MouseDown:
-                if (e.button == 0 &amp;amp;amp;&amp;amp;amp; resizer.Contains(e.mousePosition))
-                {
-                    isResizing = true;
-                }
-                break;
-
-            case EventType.MouseUp:
-                isResizing = false;
-                break;
-        }
-
-        Resize(e);
-    }
-
-    private void Resize(Event e)
-    {
-        if (isResizing)
-        {
-            sizeRatio = e.mousePosition.y / position.height;
-            Repaint();
-        }
-    }
-
-    private void LogMessageReceived(string condition, string stackTrace, LogType type)
-    {
-        Log l = new Log(false, condition, stackTrace, type);
-        logs.Add(l);
-    }
-}
-
-public class Log
-{
-    public bool isSelected;
-    public string info;
-    public string message;
-    public LogType type;
- 
-    public Log(bool isSelected, string info, string message, LogType type)
-    {
-        this.isSelected = isSelected;
-        this.info = info;
-        this.message = message;
-        this.type = type;
-    }
-}&lt;/code&gt;&lt;/pre&gt;</content><author><name>Oguz Konya</name></author><summary type="html">In our last post we created a Unity window and added two resizable panels. In this post, we will improve upon it and make it a clone of Unity’s console window. This post is going to be a little bit longer, so I will omit the previously written code, but the final version will still be available in full at the end.</summary></entry><entry><title type="html">Creating Editor Windows in Unity</title><link href="https://oguzkonya.github.io/creating-editor-windows-in-unity/" rel="alternate" type="text/html" title="Creating Editor Windows in Unity" /><published>2019-08-01T00:00:00+00:00</published><updated>2019-08-01T00:00:00+00:00</updated><id>https://oguzkonya.github.io/creating-editor-windows-in-unity</id><content type="html" xml:base="https://oguzkonya.github.io/creating-editor-windows-in-unity/">&lt;p&gt;For the last decade, Unity has been a great platform for developing games that provides a large number of tools to developers: rendering engine, physics engine, animation systems, audio mixers etc. However, when creating levels or generating in-game data, Unity falls short, because each game is unique and requires different kinds of tools. Thankfully, Unity has an API available to us developers to create our own editor windows, custom drawers and inspector panels. In this series of blog posts, I am going to show you how I develop custom editors in Unity for designers and artists. We will start by creating an editor window, put two panels in it, and then make it resizable. In the &lt;a href=&quot;/creating-clone-unitys-console-window/&quot;&gt;next&lt;/a&gt; post, we will turn that window into a clone of Unity’s own Console window.&lt;/p&gt;
+&lt;p&gt;It doesn’t seem like a lot, but believe me, we have covered everything you need to know in order to build your own editor windows. In the next blog post, we will have a look at node-based editors and start creating them for ourselves. And as I promised, &lt;a href=&quot;https://github.com/oguzkonya/post--creating-unity-console-window&quot;&gt;here&lt;/a&gt; is the script in full. Until next time.&lt;/p&gt;</content><author><name>Oguz Konya</name></author><summary type="html">In our last post we created a Unity window and added two resizable panels. In this post, we will improve upon it and make it a clone of Unity’s console window. This post is going to be a little bit longer, so I will omit the previously written code, but the final version will still be available in full at the end.</summary></entry><entry><title type="html">Creating Editor Windows in Unity</title><link href="https://oguzkonya.github.io/creating-editor-windows-in-unity/" rel="alternate" type="text/html" title="Creating Editor Windows in Unity" /><published>2019-08-01T00:00:00+00:00</published><updated>2019-08-01T00:00:00+00:00</updated><id>https://oguzkonya.github.io/creating-editor-windows-in-unity</id><content type="html" xml:base="https://oguzkonya.github.io/creating-editor-windows-in-unity/">&lt;p&gt;For the last decade, Unity has been a great platform for developing games that provides a large number of tools to developers: rendering engine, physics engine, animation systems, audio mixers etc. However, when creating levels or generating in-game data, Unity falls short, because each game is unique and requires different kinds of tools. Thankfully, Unity has an API available to us developers to create our own editor windows, custom drawers and inspector panels. In this series of blog posts, I am going to show you how I develop custom editors in Unity for designers and artists. We will start by creating an editor window, put two panels in it, and then make it resizable. In the &lt;a href=&quot;/creating-clone-unitys-console-window/&quot;&gt;next&lt;/a&gt; post, we will turn that window into a clone of Unity’s own Console window.&lt;/p&gt;
 
 &lt;h2 id=&quot;creating-an-editor-window&quot;&gt;Creating an Editor Window&lt;/h2&gt;
 
