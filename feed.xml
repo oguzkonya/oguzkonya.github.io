@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="https://oguzkonya.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://oguzkonya.github.io/" rel="alternate" type="text/html" /><updated>2019-09-22T11:28:17+00:00</updated><id>https://oguzkonya.github.io/feed.xml</id><title type="html">oguzkonya</title><subtitle>Game Developer
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="https://oguzkonya.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://oguzkonya.github.io/" rel="alternate" type="text/html" /><updated>2019-09-25T18:12:37+00:00</updated><id>https://oguzkonya.github.io/feed.xml</id><title type="html">oguzkonya</title><subtitle>Game Developer
 </subtitle><author><name>Oguz Konya</name></author><entry><title type="html">Formatting Big Numbers: The aa Notation</title><link href="https://oguzkonya.github.io/formatting-big-numbers-aa-notation/" rel="alternate" type="text/html" title="Formatting Big Numbers: The aa Notation" /><published>2019-09-05T00:00:00+00:00</published><updated>2019-09-05T00:00:00+00:00</updated><id>https://oguzkonya.github.io/formatting-big-numbers-aa-notation</id><content type="html" xml:base="https://oguzkonya.github.io/formatting-big-numbers-aa-notation/">&lt;p&gt;If you are dealing with big numbers in your game, you might have encountered the issue of properly formatting them. Small numbers such as 1.000, 10.000 or even 100.000 are OK, but as you go larger, you’ll run out of space quickly. I mean, how can you fit &lt;strong&gt;1.000.000.000.000.000.000&lt;/strong&gt; in a button?&lt;/p&gt;
 
 &lt;p&gt;But let’s say, you found a way. Let’s say you were able to put &lt;strong&gt;1.000.000.000.000.000.000&lt;/strong&gt; in a button properly and it looks good (I can’t imagine how, but for the sake of the argument let’s assume it is possible). However, you still have the UX problem of clarity. No one will be able to see this number and say “oh my gosh, I have one quintillion cookies!”. I am a mathematician and even I can’t read it without counting zeros first.&lt;/p&gt;
@@ -1143,7 +1143,7 @@ public class XMLOp
 
 &lt;p&gt;Let’s start by creating a simple editor window. The structure of the code will be similar to that of the console clone we developed in the previous posts: draw the elements first, and then process input, and if the GUI is changed due to input events, force the window to repaint.&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-filename=&quot;NodeBasedEditor.cs&quot;&gt;&lt;code&gt;using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
@@ -1176,9 +1176,9 @@ public class NodeBasedEditor : EditorWindow
 
 &lt;h3 id=&quot;drawing-nodes&quot;&gt;Drawing Nodes&lt;/h3&gt;
 
-&lt;p&gt;Well, since this is a node editor, it should contain a list of nodes, which requires us to define a List&lt;Node&gt;. But first we should define __Node__ class. A __Node__ will be responsible for drawing itself and processing its own events. Unlike __ProcessEvents(Event e)__ in __NodeBasedEditor__, __ProcessEvents(Event e)__ in __Node__ will return a boolean so that we can check whether we should repaint the GUI or not.&lt;/Node&gt;&lt;/p&gt;
+&lt;p&gt;Well, since this is a node editor, it should contain a list of nodes, which requires us to define a &lt;code class=&quot;highlighter-rouge&quot;&gt;List&amp;lt;Node&amp;gt;&lt;/code&gt;. But first we should define &lt;code class=&quot;highlighter-rouge&quot;&gt;Node&lt;/code&gt; class. A &lt;code class=&quot;highlighter-rouge&quot;&gt;Node&lt;/code&gt; will be responsible for drawing itself and processing its own events. Unlike &lt;code class=&quot;highlighter-rouge&quot;&gt;ProcessEvents(Event e)&lt;/code&gt; in &lt;code class=&quot;highlighter-rouge&quot;&gt;NodeBasedEditor&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;ProcessEvents(Event e)&lt;/code&gt; in &lt;code class=&quot;highlighter-rouge&quot;&gt;Node&lt;/code&gt; will return a boolean so that we can check whether we should repaint the GUI or not.&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-filename=&quot;Node.cs&quot;&gt;&lt;code&gt;using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -1211,7 +1211,7 @@ public class Node
     }
 }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-line=&quot;7,27-33&quot; data-filename=&quot;NodeBasedEditor.cs&quot;&gt;&lt;code&gt;using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
@@ -1253,9 +1253,9 @@ public class NodeBasedEditor : EditorWindow
 
 &lt;h3 id=&quot;creating-nodes&quot;&gt;Creating Nodes&lt;/h3&gt;
 
-&lt;p&gt;Nodes are drawn in the editor now, but we can’t see them if we don’t create them. We should display a context menu with an “Add node” item when the user right clicks in the editor. When the user clicks “Add node”, we will create a &lt;strong&gt;Node&lt;/strong&gt; and add it to the list of nodes, so that it is drawn. A &lt;strong&gt;Node&lt;/strong&gt; requires a position, a width, a height and a styling; position will be the mouse’s current position, width will be 200, height will be 50 (yes, I don’t like using magic numbers in code, but this is going to be a simple editor, so the size doesn’t matter for the moment) and we will replicate the Animator window’s node style for styling.&lt;/p&gt;
+&lt;p&gt;Nodes are drawn in the editor now, but we can’t see them if we don’t create them. We should display a context menu with an “Add node” item when the user right clicks in the editor. When the user clicks “Add node”, we will create a &lt;code class=&quot;highlighter-rouge&quot;&gt;Node&lt;/code&gt; and add it to the list of nodes, so that it is drawn. A &lt;code class=&quot;highlighter-rouge&quot;&gt;Node&lt;/code&gt; requires a position, a width, a height and a styling; position will be the mouse’s current position, width will be 200, height will be 50 (yes, I don’t like using magic numbers in code, but this is going to be a simple editor, so the size doesn’t matter for the moment) and we will replicate the Animator window’s node style for styling.&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-line=&quot;9,18-23,47-55,58-63,65-73&quot; data-filename=&quot;NodeBasedEditor.cs&quot;&gt;&lt;code&gt;using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
@@ -1332,9 +1332,9 @@ public class NodeBasedEditor : EditorWindow
 
 &lt;h3 id=&quot;making-nodes-draggable&quot;&gt;Making Nodes Draggable&lt;/h3&gt;
 
-&lt;p&gt;Alright, now we are able to add nodes, but we can’t drag them around. As I mentioned earlier, nodes will be processing their own events, hence we will be handling drag event in &lt;strong&gt;Node&lt;/strong&gt; class. One important thing to note here is that we should be “using” the drag event with &lt;strong&gt;Use()&lt;/strong&gt; method. Later on, we will be adding canvas dragging, and we wouldn’t want to drag a node and the whole canvas at the same time (“using” an event prevents it being used by other processes, i.e. it stops event bubbling). Also note that the for loop in &lt;strong&gt;ProcessNodeEvents(Event e)&lt;/strong&gt; traverses the node list backwards, because the last node is drawn at the top, so it should process the events first.&lt;/p&gt;
+&lt;p&gt;Alright, now we are able to add nodes, but we can’t drag them around. As I mentioned earlier, nodes will be processing their own events, hence we will be handling drag event in &lt;code class=&quot;highlighter-rouge&quot;&gt;Node&lt;/code&gt; class. One important thing to note here is that we should be “using” the drag event with &lt;code class=&quot;highlighter-rouge&quot;&gt;Use()&lt;/code&gt; method. Later on, we will be adding canvas dragging, and we wouldn’t want to drag a node and the whole canvas at the same time (“using” an event prevents it being used by other processes, i.e. it stops event bubbling). Also note that the for loop in &lt;code class=&quot;highlighter-rouge&quot;&gt;ProcessNodeEvents(Event e)&lt;/code&gt; traverses the node list backwards, because the last node is drawn at the top, so it should process the events first.&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-line=&quot;9,31-60&quot; data-filename=&quot;Node.cs&quot;&gt;&lt;code&gt;using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -1399,7 +1399,7 @@ public class Node
     }
 }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnGUI()
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;25&quot; data-line=&quot;29,59-73&quot; data-filename=&quot;NodeBasedEditor.cs&quot;&gt;&lt;code&gt;    private void OnGUI()
     {
         DrawNodes();
 
@@ -1458,11 +1458,11 @@ public class Node
 
 &lt;h3 id=&quot;creating-connections-between-nodes&quot;&gt;Creating Connections Between Nodes&lt;/h3&gt;
 
-&lt;p&gt;Our node editor now has nodes, but we should also be able to connect them. In order to do this, we need two connection points (in and out) on a node and a connection between them. A connection point has a rectangle (so that we can draw it), has a type (in or out), has a style and it references its parent node. Therefore, our &lt;strong&gt;ConnectionPoint&lt;/strong&gt; class will be a very simple one; drawing a button at a specific position and doing an action when this button is clicked.&lt;/p&gt;
+&lt;p&gt;Our node editor now has nodes, but we should also be able to connect them. In order to do this, we need two connection points (in and out) on a node and a connection between them. A connection point has a rectangle (so that we can draw it), has a type (in or out), has a style and it references its parent node. Therefore, our &lt;code class=&quot;highlighter-rouge&quot;&gt;ConnectionPoint&lt;/code&gt; class will be a very simple one; drawing a button at a specific position and doing an action when this button is clicked.&lt;/p&gt;
 
-&lt;p&gt;On the other hand, a connection has two connection points and an action to remove it. &lt;strong&gt;Connection&lt;/strong&gt; class is much simpler than &lt;strong&gt;ConnectionPoint&lt;/strong&gt;, however, it introduces a new concept: &lt;strong&gt;Handles&lt;/strong&gt;. This class is actually used to draw 3D GUI controls in the &lt;strong&gt;Scene&lt;/strong&gt; view, but it is the only class with a bezier drawing method: &lt;strong&gt;Handles.DrawBezier(Vector3, Vector3, Vector3, Vector3, Color, Texture2D, float).&lt;/strong&gt; It takes 7 parameters and the first 4 parameters are the position controls (start position, end position, start tangent, and end tangent), while the rest determine how the bezier looks.&lt;/p&gt;
+&lt;p&gt;On the other hand, a connection has two connection points and an action to remove it. &lt;code class=&quot;highlighter-rouge&quot;&gt;Connection&lt;/code&gt; class is much simpler than &lt;code class=&quot;highlighter-rouge&quot;&gt;ConnectionPoint&lt;/code&gt;, however, it introduces a new concept: &lt;code class=&quot;highlighter-rouge&quot;&gt;Handles&lt;/code&gt;. This class is actually used to draw 3D GUI controls in the &lt;strong&gt;Scene&lt;/strong&gt; view, but it is the only class with a bezier drawing method: &lt;code class=&quot;highlighter-rouge&quot;&gt;Handles.DrawBezier(Vector3, Vector3, Vector3, Vector3, Color, Texture2D, float)&lt;/code&gt;. It takes 7 parameters and the first 4 parameters are the position controls (start position, end position, start tangent, and end tangent), while the rest determine how the bezier looks.&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-filename=&quot;ConnectionPoint.cs&quot;&gt;&lt;code&gt;using System;
 using UnityEngine;
 
 public enum ConnectionPointType { In, Out }
@@ -1513,7 +1513,7 @@ public class ConnectionPoint
     }
 }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-filename=&quot;Connection.cs&quot;&gt;&lt;code&gt;using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -1554,9 +1554,9 @@ public class Connection
 
 &lt;h3 id=&quot;drawing-connections&quot;&gt;Drawing Connections&lt;/h3&gt;
 
-&lt;p&gt;Since the &lt;strong&gt;Connection&lt;/strong&gt; and &lt;strong&gt;ConnectionPoint&lt;/strong&gt; classes are ready, all we have to do is draw connection points in &lt;strong&gt;Node&lt;/strong&gt; class and draw connections in &lt;strong&gt;NodeBasedEditor&lt;/strong&gt;. Changes in &lt;strong&gt;Node&lt;/strong&gt; class will be minimal; we will define two connection points, modify the constructor so that we can pass the styling and actions for them, and draw them in &lt;strong&gt;Draw()&lt;/strong&gt; method.&lt;/p&gt;
+&lt;p&gt;Since the &lt;code class=&quot;highlighter-rouge&quot;&gt;Connection&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;ConnectionPoint&lt;/code&gt; classes are ready, all we have to do is draw connection points in &lt;code class=&quot;highlighter-rouge&quot;&gt;Node&lt;/code&gt; class and draw connections in &lt;code class=&quot;highlighter-rouge&quot;&gt;NodeBasedEditor&lt;/code&gt;. Changes in &lt;code class=&quot;highlighter-rouge&quot;&gt;Node&lt;/code&gt; class will be minimal; we will define two connection points, modify the constructor so that we can pass the styling and actions for them, and draw them in &lt;code class=&quot;highlighter-rouge&quot;&gt;Draw()&lt;/code&gt; method.&lt;/p&gt;
 
-&lt;p&gt;However, &lt;strong&gt;NodeBasedEditor&lt;/strong&gt; needs significant modification. First of all, we need to define styles for connection points. You can use a single style for both of them, but I would like them to look different, so I will be using separate styles for each. We are going to initialize these styles in &lt;strong&gt;OnEnable()&lt;/strong&gt; just like we initialized node style.&lt;/p&gt;
+&lt;p&gt;However, &lt;code class=&quot;highlighter-rouge&quot;&gt;NodeBasedEditor&lt;/code&gt; needs significant modification. First of all, we need to define styles for connection points. You can use a single style for both of them, but I would like them to look different, so I will be using separate styles for each. We are going to initialize these styles in &lt;code class=&quot;highlighter-rouge&quot;&gt;OnEnable()&lt;/code&gt; just like we initialized node style.&lt;/p&gt;
 
 &lt;p&gt;Secondly, we need to keep track of clicked connection points, so that when a user selects an &lt;strong&gt;in&lt;/strong&gt; and &lt;strong&gt;out&lt;/strong&gt;, we should create a connection between them. This step includes most of the additions:&lt;/p&gt;
 
@@ -1568,9 +1568,9 @@ public class Connection
   &lt;li&gt;ClearConnectionSelection() clears selected points.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;And lastly, we need to draw connections in &lt;strong&gt;OnGUI()&lt;/strong&gt; just like we draw nodes.&lt;/p&gt;
+&lt;p&gt;And lastly, we need to draw connections in &lt;code class=&quot;highlighter-rouge&quot;&gt;OnGUI()&lt;/code&gt; just like we draw nodes.&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-line=&quot;11,12,16,20,21,31,32&quot; data-filename=&quot;Node.cs&quot;&gt;&lt;code&gt;using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -1642,7 +1642,7 @@ public class Node
     }
 }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-line=&quot;8,11,12,14,15,30-38,44,63-72,122,125-141,143-159,161-164,166-174,176-180&quot; data-filename=&quot;NodeBasedEditor.cs&quot;&gt;&lt;code&gt;using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
@@ -1828,7 +1828,7 @@ public class NodeBasedEditor : EditorWindow
 
 &lt;p&gt;We should provide feedback when the user clicks on a node so that they would know which node they selected (or if a node is selected at all). This is going to be useful when a user wants to remove a node.&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-line=&quot;10,15-17,19,25,26,52,53,58,59&quot; data-filename=&quot;Node.cs&quot;&gt;&lt;code&gt;using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -1909,7 +1909,7 @@ public class Node
     }
 }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-line=&quot;11,31-33&quot; data-filename=&quot;NodeBasedEditor.cs&quot;&gt;&lt;code&gt;using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
@@ -1956,7 +1956,7 @@ public class NodeBasedEditor : EditorWindow
 
     ...&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnClickAddNode(Vector2 mousePosition)
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;120&quot; data-line=&quot;127&quot; data-filename=&quot;NodeBasedEditor.cs&quot;&gt;&lt;code&gt;    private void OnClickAddNode(Vector2 mousePosition)
     {
         if (nodes == null)
         {
@@ -1970,7 +1970,7 @@ public class NodeBasedEditor : EditorWindow
 
 &lt;p&gt;Some node editors prefer to put the &lt;strong&gt;remove node&lt;/strong&gt; button on the node itself, but in our case it might be dangerous: the user might remove a node accidentally. So, we are going to do the next best thing: put that button on a context menu. Users should select the node first and then right click on it in order to access the &lt;strong&gt;remove node&lt;/strong&gt; button. When the user clicks &lt;strong&gt;remove node&lt;/strong&gt;, we will remove the node from the nodes list. However, the node might have connections to other nodes, so we should remove those connections first.&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-line=&quot;19,21,29,66-70,90-103&quot; data-filename=&quot;Node.cs&quot;&gt;&lt;code&gt;using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -2075,7 +2075,7 @@ public class Node
     }
 }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnClickAddNode(Vector2 mousePosition)
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;120&quot; data-line=&quot;127&quot; data-filename=&quot;NodeBasedEditor.cs&quot;&gt;&lt;code&gt;    private void OnClickAddNode(Vector2 mousePosition)
     {
         if (nodes == null)
         {
@@ -2085,7 +2085,7 @@ public class Node
         nodes.Add(new Node(mousePosition, 200, 50, nodeStyle, selectedNodeStyle, inPointStyle, outPointStyle, OnClickInPoint, OnClickOutPoint, OnClickRemoveNode));
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnClickRemoveNode(Node node)
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;166&quot; data-line=&quot;166-189&quot; data-filename=&quot;NodeBasedEditor.cs&quot;&gt;&lt;code&gt;    private void OnClickRemoveNode(Node node)
     {
         if (connections != null)
         {
@@ -2122,7 +2122,7 @@ public class Node
 
 &lt;p&gt;Making our canvas draggable is the easiest one, so let’s start with that. All we have to do is just apply mouse drag to every single node in the node list.&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;public class NodeBasedEditor : EditorWindow
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;5&quot; data-line=&quot;18&quot; data-filename=&quot;NodeBasedEditor.cs&quot;&gt;&lt;code&gt;public class NodeBasedEditor : EditorWindow
 {
     private List&amp;lt;Node&amp;gt; nodes;
     private List&amp;lt;Connection&amp;gt; connections;
@@ -2139,7 +2139,7 @@ public class Node
 
     ...&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void ProcessEvents(Event e)
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;81&quot; data-line=&quot;83,99-103&quot; data-filename=&quot;NodeBasedEditor.cs&quot;&gt;&lt;code&gt;    private void ProcessEvents(Event e)
     {
         drag = Vector2.zero;
 
@@ -2166,7 +2166,7 @@ public class Node
         }
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnDrag(Vector2 delta)
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;131&quot; data-line=&quot;131-144&quot; data-filename=&quot;NodeBasedEditor.cs&quot;&gt;&lt;code&gt;    private void OnDrag(Vector2 delta)
     {
         drag = delta;
 
@@ -2183,7 +2183,7 @@ public class Node
 
 &lt;p&gt;Next up, drawing the bezier from selected connection point to the mouse position. By drawing this bezier, we will let users know which connection point selected and how their connection will look like.&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnGUI()
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;48&quot; data-line=&quot;48-59&quot; data-filename=&quot;NodeBasedEditor.cs&quot;&gt;&lt;code&gt;    private void OnGUI()
     {
         DrawNodes();
         DrawConnections();
@@ -2196,7 +2196,7 @@ public class Node
         if (GUI.changed) Repaint();
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void DrawConnectionLine(Event e)
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;126&quot; data-line=&quot;126-157&quot; data-filename=&quot;NodeBasedEditor.cs&quot;&gt;&lt;code&gt;    private void DrawConnectionLine(Event e)
     {
         if (selectedInPoint != null &amp;amp;amp;&amp;amp;amp; selectedOutPoint == null)
         {
@@ -2231,7 +2231,7 @@ public class Node
 
 &lt;p&gt;And finally, drawing the grid:&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;public class NodeBasedEditor : EditorWindow
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;5&quot; data-line=&quot;19&quot; data-filename=&quot;NodeBasedEditor.cs&quot;&gt;&lt;code&gt;public class NodeBasedEditor : EditorWindow
 {
     private List&amp;lt;Node&amp;gt; nodes;
     private List&amp;lt;Connection&amp;gt; connections;
@@ -2249,7 +2249,7 @@ public class Node
 
     ...&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnGUI()
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;49&quot; data-line=&quot;51,52,65-88&quot; data-filename=&quot;NodeBasedEditor.cs&quot;&gt;&lt;code&gt;    private void OnGUI()
     {
         DrawGrid(20, 0.2f, Color.gray);
         DrawGrid(100, 0.4f, Color.gray);
@@ -2301,504 +2301,7 @@ public class Node
     &lt;div class=&quot;empty-caption&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
 
-&lt;p&gt;And as always, here is the script in full, below. Until next time.&lt;/p&gt;
-
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
-using UnityEditor;
-using System.Collections.Generic;
-
-public class NodeBasedEditor : EditorWindow
-{
-    private List&amp;lt;Node&amp;gt; nodes;
-    private List&amp;lt;Connection&amp;gt; connections;
-
-    private GUIStyle nodeStyle;
-    private GUIStyle selectedNodeStyle;
-    private GUIStyle inPointStyle;
-    private GUIStyle outPointStyle;
-
-    private ConnectionPoint selectedInPoint;
-    private ConnectionPoint selectedOutPoint;
-
-    private Vector2 offset;
-    private Vector2 drag;
-
-    [MenuItem(&amp;quot;Window/Node Based Editor&amp;quot;)]
-    private static void OpenWindow()
-    {
-        NodeBasedEditor window = GetWindow&amp;lt;NodeBasedEditor&amp;gt;();
-        window.titleContent = new GUIContent(&amp;quot;Node Based Editor&amp;quot;);
-    }
-
-    private void OnEnable()
-    {
-        nodeStyle = new GUIStyle();
-        nodeStyle.normal.background = EditorGUIUtility.Load(&amp;quot;builtin skins/darkskin/images/node1.png&amp;quot;) as Texture2D;
-        nodeStyle.border = new RectOffset(12, 12, 12, 12);
-
-        selectedNodeStyle = new GUIStyle();
-        selectedNodeStyle.normal.background = EditorGUIUtility.Load(&amp;quot;builtin skins/darkskin/images/node1 on.png&amp;quot;) as Texture2D;
-        selectedNodeStyle.border = new RectOffset(12, 12, 12, 12);
-
-        inPointStyle = new GUIStyle();
-        inPointStyle.normal.background = EditorGUIUtility.Load(&amp;quot;builtin skins/darkskin/images/btn left.png&amp;quot;) as Texture2D;
-        inPointStyle.active.background = EditorGUIUtility.Load(&amp;quot;builtin skins/darkskin/images/btn left on.png&amp;quot;) as Texture2D;
-        inPointStyle.border = new RectOffset(4, 4, 12, 12);
-
-        outPointStyle = new GUIStyle();
-        outPointStyle.normal.background = EditorGUIUtility.Load(&amp;quot;builtin skins/darkskin/images/btn right.png&amp;quot;) as Texture2D;
-        outPointStyle.active.background = EditorGUIUtility.Load(&amp;quot;builtin skins/darkskin/images/btn right on.png&amp;quot;) as Texture2D;
-        outPointStyle.border = new RectOffset(4, 4, 12, 12);
-    }
-
-    private void OnGUI()
-    {
-        DrawGrid(20, 0.2f, Color.gray);
-        DrawGrid(100, 0.4f, Color.gray);
-
-        DrawNodes();
-        DrawConnections();
-
-        DrawConnectionLine(Event.current);
-
-        ProcessNodeEvents(Event.current);
-        ProcessEvents(Event.current);
-
-        if (GUI.changed) Repaint();
-    }
-
-    private void DrawGrid(float gridSpacing, float gridOpacity, Color gridColor)
-    {
-        int widthDivs = Mathf.CeilToInt(position.width / gridSpacing);
-        int heightDivs = Mathf.CeilToInt(position.height / gridSpacing);
-
-        Handles.BeginGUI();
-        Handles.color = new Color(gridColor.r, gridColor.g, gridColor.b, gridOpacity);
-
-        offset += drag * 0.5f;
-        Vector3 newOffset = new Vector3(offset.x % gridSpacing, offset.y % gridSpacing, 0);
-
-        for (int i = 0; i &amp;lt; widthDivs; i++)
-        {
-            Handles.DrawLine(new Vector3(gridSpacing * i, -gridSpacing, 0) + newOffset, new Vector3(gridSpacing * i, position.height, 0f) + newOffset);
-        }
-
-        for (int j = 0; j &amp;lt; heightDivs; j++)
-        {
-            Handles.DrawLine(new Vector3(-gridSpacing, gridSpacing * j, 0) + newOffset, new Vector3(position.width, gridSpacing * j, 0f) + newOffset);
-        }
-
-        Handles.color = Color.white;
-        Handles.EndGUI();
-    }
-
-    private void DrawNodes()
-    {
-        if (nodes != null)
-        {
-            for (int i = 0; i &amp;lt; nodes.Count; i++)
-            {
-                nodes[i].Draw();
-            }
-        }
-    }
-
-    private void DrawConnections()
-    {
-        if (connections != null)
-        {
-            for (int i = 0; i &amp;lt; connections.Count; i++)
-            {
-                connections[i].Draw();
-            } 
-        }
-    }
-
-    private void ProcessEvents(Event e)
-    {
-        drag = Vector2.zero;
-
-        switch (e.type)
-        {
-            case EventType.MouseDown:
-                if (e.button == 0)
-                {
-                    ClearConnectionSelection();
-                }
-
-                if (e.button == 1)
-                {
-                    ProcessContextMenu(e.mousePosition);
-                }
-            break;
-
-            case EventType.MouseDrag:
-                if (e.button == 0)
-                {
-                    OnDrag(e.delta);
-                }
-            break;
-        }
-    }
-
-    private void ProcessNodeEvents(Event e)
-    {
-        if (nodes != null)
-        {
-            for (int i = nodes.Count - 1; i &amp;gt;= 0; i--)
-            {
-                bool guiChanged = nodes[i].ProcessEvents(e);
-
-                if (guiChanged)
-                {
-                    GUI.changed = true;
-                }
-            }
-        }
-    }
-
-    private void DrawConnectionLine(Event e)
-    {
-        if (selectedInPoint != null &amp;amp;amp;&amp;amp;amp; selectedOutPoint == null)
-        {
-            Handles.DrawBezier(
-                selectedInPoint.rect.center,
-                e.mousePosition,
-                selectedInPoint.rect.center + Vector2.left * 50f,
-                e.mousePosition - Vector2.left * 50f,
-                Color.white,
-                null,
-                2f
-            );
-
-            GUI.changed = true;
-        }
-
-        if (selectedOutPoint != null &amp;amp;amp;&amp;amp;amp; selectedInPoint == null)
-        {
-            Handles.DrawBezier(
-                selectedOutPoint.rect.center,
-                e.mousePosition,
-                selectedOutPoint.rect.center - Vector2.left * 50f,
-                e.mousePosition + Vector2.left * 50f,
-                Color.white,
-                null,
-                2f
-            );
-
-            GUI.changed = true;
-        }
-    }
-
-    private void ProcessContextMenu(Vector2 mousePosition)
-    {
-        GenericMenu genericMenu = new GenericMenu();
-        genericMenu.AddItem(new GUIContent(&amp;quot;Add node&amp;quot;), false, () =&amp;gt; OnClickAddNode(mousePosition)); 
-        genericMenu.ShowAsContext();
-    }
-
-    private void OnDrag(Vector2 delta)
-    {
-        drag = delta;
-
-        if (nodes != null)
-        {
-            for (int i = 0; i &amp;lt; nodes.Count; i++)
-            {
-                nodes[i].Drag(delta);
-            }
-        }
-
-        GUI.changed = true;
-    }
-
-    private void OnClickAddNode(Vector2 mousePosition)
-    {
-        if (nodes == null)
-        {
-            nodes = new List&amp;lt;Node&amp;gt;();
-        }
-
-        nodes.Add(new Node(mousePosition, 200, 50, nodeStyle, selectedNodeStyle, inPointStyle, outPointStyle, OnClickInPoint, OnClickOutPoint, OnClickRemoveNode));
-    }
-
-    private void OnClickInPoint(ConnectionPoint inPoint)
-    {
-        selectedInPoint = inPoint;
-
-        if (selectedOutPoint != null)
-        {
-            if (selectedOutPoint.node != selectedInPoint.node)
-            {
-                CreateConnection();
-                ClearConnectionSelection(); 
-            }
-            else
-            {
-                ClearConnectionSelection();
-            }
-        }
-    }
-
-    private void OnClickOutPoint(ConnectionPoint outPoint)
-    {
-        selectedOutPoint = outPoint;
-
-        if (selectedInPoint != null)
-        {
-            if (selectedOutPoint.node != selectedInPoint.node)
-            {
-                CreateConnection();
-                ClearConnectionSelection();
-            }
-            else
-            {
-                ClearConnectionSelection();
-            }
-        }
-    }
-
-    private void OnClickRemoveNode(Node node)
-    {
-        if (connections != null)
-        {
-            List&amp;lt;Connection&amp;gt; connectionsToRemove = new List&amp;lt;Connection&amp;gt;();
-
-            for (int i = 0; i &amp;lt; connections.Count; i++)
-            {
-                if (connections[i].inPoint == node.inPoint || connections[i].outPoint == node.outPoint)
-                {
-                    connectionsToRemove.Add(connections[i]);
-                }
-            }
-
-            for (int i = 0; i &amp;lt; connectionsToRemove.Count; i++)
-            {
-                connections.Remove(connectionsToRemove[i]);
-            }
-
-            connectionsToRemove = null;
-        }
-
-        nodes.Remove(node);
-    }
-
-    private void OnClickRemoveConnection(Connection connection)
-    {
-        connections.Remove(connection);
-    }
-
-    private void CreateConnection()
-    {
-        if (connections == null)
-        {
-            connections = new List&amp;lt;Connection&amp;gt;();
-        }
-
-        connections.Add(new Connection(selectedInPoint, selectedOutPoint, OnClickRemoveConnection));
-    }
-
-    private void ClearConnectionSelection()
-    {
-        selectedInPoint = null;
-        selectedOutPoint = null;
-    }
-}&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System;
-using UnityEditor;
-using UnityEngine;
-
-public class Node
-{
-    public Rect rect;
-    public string title;
-    public bool isDragged;
-    public bool isSelected;
-
-    public ConnectionPoint inPoint;
-    public ConnectionPoint outPoint;
-
-    public GUIStyle style;
-    public GUIStyle defaultNodeStyle;
-    public GUIStyle selectedNodeStyle;
-
-    public Action&amp;lt;Node&amp;gt; OnRemoveNode;
-
-    public Node(Vector2 position, float width, float height, GUIStyle nodeStyle, GUIStyle selectedStyle, GUIStyle inPointStyle, GUIStyle outPointStyle, Action&amp;lt;ConnectionPoint&amp;gt; OnClickInPoint, Action&amp;lt;ConnectionPoint&amp;gt; OnClickOutPoint, Action&amp;lt;Node&amp;gt; OnClickRemoveNode)
-    {
-        rect = new Rect(position.x, position.y, width, height);
-        style = nodeStyle;
-        inPoint = new ConnectionPoint(this, ConnectionPointType.In, inPointStyle, OnClickInPoint);
-        outPoint = new ConnectionPoint(this, ConnectionPointType.Out, outPointStyle, OnClickOutPoint);
-        defaultNodeStyle = nodeStyle;
-        selectedNodeStyle = selectedStyle;
-        OnRemoveNode = OnClickRemoveNode;
-    }
-
-    public void Drag(Vector2 delta)
-    {
-        rect.position += delta;
-    }
-
-    public void Draw()
-    {
-        inPoint.Draw();
-        outPoint.Draw();
-        GUI.Box(rect, title, style);
-    }
-
-    public bool ProcessEvents(Event e)
-    {
-        switch (e.type)
-        {
-            case EventType.MouseDown:
-                if (e.button == 0)
-                {
-                    if (rect.Contains(e.mousePosition))
-                    {
-                        isDragged = true;
-                        GUI.changed = true;
-                        isSelected = true;
-                        style = selectedNodeStyle;
-                    }
-                    else
-                    {
-                        GUI.changed = true;
-                        isSelected = false;
-                        style = defaultNodeStyle;
-                    }
-                }
-
-                if (e.button == 1 &amp;amp;amp;&amp;amp;amp; isSelected &amp;amp;amp;&amp;amp;amp; rect.Contains(e.mousePosition))
-                {
-                    ProcessContextMenu();
-                    e.Use();
-                }
-                break;
-
-            case EventType.MouseUp:
-                isDragged = false;
-                break;
-
-            case EventType.MouseDrag:
-                if (e.button == 0 &amp;amp;amp;&amp;amp;amp; isDragged)
-                {
-                    Drag(e.delta);
-                    e.Use();
-                    return true;
-                }
-                break;
-        }
-
-        return false;
-    }
-
-    private void ProcessContextMenu()
-    {
-        GenericMenu genericMenu = new GenericMenu();
-        genericMenu.AddItem(new GUIContent(&amp;quot;Remove node&amp;quot;), false, OnClickRemoveNode);
-        genericMenu.ShowAsContext();
-    }
-
-    private void OnClickRemoveNode()
-    {
-        if (OnRemoveNode != null)
-        {
-            OnRemoveNode(this);
-        }
-    }
-}&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System;
-using UnityEditor;
-using UnityEngine;
-
-public class Connection
-{
-    public ConnectionPoint inPoint;
-    public ConnectionPoint outPoint;
-    public Action&amp;lt;Connection&amp;gt; OnClickRemoveConnection;
-
-    public Connection(ConnectionPoint inPoint, ConnectionPoint outPoint, Action&amp;lt;Connection&amp;gt; OnClickRemoveConnection)
-    {
-        this.inPoint = inPoint;
-        this.outPoint = outPoint;
-        this.OnClickRemoveConnection = OnClickRemoveConnection;
-    }
-
-    public void Draw()
-    {
-        Handles.DrawBezier(
-            inPoint.rect.center,
-            outPoint.rect.center,
-            inPoint.rect.center + Vector2.left * 50f,
-            outPoint.rect.center - Vector2.left * 50f,
-            Color.white,
-            null,
-            2f
-        );
-
-        if (Handles.Button((inPoint.rect.center + outPoint.rect.center) * 0.5f, Quaternion.identity, 4, 8, Handles.RectangleCap))
-        {
-            if (OnClickRemoveConnection != null)
-            {
-                OnClickRemoveConnection(this);
-            }
-        }
-    }
-}&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System;
-using UnityEngine;
-
-public enum ConnectionPointType { In, Out }
-
-public class ConnectionPoint
-{
-    public Rect rect;
-
-    public ConnectionPointType type;
-
-    public Node node;
-
-    public GUIStyle style;
-
-    public Action&amp;lt;ConnectionPoint&amp;gt; OnClickConnectionPoint;
-
-    public ConnectionPoint(Node node, ConnectionPointType type, GUIStyle style, Action&amp;lt;ConnectionPoint&amp;gt; OnClickConnectionPoint)
-    {
-        this.node = node;
-        this.type = type;
-        this.style = style;
-        this.OnClickConnectionPoint = OnClickConnectionPoint;
-        rect = new Rect(0, 0, 10f, 20f);
-    }
-
-    public void Draw()
-    {
-        rect.y = node.rect.y + (node.rect.height * 0.5f) - rect.height * 0.5f;
-
-        switch (type)
-        {
-            case ConnectionPointType.In:
-            rect.x = node.rect.x - rect.width + 8f;
-            break;
-
-            case ConnectionPointType.Out:
-            rect.x = node.rect.x + node.rect.width - 8f;
-            break;
-        }
-
-        if (GUI.Button(rect, &amp;quot;&amp;quot;, style))
-        {
-            if (OnClickConnectionPoint != null)
-            {
-                OnClickConnectionPoint(this);
-            }
-        }
-    }
-}&lt;/code&gt;&lt;/pre&gt;</content><author><name>Oguz Konya</name></author><summary type="html">Node based editors are frequently used in game engines; Unity has Animator window, Unreal Engine has blueprint system, some other game engines have dialogue systems. In this blog post, we will create our own node based editor in Unity. It’s going to be simple node editor that you’ll be able to improve upon later (see the below image for an example). I am going to assume that you are already familiar with editor scripting, but if you are not, please take your time to have a look at this post and this post.</summary></entry><entry><title type="html">Creating a Clone of Unity’s Console Window</title><link href="https://oguzkonya.github.io/creating-clone-unitys-console-window/" rel="alternate" type="text/html" title="Creating a Clone of Unity's Console Window" /><published>2019-08-08T00:00:00+00:00</published><updated>2019-08-08T00:00:00+00:00</updated><id>https://oguzkonya.github.io/creating-clone-unitys-console-window</id><content type="html" xml:base="https://oguzkonya.github.io/creating-clone-unitys-console-window/">&lt;p&gt;In our last &lt;a href=&quot;/creating-editor-windows-in-unity/&quot;&gt;post&lt;/a&gt; we created a Unity window and added two resizable panels. In this post, we will improve upon it and make it a clone of Unity’s console window. This post is going to be a little bit longer, so I will omit the previously written code, but the final version will still be available in full at the end.&lt;/p&gt;
+&lt;p&gt;And as always, &lt;a href=&quot;https://github.com/oguzkonya/post--creating-node-based-editor&quot;&gt;here&lt;/a&gt; is the script in full, below. Until next time.&lt;/p&gt;</content><author><name>Oguz Konya</name></author><summary type="html">Node based editors are frequently used in game engines; Unity has Animator window, Unreal Engine has blueprint system, some other game engines have dialogue systems. In this blog post, we will create our own node based editor in Unity. It’s going to be simple node editor that you’ll be able to improve upon later (see the below image for an example). I am going to assume that you are already familiar with editor scripting, but if you are not, please take your time to have a look at this post and this post.</summary></entry><entry><title type="html">Creating a Clone of Unity’s Console Window</title><link href="https://oguzkonya.github.io/creating-clone-unitys-console-window/" rel="alternate" type="text/html" title="Creating a Clone of Unity's Console Window" /><published>2019-08-08T00:00:00+00:00</published><updated>2019-08-08T00:00:00+00:00</updated><id>https://oguzkonya.github.io/creating-clone-unitys-console-window</id><content type="html" xml:base="https://oguzkonya.github.io/creating-clone-unitys-console-window/">&lt;p&gt;In our last &lt;a href=&quot;/creating-editor-windows-in-unity/&quot;&gt;post&lt;/a&gt; we created a Unity window and added two resizable panels. In this post, we will improve upon it and make it a clone of Unity’s console window. This post is going to be a little bit longer, so I will omit the previously written code, but the final version will still be available in full at the end.&lt;/p&gt;
 
 &lt;p&gt;Before we start coding, let’s examine the console window and see what we should add.&lt;/p&gt;
 
