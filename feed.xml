@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="https://oguzkonya.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://oguzkonya.github.io/" rel="alternate" type="text/html" /><updated>2019-09-25T18:12:37+00:00</updated><id>https://oguzkonya.github.io/feed.xml</id><title type="html">oguzkonya</title><subtitle>Game Developer
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="https://oguzkonya.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://oguzkonya.github.io/" rel="alternate" type="text/html" /><updated>2020-01-29T14:41:53+00:00</updated><id>https://oguzkonya.github.io/feed.xml</id><title type="html">oguzkonya</title><subtitle>Game Developer
 </subtitle><author><name>Oguz Konya</name></author><entry><title type="html">Formatting Big Numbers: The aa Notation</title><link href="https://oguzkonya.github.io/formatting-big-numbers-aa-notation/" rel="alternate" type="text/html" title="Formatting Big Numbers: The aa Notation" /><published>2019-09-05T00:00:00+00:00</published><updated>2019-09-05T00:00:00+00:00</updated><id>https://oguzkonya.github.io/formatting-big-numbers-aa-notation</id><content type="html" xml:base="https://oguzkonya.github.io/formatting-big-numbers-aa-notation/">&lt;p&gt;If you are dealing with big numbers in your game, you might have encountered the issue of properly formatting them. Small numbers such as 1.000, 10.000 or even 100.000 are OK, but as you go larger, you’ll run out of space quickly. I mean, how can you fit &lt;strong&gt;1.000.000.000.000.000.000&lt;/strong&gt; in a button?&lt;/p&gt;
 
 &lt;p&gt;But let’s say, you found a way. Let’s say you were able to put &lt;strong&gt;1.000.000.000.000.000.000&lt;/strong&gt; in a button properly and it looks good (I can’t imagine how, but for the sake of the argument let’s assume it is possible). However, you still have the UX problem of clarity. No one will be able to see this number and say “oh my gosh, I have one quintillion cookies!”. I am a mathematician and even I can’t read it without counting zeros first.&lt;/p&gt;
@@ -261,10 +261,10 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;We’ll start with adding a menu bar, and we’ll copy it from the console window clone:&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private float menuBarHeight = 20f;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;21&quot; data-line=&quot;21,22&quot; data-filename=&quot;NodeBasedEditor.cs&quot;&gt;&lt;code&gt;    private float menuBarHeight = 20f;
     private Rect menuBar;&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void OnGUI()
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;52&quot; data-line=&quot;56,69-82&quot; data-filename=&quot;NodeBasedEditor.cs&quot;&gt;&lt;code&gt;    private void OnGUI()
     {
         DrawGrid(20, 0.2f, Color.gray);
         DrawGrid(100, 0.4f, Color.gray);
@@ -322,7 +322,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Rule number 1 doesn’t cause that many problems (it still causes some but we’ll get to that), but rule number 2 is problematic. Both of our classes have constructors &lt;strong&gt;with&lt;/strong&gt; parameters. Let’s fix that first:&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    public Node() { }
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;21&quot; data-line=&quot;21&quot; data-filename=&quot;Node.cs&quot;&gt;&lt;code&gt;    public Node() { }
     
     public Node(Vector2 position, float width, float height, GUIStyle nodeStyle, GUIStyle selectedStyle, GUIStyle inPointStyle, GUIStyle outPointStyle, Action&amp;lt;ConnectionPoint&amp;gt; OnClickInPoint, Action&amp;lt;ConnectionPoint&amp;gt; OnClickOutPoint, Action&amp;lt;Node&amp;gt; OnClickRemoveNode)
     {
@@ -335,7 +335,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
         OnRemoveNode = OnClickRemoveNode;
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    public Connection() { }
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;11&quot; data-line=&quot;11&quot; data-filename=&quot;Connection.cs&quot;&gt;&lt;code&gt;    public Connection() { }
     
     public Connection(ConnectionPoint inPoint, ConnectionPoint outPoint, Action&amp;lt;Connection&amp;gt; OnClickRemoveConnection)
     {
@@ -346,7 +346,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Next, we are going to &lt;strong&gt;ignore&lt;/strong&gt; the properties that can’t be serialized or don’t need to be serialized. For example, in &lt;code class=&quot;highlighter-rouge&quot;&gt;Node&lt;/code&gt; class, &lt;code class=&quot;highlighter-rouge&quot;&gt;GUIStyle&lt;/code&gt;s can be left out of serialization, because they are already provided by the editor itself. We don’t need &lt;code class=&quot;highlighter-rouge&quot;&gt;isDragged&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;isSelected&lt;/code&gt; either. Actually, Node class has only one property that needs to be serialized: the &lt;code class=&quot;highlighter-rouge&quot;&gt;rect&lt;/code&gt;. Let’s see how &lt;code class=&quot;highlighter-rouge&quot;&gt;Node&lt;/code&gt; class looks like after properly &lt;strong&gt;ignoring&lt;/strong&gt; unnecessary and unserializable properties:&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;public class Node
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;5&quot; data-line=&quot;9-20&quot; data-filename=&quot;Node.cs&quot;&gt;&lt;code&gt;public class Node
 {
 	public Rect rect;
 
@@ -363,9 +363,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 	[XmlIgnore] public Action&amp;lt;Node&amp;gt; OnRemoveNode;
 
-	public Node()
-	{
-	}&lt;/code&gt;&lt;/pre&gt;
+	public Node() { }&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Node&lt;/code&gt; class is ready to be serialized at this point. So, let’s serialize nodes!&lt;/p&gt;
 
@@ -373,14 +371,14 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Remember the save button which did nothing at all? Well, it should at least save nodes, since they are now serializable. The method for saving nodes is really simple:&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void Save()
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;321&quot; data-line=&quot;321-324&quot; data-filename=&quot;NodeBasedEditor.cs&quot;&gt;&lt;code&gt;    private void Save()
     {
         XMLOp.Serialize(nodes, &amp;quot;Assets/Resources/nodes.xml&amp;quot;);
     }&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;And we are going to call that method when the user clicks Save button:&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void DrawMenuBar()
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;69&quot; data-line=&quot;76-79&quot; data-filename=&quot;NodeBasedEditor.cs&quot;&gt;&lt;code&gt;    private void DrawMenuBar()
     {
         menuBar = new Rect(0, 0, position.width, menuBarHeight);
 
@@ -399,9 +397,9 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
         GUILayout.EndArea();
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Now, open up your Node Based Editor, place a couple of nodes, and then hit Save (you must have a Resources folder under Assets before doing that). Unity will create a file called &lt;code class=&quot;highlighter-rouge&quot;&gt;nodes.xml&lt;/code&gt; in Resources, if you can’t see it, simply right-click on Resources and then click Reimport. Contents of the nodes.xml file should be something like this:&lt;/p&gt;
+&lt;p&gt;Now, open up your &lt;strong&gt;Node Based Editor&lt;/strong&gt;, place a couple of nodes, and then hit &lt;strong&gt;Save&lt;/strong&gt; (you must have a &lt;strong&gt;Resources&lt;/strong&gt; folder under &lt;strong&gt;Assets&lt;/strong&gt; before doing that). Unity will create a file called &lt;code class=&quot;highlighter-rouge&quot;&gt;nodes.xml&lt;/code&gt; in &lt;strong&gt;Resources&lt;/strong&gt;, if you can’t see it, simply right-click on &lt;strong&gt;Resources&lt;/strong&gt; and then click &lt;strong&gt;Reimport&lt;/strong&gt;. Contents of the &lt;code class=&quot;highlighter-rouge&quot;&gt;nodes.xml&lt;/code&gt; file should be something like this:&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-filename=&quot;nodes.xml&quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
 &amp;lt;ArrayOfNode xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xmlns:xsd=&amp;quot;http://www.w3.org/2001/XMLSchema&amp;quot;&amp;gt;
   &amp;lt;Node&amp;gt;
     &amp;lt;rect&amp;gt;
@@ -488,7 +486,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;In order to solve this issue, we need some kind of an identifier for a connection point, i.e a unique ID, so that after deserializing, we can look for those connection points by their IDs and give reference to actual objects to restore connections.&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;public class ConnectionPoint
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;6&quot; data-line=&quot;8,18,22,30&quot; data-filename=&quot;ConnectionPoint.cs&quot;&gt;&lt;code&gt;public class ConnectionPoint
 {
     public string id;
     
@@ -515,13 +513,13 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
         this.id = id ?? Guid.NewGuid().ToString();
     }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;public class Connection
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;5&quot; data-line=&quot;9&quot; data-filename=&quot;Connection.cs&quot;&gt;&lt;code&gt;public class Connection
 {
     public ConnectionPoint inPoint;
     public ConnectionPoint outPoint;
     [XmlIgnore] public Action&amp;lt;Connection&amp;gt; OnClickRemoveConnection;&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;public class Node
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;5&quot; data-line=&quot;13,14&quot; data-filename=&quot;Node.cs&quot;&gt;&lt;code&gt;public class Node
 {
 	public Rect rect;
 
@@ -540,7 +538,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Of course, we need to update our &lt;code class=&quot;highlighter-rouge&quot;&gt;Save&lt;/code&gt; method to include connections as well:&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void Save()
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;325&quot; data-line=&quot;328&quot; data-filename=&quot;NodeBasedEditor.cs&quot;&gt;&lt;code&gt;    private void Save()
     {
         XMLOp.Serialize(nodes, &amp;quot;Assets/Resources/nodes.xml&amp;quot;);
         XMLOp.Serialize(connections, &amp;quot;Assets/Resources/connections.xml&amp;quot;);
@@ -552,7 +550,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;First things first: the Load button should be functional.&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void DrawMenuBar()
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;69&quot; data-line=&quot;83-86&quot; data-filename=&quot;NodeBasedEditor.cs&quot;&gt;&lt;code&gt;    private void DrawMenuBar()
     {
         menuBar = new Rect(0, 0, position.width, menuBarHeight);
 
@@ -577,7 +575,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;We are going to deserialize the contents of the XML files in &lt;code class=&quot;highlighter-rouge&quot;&gt;Load()&lt;/code&gt; method, create nodes and connections and assign them to their respective properties. Deserializing the XML files is a pretty straightforward process; all we have to do is call &lt;code class=&quot;highlighter-rouge&quot;&gt;XMLOp.Deserialize&amp;lt;T&amp;gt;(string)&lt;/code&gt;:&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void Load()
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;335&quot; data-line=&quot;335-342&quot; data-filename=&quot;NodeBasedEditor.cs&quot;&gt;&lt;code&gt;    private void Load()
     {
         var nodesDeserialized = XMLOp.Deserialize&amp;lt;List&amp;lt;Node&amp;gt;&amp;gt;(&amp;quot;Assets/Resources/nodes.xml&amp;quot;);
         var connectionsDeserialized = XMLOp.Deserialize&amp;lt;List&amp;lt;Connection&amp;gt;&amp;gt;(&amp;quot;Assets/Resources/connections.xml&amp;quot;);
@@ -588,7 +586,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;However, deserializing the XML files alone is not enough to restore our editor to its last state, because as you can see in the figure above, we broke the relation between the nodes and connections while serializing and we need to reconnect them. This reconnection process requires finding nodes by IDs and creating a connection between them. This is why we added unique IDs to our &lt;code class=&quot;highlighter-rouge&quot;&gt;ConnectionPoint&lt;/code&gt; class. We need to recreate the &lt;code class=&quot;highlighter-rouge&quot;&gt;ConnectionPoint&lt;/code&gt;s with those IDs, so we are going to add another constructor to Node class:&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    public Node(Vector2 position, float width, float height, GUIStyle nodeStyle, GUIStyle selectedStyle, GUIStyle inPointStyle, GUIStyle outPointStyle, Action&amp;lt;ConnectionPoint&amp;gt; OnClickInPoint,
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;24&quot; data-line=&quot;25,29,30&quot; data-filename=&quot;Node.cs&quot;&gt;&lt;code&gt;    public Node(Vector2 position, float width, float height, GUIStyle nodeStyle, GUIStyle selectedStyle, GUIStyle inPointStyle, GUIStyle outPointStyle, Action&amp;lt;ConnectionPoint&amp;gt; OnClickInPoint,
 		Action&amp;lt;ConnectionPoint&amp;gt; OnClickOutPoint, Action&amp;lt;Node&amp;gt; OnClickRemoveNode, string inPointID, string outPointID)
 	{
 		rect = new Rect(position.x, position.y, width, height);
@@ -602,7 +600,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;This is a new constructor, and it will create a &lt;code class=&quot;highlighter-rouge&quot;&gt;Node&lt;/code&gt; with two &lt;code class=&quot;highlighter-rouge&quot;&gt;ConnectionPoints&lt;/code&gt; with given (instead of generated) IDs. Now we are going to create new nodes based on deserialized nodes:&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void Load()
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;335&quot; data-line=&quot;343-360&quot; data-filename=&quot;NodeBasedEditor.cs&quot;&gt;&lt;code&gt;    private void Load()
     {
         var nodesDeserialized = XMLOp.Deserialize&amp;lt;List&amp;lt;Node&amp;gt;&amp;gt;(&amp;quot;Assets/Resources/nodes.xml&amp;quot;);
         var connectionsDeserialized = XMLOp.Deserialize&amp;lt;List&amp;lt;Connection&amp;gt;&amp;gt;(&amp;quot;Assets/Resources/connections.xml&amp;quot;);
@@ -632,7 +630,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Go ahead and try it. Create a couple of nodes, save it, close the editor, open it again and hit the Load button. You’ll see that your nodes return back to their positions. Let’s deserialize connections and finalize our node based editor:&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;    private void Load()
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-start=&quot;335&quot; data-line=&quot;362-367&quot; data-filename=&quot;NodeBasedEditor.cs&quot;&gt;&lt;code&gt;    private void Load()
     {
         var nodesDeserialized = XMLOp.Deserialize&amp;lt;List&amp;lt;Node&amp;gt;&amp;gt;(&amp;quot;Assets/Resources/nodes.xml&amp;quot;);
         var connectionsDeserialized = XMLOp.Deserialize&amp;lt;List&amp;lt;Connection&amp;gt;&amp;gt;(&amp;quot;Assets/Resources/connections.xml&amp;quot;);
@@ -671,13 +669,13 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;This concludes our tutorial on serializing a node based editor. You now have a fully functioning node based editor with save and load features. If you have any questions or feedback, leave a comment.&lt;/p&gt;
 
-&lt;p&gt;As always, here are the scripts in full, below. Until next time.&lt;/p&gt;</content><author><name>Oguz Konya</name></author><summary type="html">I actually don’t get a lot of feedback on my posts, but one post stood out: Creating a Node Based Editor in Unity. Some people asked for a more advanced version and some asked how they can save and load data to the editor. I can make an advanced version, but it probably wouldn’t cover all usage cases. On the other hand, serializing (and deserializing) a node list is a more common problem. Although I addressed some issues in XML Serialization in Unity post, I would like to complete the node based editor by adding save and load features in this post.</summary></entry><entry><title type="html">XML Serialization in Unity</title><link href="https://oguzkonya.github.io/xml-serialization-and-deserialization-in-unity/" rel="alternate" type="text/html" title="XML Serialization in Unity" /><published>2019-08-22T00:00:00+00:00</published><updated>2019-08-22T00:00:00+00:00</updated><id>https://oguzkonya.github.io/xml-serialization-and-deserialization-in-unity</id><content type="html" xml:base="https://oguzkonya.github.io/xml-serialization-and-deserialization-in-unity/">&lt;p&gt;Unity stores contents of a scene in a custom YAML file called a &lt;strong&gt;Unity scene file&lt;/strong&gt;. While this is convenient for levels which are designed in Unity’s scene editor, it is not very useful for levels which are built at runtime. Moreover, it is not possible to store game related data in scene files, such as properties of weapons, cars, NPCs, etc. (actually, it is possible, but not feasible). Even though there are a few solutions for that kind of data storage in Unity, such as JSON, or SQL, the easiest of them to implement is XML. In this post, I will show you how to store your game data in XML files and read them at runtime.&lt;/p&gt;
+&lt;p&gt;As always, &lt;a href=&quot;https://github.com/oguzkonya/post--serializing-node-based-editor-unity&quot;&gt;here&lt;/a&gt; are the scripts in full. Until next time.&lt;/p&gt;</content><author><name>Oguz Konya</name></author><summary type="html">I actually don’t get a lot of feedback on my posts, but one post stood out: Creating a Node Based Editor in Unity. Some people asked for a more advanced version and some asked how they can save and load data to the editor. I can make an advanced version, but it probably wouldn’t cover all usage cases. On the other hand, serializing (and deserializing) a node list is a more common problem. Although I addressed some issues in XML Serialization in Unity post, I would like to complete the node based editor by adding save and load features in this post.</summary></entry><entry><title type="html">XML Serialization in Unity</title><link href="https://oguzkonya.github.io/xml-serialization-and-deserialization-in-unity/" rel="alternate" type="text/html" title="XML Serialization in Unity" /><published>2019-08-22T00:00:00+00:00</published><updated>2019-08-22T00:00:00+00:00</updated><id>https://oguzkonya.github.io/xml-serialization-and-deserialization-in-unity</id><content type="html" xml:base="https://oguzkonya.github.io/xml-serialization-and-deserialization-in-unity/">&lt;p&gt;Unity stores contents of a scene in a custom YAML file called a &lt;strong&gt;Unity scene file&lt;/strong&gt;. While this is convenient for levels which are designed in Unity’s scene editor, it is not very useful for levels which are built at runtime. Moreover, it is not possible to store game related data in scene files, such as properties of weapons, cars, NPCs, etc. (actually, it is possible, but not feasible). Even though there are a few solutions for that kind of data storage in Unity, such as JSON, or SQL, the easiest of them to implement is XML. In this post, I will show you how to store your game data in XML files and read them at runtime.&lt;/p&gt;
 
 &lt;p&gt;To be able to save data in XML files, first we need to be able to convert objects into XML format and then convert XML format back into objects. This process is called &lt;abbr title=&quot;Converting objects into a form (such as JSON, or XML) that can be easily transported.&quot;&gt;serialization&lt;/abbr&gt; and &lt;abbr title=&quot;Creating objects from transport formats such as JSON, or XML.&quot;&gt;deserialization&lt;/abbr&gt;. C# already has great tools for XML &lt;abbr title=&quot;Converting objects into a form (such as JSON, or XML) that can be easily transported.&quot;&gt;serialization&lt;/abbr&gt;, and we will build upon them to create XML serializer we need.&lt;/p&gt;
 
 &lt;p&gt;First, let’s create a sample class to start serializing:&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;public class Hero
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-filename=&quot;Hero.cs&quot;&gt;&lt;code&gt;public class Hero
 {
     public string name;
 
@@ -698,7 +696,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;In our case, &lt;code class=&quot;highlighter-rouge&quot;&gt;Hero&lt;/code&gt; class already has nothing but public fields and since there isn’t any kind of constructor, it implicitly has a parameterless default constructor.&lt;/p&gt;
 
 &lt;p&gt;Let’s say we want this class to output an XML file just like the following:&lt;/p&gt;
-&lt;pre class=&quot;language-xml  line-numbers &quot;&gt;&lt;code&gt;&amp;lt;Hero&amp;gt;
+&lt;pre class=&quot;language-xml  line-numbers &quot; data-filename=&quot;hero.xml&quot;&gt;&lt;code&gt;&amp;lt;Hero&amp;gt;
     &amp;lt;name&amp;gt;&amp;lt;/name&amp;gt;
     &amp;lt;isBoss&amp;gt;&amp;lt;/isBoss&amp;gt;
     &amp;lt;hitPoints&amp;gt;&amp;lt;/hitPoints&amp;gt;
@@ -707,7 +705,7 @@ unit = firstUnit.toChar() + secondUnit.toChar();&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Generally, producing an XML file in a certain format requires some modification to target class. But, in our case we are not looking for a specific format. All our fields we want to serialize are public and there is a default constructor, therefore, we can start creating the XML file:&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-filename=&quot;XMLSerializer.cs&quot;&gt;&lt;code&gt;using UnityEngine;
 using System.Xml.Serialization;
 using System.IO;
 
@@ -742,7 +740,7 @@ public class XMLSerializer : MonoBehaviour
 
 &lt;p&gt;When you drag&amp;amp;drop this code on an empty game object in Unity and run it, you will see that a file named &lt;code class=&quot;highlighter-rouge&quot;&gt;hero.xml&lt;/code&gt; is created in your Unity project folder and its contents hold Hero data:&lt;/p&gt;
 
-&lt;pre class=&quot;language-xml  line-numbers &quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
+&lt;pre class=&quot;language-xml  line-numbers &quot; data-filename=&quot;hero.xml&quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
 &amp;lt;Hero xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xmlns:xsd=&amp;quot;http://www.w3.org/2001/XMLSchema&amp;quot;&amp;gt;
     &amp;lt;name&amp;gt;Knight of Solamnia&amp;lt;/name&amp;gt;
     &amp;lt;isBoss&amp;gt;true&amp;lt;/isBoss&amp;gt;
@@ -752,7 +750,7 @@ public class XMLSerializer : MonoBehaviour
 
 &lt;p&gt;As you can see, creating an XML file required no more than a few lines of code. But, what if we want to have different tag names in the XML file? Or, to use XML &lt;abbr title=&quot;A method to associate declarative information with the code&quot;&gt;attributes&lt;/abbr&gt; instead of XML elements to store data? Or, to use arrays in our class? To achieve these, we need to modify our base class by adding some XML &lt;abbr title=&quot;A method to associate declarative information with the code&quot;&gt;attributes&lt;/abbr&gt; to our fields. But first, we should change something in our code. I like my code well organized and I favor OOP’s single responsibility principle, so I will move XML &lt;abbr title=&quot;Converting objects into a form (such as JSON, or XML) that can be easily transported.&quot;&gt;serialization&lt;/abbr&gt; part into its own class. This way, we will be able to serialize any type of object with a single line of code:&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System.IO;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-filename=&quot;XMLOp.cs&quot;&gt;&lt;code&gt;using System.IO;
 using System.Xml.Serialization;
 
 public class XMLOp
@@ -768,7 +766,7 @@ public class XMLOp
 
 &lt;p&gt;Now our &lt;code class=&quot;highlighter-rouge&quot;&gt;XMLSerializer&lt;/code&gt; looks like this:&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-filename=&quot;XMLSerializer.cs&quot;&gt;&lt;code&gt;using UnityEngine;
 
 public class XMLSerializer : MonoBehaviour
 {
@@ -806,7 +804,7 @@ public string Name;&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;This attribute indicates that a field will be represented as an XML element. Fields of an object is serialized as XMLElement as default, so this attribute is necessary only to change the name of a field (or force an array to act like an element but we will get to that later). Let’s modify our script file and see what kind of XML file it produces:&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System.Xml.Serialization;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-filename=&quot;Hero.cs&quot;&gt;&lt;code&gt;using System.Xml.Serialization;
 
 public class Hero
 {
@@ -822,7 +820,7 @@ public class Hero
 
 &lt;p&gt;And the output becomes:&lt;/p&gt;
 
-&lt;pre class=&quot;language-xml  line-numbers &quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
+&lt;pre class=&quot;language-xml  line-numbers &quot; data-filename=&quot;hero.xml&quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
 &amp;lt;Hero xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xmlns:xsd=&amp;quot;http://www.w3.org/2001/XMLSchema&amp;quot;&amp;gt;
     &amp;lt;n&amp;gt;Knight of Solamnia&amp;lt;/n&amp;gt;
     &amp;lt;hitPoints&amp;gt;100&amp;lt;/hitPoints&amp;gt;
@@ -836,7 +834,7 @@ public class Hero
 
 &lt;p&gt;This attribute indicates that a field will be represented as an XML attribute.&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System.Xml.Serialization;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-filename=&quot;Hero.cs&quot;&gt;&lt;code&gt;using System.Xml.Serialization;
 
 public class Hero
 {
@@ -853,7 +851,7 @@ public class Hero
 
 &lt;p&gt;And the output becomes:&lt;/p&gt;
 
-&lt;pre class=&quot;language-xml  line-numbers &quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
+&lt;pre class=&quot;language-xml  line-numbers &quot; data-filename=&quot;hero.xml&quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
 &amp;lt;Hero xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xmlns:xsd=&amp;quot;http://www.w3.org/2001/XMLSchema&amp;quot; boss=&amp;quot;true&amp;quot;&amp;gt;
     &amp;lt;n&amp;gt;Knight of Solamnia&amp;lt;/n&amp;gt;
     &amp;lt;hitPoints&amp;gt;100&amp;lt;/hitPoints&amp;gt;
@@ -864,7 +862,7 @@ public class Hero
 
 &lt;p&gt;As I have mentioned before, a field must be public in order to be serialized. This also means that all the public fields will be serialized by the XML serializer. But sometimes, we might need a field to be &lt;strong&gt;not&lt;/strong&gt; serialized without making it private. This is where &lt;code class=&quot;highlighter-rouge&quot;&gt;[XmlIgnore]&lt;/code&gt; comes into play. It indicates that a field will not be represented in the XML file at all.&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System.Xml.Serialization;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-filename=&quot;Hero.cs&quot;&gt;&lt;code&gt;using System.Xml.Serialization;
 
 public class Hero
 {
@@ -882,7 +880,7 @@ public class Hero
 
 &lt;p&gt;And the output becomes:&lt;/p&gt;
 
-&lt;pre class=&quot;language-xml  line-numbers &quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
+&lt;pre class=&quot;language-xml  line-numbers &quot; data-filename=&quot;hero.xml&quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
 &amp;lt;Hero xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xmlns:xsd=&amp;quot;http://www.w3.org/2001/XMLSchema&amp;quot; boss=&amp;quot;true&amp;quot;&amp;gt;
     &amp;lt;n&amp;gt;Knight of Solamnia&amp;lt;/n&amp;gt;
     &amp;lt;baseDamage&amp;gt;50&amp;lt;/baseDamage&amp;gt;
@@ -892,7 +890,7 @@ public class Hero
 
 &lt;p&gt;The object that is serialized by the XML serializer becomes the root of the XML file. As a result, object’s class name becomes the name of the root tag. Sometimes, we want to use some other name in order to provide clarification. This attribute indicates that the name of the root tag will be the provided string. It should be noted that &lt;code class=&quot;highlighter-rouge&quot;&gt;[XmlRoot]&lt;/code&gt; attribute can only be used on classes, structs, enumerations or interfaces unlike the previous &lt;abbr title=&quot;A method to associate declarative information with the code&quot;&gt;attributes&lt;/abbr&gt;.&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System.Xml.Serialization;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-filename=&quot;Hero.cs&quot;&gt;&lt;code&gt;using System.Xml.Serialization;
 
 [XmlRoot(&amp;quot;Knight&amp;quot;)]
 public class Hero
@@ -911,7 +909,7 @@ public class Hero
 
 &lt;p&gt;And the output becomes:&lt;/p&gt;
 
-&lt;pre class=&quot;language-xml  line-numbers &quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
+&lt;pre class=&quot;language-xml  line-numbers &quot; data-filename=&quot;hero.xml&quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
 &amp;lt;Knight xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xmlns:xsd=&amp;quot;http://www.w3.org/2001/XMLSchema&amp;quot; boss=&amp;quot;true&amp;quot;&amp;gt;
     &amp;lt;n&amp;gt;Knight of Solamnia&amp;lt;/n&amp;gt;
     &amp;lt;baseDamage&amp;gt;50&amp;lt;/baseDamage&amp;gt;
@@ -920,7 +918,7 @@ public class Hero
 &lt;h3 id=&quot;xmlarraystring-and-xmlarrayitemstring&quot;&gt;[XmlArray(String)] and [XmlArrayItem(String)]&lt;/h3&gt;
 &lt;p&gt;But, how about arrays? What if our Hero has a int array which includes combo rewards?&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System.Xml.Serialization;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-filename=&quot;Hero.cs&quot;&gt;&lt;code&gt;using System.Xml.Serialization;
 
 public class Hero
 {
@@ -938,7 +936,7 @@ public class Hero
     public int[] comboRewards;
 }&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-filename=&quot;XMLSerializer.cs&quot;&gt;&lt;code&gt;using UnityEngine;
 
 public class XMLSerializer : MonoBehaviour
 {
@@ -957,7 +955,7 @@ public class XMLSerializer : MonoBehaviour
 
 &lt;p&gt;Output of this code would be:&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-filename=&quot;hero.xml&quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
 &amp;lt;Knight xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xmlns:xsd=&amp;quot;http://www.w3.org/2001/XMLSchema&amp;quot; boss=&amp;quot;true&amp;quot;&amp;gt;
     &amp;lt;n&amp;gt;Knight of Solamnia&amp;lt;/n&amp;gt;
     &amp;lt;baseDamage&amp;gt;50&amp;lt;/baseDamage&amp;gt;
@@ -970,7 +968,7 @@ public class XMLSerializer : MonoBehaviour
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;comboRewards&amp;gt;&lt;/code&gt; tag is OK, but those &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;int&amp;gt;&lt;/code&gt; tags don’t look nice, do they? Fortunately, there are two XML &lt;abbr title=&quot;A method to associate declarative information with the code&quot;&gt;attributes&lt;/abbr&gt; which modify the XML output of an array: &lt;code class=&quot;highlighter-rouge&quot;&gt;[XmlArray(string)]&lt;/code&gt; which modifies the name of the array, and &lt;code class=&quot;highlighter-rouge&quot;&gt;[XmlArrayItem(string)]&lt;/code&gt; which, as you might have guessed, modifies the name of the array items.&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System.Xml.Serialization;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-filename=&quot;Hero.cs&quot;&gt;&lt;code&gt;using System.Xml.Serialization;
 
 public class Hero
 {
@@ -991,7 +989,7 @@ public class Hero
 
 &lt;p&gt;And this would produce a better output:&lt;/p&gt;
 
-&lt;pre class=&quot;language-xml  line-numbers &quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
+&lt;pre class=&quot;language-xml  line-numbers &quot; data-filename=&quot;hero.xml&quot;&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
 &amp;lt;Knight xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot; xmlns:xsd=&amp;quot;http://www.w3.org/2001/XMLSchema&amp;quot; boss=&amp;quot;true&amp;quot;&amp;gt;
     &amp;lt;n&amp;gt;Knight of Solamnia&amp;lt;/n&amp;gt;
     &amp;lt;baseDamage&amp;gt;50&amp;lt;/baseDamage&amp;gt;
@@ -1006,7 +1004,7 @@ public class Hero
 
 &lt;p&gt;We have successfully saved our game data in an XML file, but currently it is pretty useless, because we can’t take that data back into our game. In order to do that, we need to read the XML file and create objects (namely, deserialize it). Deserialization is simpler than &lt;abbr title=&quot;Converting objects into a form (such as JSON, or XML) that can be easily transported.&quot;&gt;serialization&lt;/abbr&gt;, because we already defined the structure in our class. All we need to do is just add a few lines of code to our &lt;code class=&quot;highlighter-rouge&quot;&gt;XMLOp.cs&lt;/code&gt;:&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System.IO;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-filename=&quot;XMLOp.cs&quot;&gt;&lt;code&gt;using System.IO;
 using System.Xml.Serialization;
 
 public class XMLOp
@@ -1041,7 +1039,7 @@ public class XMLOp
 
 &lt;p&gt;Let’s say, we have already serialized our weapon object and created the XML file. Now we can deserialize it in another script:&lt;/p&gt;
 
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
+&lt;pre class=&quot;language-csharp  line-numbers &quot; data-filename=&quot;XMLDeserializer.cs&quot;&gt;&lt;code&gt;using UnityEngine;
 
 public class XMLDeserializer : MonoBehaviour
 {
@@ -1055,78 +1053,7 @@ public class XMLDeserializer : MonoBehaviour
 &lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;This concludes our tutorial, and as you can see, XML &lt;abbr title=&quot;Converting objects into a form (such as JSON, or XML) that can be easily transported.&quot;&gt;serialization&lt;/abbr&gt; in Unity (in C# actually) is pretty easy. All you have to do is to use XML &lt;abbr title=&quot;A method to associate declarative information with the code&quot;&gt;attributes&lt;/abbr&gt; in your classes to modify &lt;abbr title=&quot;Converting objects into a form (such as JSON, or XML) that can be easily transported.&quot;&gt;serialization&lt;/abbr&gt; behaviour.&lt;/p&gt;
 
-&lt;p&gt;As always, here are the scripts in full, below. Until next time.&lt;/p&gt;
-
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System.Xml.Serialization;
-
-[XmlRoot(&amp;quot;Knight&amp;quot;)]
-public class Hero
-{
-    [XmlElement(&amp;quot;n&amp;quot;)]
-    public string name;
-
-    [XmlAttribute(&amp;quot;boss&amp;quot;)]
-    public bool isBoss;
-
-    [XmlIgnore]
-    public int hitPoints;
-
-    public float baseDamage;
-
-    [XmlArray(&amp;quot;rewards&amp;quot;), XmlArrayItem(&amp;quot;reward&amp;quot;)]
-    public int[] comboRewards;
-}&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
-
-public class XMLSerializer : MonoBehaviour
-{
-    private void Start()
-    {
-        Hero knight = new Hero();
-        knight.name = &amp;quot;Knight of Solamnia&amp;quot;;
-        knight.hitPoints = 100;
-        knight.baseDamage = 50f;
-        knight.isBoss = true;
-        knight.comboRewards = new int[] { 1, 3, 5 };
-
-        XMLOp.Serialize(knight, &amp;quot;hero.xml&amp;quot;);
-    }
-}&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using UnityEngine;
-
-public class XMLDeserializer : MonoBehaviour
-{
-    private void Start()
-    {
-        Hero hero = XMLOp.Deserialize&amp;lt;Hero&amp;gt;(&amp;quot;hero.xml&amp;quot;);
-        Debug.Log(hero.name);
-    }
-}&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre class=&quot;language-csharp  line-numbers &quot;&gt;&lt;code&gt;using System.IO;
-using System.Xml.Serialization;
-
-public class XMLOp
-{
-    public static void Serialize(object item, string path)
-    {
-        XmlSerializer serializer = new XmlSerializer(item.GetType());
-        StreamWriter writer = new StreamWriter(path);
-        serializer.Serialize(writer.BaseStream, item);
-        writer.Close();
-    }
-
-    public static T Deserialize&amp;lt;T&amp;gt;(string path)
-    {
-        XmlSerializer serializer = new XmlSerializer(typeof(T));
-        StreamReader reader = new StreamReader(path);
-        T deserialized = (T)serializer.Deserialize(reader.BaseStream);
-        reader.Close();
-        return deserialized;
-    }
-}&lt;/code&gt;&lt;/pre&gt;</content><author><name>Oguz Konya</name></author><summary type="html"></summary></entry><entry><title type="html">Creating a Node Based Editor in Unity</title><link href="https://oguzkonya.github.io/creating-node-based-editor-unity/" rel="alternate" type="text/html" title="Creating a Node Based Editor in Unity" /><published>2019-08-15T00:00:00+00:00</published><updated>2019-08-15T00:00:00+00:00</updated><id>https://oguzkonya.github.io/creating-node-based-editor-unity</id><content type="html" xml:base="https://oguzkonya.github.io/creating-node-based-editor-unity/">&lt;p&gt;Node based editors are frequently used in game engines; Unity has Animator window, Unreal Engine has blueprint system, some other game engines have dialogue systems. In this blog post, we will create our own node based editor in Unity. It’s going to be simple node editor that you’ll be able to improve upon later (see the below image for an example). I am going to assume that you are already familiar with editor scripting, but if you are not, please take your time to have a look at &lt;a href=&quot;/creating-editor-windows-in-unity/&quot;&gt;this&lt;/a&gt; post and &lt;a href=&quot;/creating-clone-unitys-console-window/&quot;&gt;this&lt;/a&gt; post.&lt;/p&gt;
+&lt;p&gt;As always, &lt;a href=&quot;https://github.com/oguzkonya/post--xml-serialization-in-unity&quot;&gt;here&lt;/a&gt; are the scripts in full. Until next time.&lt;/p&gt;</content><author><name>Oguz Konya</name></author><summary type="html"></summary></entry><entry><title type="html">Creating a Node Based Editor in Unity</title><link href="https://oguzkonya.github.io/creating-node-based-editor-unity/" rel="alternate" type="text/html" title="Creating a Node Based Editor in Unity" /><published>2019-08-15T00:00:00+00:00</published><updated>2019-08-15T00:00:00+00:00</updated><id>https://oguzkonya.github.io/creating-node-based-editor-unity</id><content type="html" xml:base="https://oguzkonya.github.io/creating-node-based-editor-unity/">&lt;p&gt;Node based editors are frequently used in game engines; Unity has Animator window, Unreal Engine has blueprint system, some other game engines have dialogue systems. In this blog post, we will create our own node based editor in Unity. It’s going to be simple node editor that you’ll be able to improve upon later (see the below image for an example). I am going to assume that you are already familiar with editor scripting, but if you are not, please take your time to have a look at &lt;a href=&quot;/creating-editor-windows-in-unity/&quot;&gt;this&lt;/a&gt; post and &lt;a href=&quot;/creating-clone-unitys-console-window/&quot;&gt;this&lt;/a&gt; post.&lt;/p&gt;
 
 &lt;div class=&quot;img-wrapper&quot;&gt;
     
@@ -2301,7 +2228,7 @@ public class Node
     &lt;div class=&quot;empty-caption&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
 
-&lt;p&gt;And as always, &lt;a href=&quot;https://github.com/oguzkonya/post--creating-node-based-editor&quot;&gt;here&lt;/a&gt; is the script in full, below. Until next time.&lt;/p&gt;</content><author><name>Oguz Konya</name></author><summary type="html">Node based editors are frequently used in game engines; Unity has Animator window, Unreal Engine has blueprint system, some other game engines have dialogue systems. In this blog post, we will create our own node based editor in Unity. It’s going to be simple node editor that you’ll be able to improve upon later (see the below image for an example). I am going to assume that you are already familiar with editor scripting, but if you are not, please take your time to have a look at this post and this post.</summary></entry><entry><title type="html">Creating a Clone of Unity’s Console Window</title><link href="https://oguzkonya.github.io/creating-clone-unitys-console-window/" rel="alternate" type="text/html" title="Creating a Clone of Unity's Console Window" /><published>2019-08-08T00:00:00+00:00</published><updated>2019-08-08T00:00:00+00:00</updated><id>https://oguzkonya.github.io/creating-clone-unitys-console-window</id><content type="html" xml:base="https://oguzkonya.github.io/creating-clone-unitys-console-window/">&lt;p&gt;In our last &lt;a href=&quot;/creating-editor-windows-in-unity/&quot;&gt;post&lt;/a&gt; we created a Unity window and added two resizable panels. In this post, we will improve upon it and make it a clone of Unity’s console window. This post is going to be a little bit longer, so I will omit the previously written code, but the final version will still be available in full at the end.&lt;/p&gt;
+&lt;p&gt;And as always, &lt;a href=&quot;https://github.com/oguzkonya/post--creating-node-based-editor&quot;&gt;here&lt;/a&gt; is the script in full. Until next time.&lt;/p&gt;</content><author><name>Oguz Konya</name></author><summary type="html">Node based editors are frequently used in game engines; Unity has Animator window, Unreal Engine has blueprint system, some other game engines have dialogue systems. In this blog post, we will create our own node based editor in Unity. It’s going to be simple node editor that you’ll be able to improve upon later (see the below image for an example). I am going to assume that you are already familiar with editor scripting, but if you are not, please take your time to have a look at this post and this post.</summary></entry><entry><title type="html">Creating a Clone of Unity’s Console Window</title><link href="https://oguzkonya.github.io/creating-clone-unitys-console-window/" rel="alternate" type="text/html" title="Creating a Clone of Unity's Console Window" /><published>2019-08-08T00:00:00+00:00</published><updated>2019-08-08T00:00:00+00:00</updated><id>https://oguzkonya.github.io/creating-clone-unitys-console-window</id><content type="html" xml:base="https://oguzkonya.github.io/creating-clone-unitys-console-window/">&lt;p&gt;In our last &lt;a href=&quot;/creating-editor-windows-in-unity/&quot;&gt;post&lt;/a&gt; we created a Unity window and added two resizable panels. In this post, we will improve upon it and make it a clone of Unity’s console window. This post is going to be a little bit longer, so I will omit the previously written code, but the final version will still be available in full at the end.&lt;/p&gt;
 
 &lt;p&gt;Before we start coding, let’s examine the console window and see what we should add.&lt;/p&gt;
 
