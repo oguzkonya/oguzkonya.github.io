@@ -50,8 +50,8 @@ dl, dd, ol, ul, figure {
 
 /* Basic styling */
 body {
-  font: 300 16px/1.5 "IBM Plex Sans", Helvetica, sans-serif;
-  color: #111;
+  font: 400 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Symbols", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  color: #212529;
   background-color: #fdfdfd;
   -webkit-text-size-adjust: 100%;
   -webkit-font-feature-settings: "kern" 1;
@@ -63,11 +63,11 @@ body {
   min-height: 100.1vh;
   flex-direction: column; }
   body code {
-    font-size: 12px;
-    font-family: "Hack", monospace; }
+    font-size: 14px;
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
 
 b, strong {
-  font-weight: 500; }
+  font-weight: 700; }
 
 /* Inputs */
 textarea {
@@ -75,8 +75,8 @@ textarea {
   padding-bottom: 2px; }
 
 input, textarea, button {
-  font: 300 14.8px/1.5 "IBM Plex Sans", Helvetica, sans-serif;
-  color: #111;
+  font: 400 14.8px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Symbols", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  color: #212529;
   background-color: #fdfdfd;
   padding-left: 3.75px;
   padding-right: 3.75px;
@@ -87,7 +87,7 @@ input, textarea, button {
     box-shadow: 2px 2px 2px 0px #e8e8e8; }
   input:focus, textarea:focus, button:focus {
     box-shadow: 2px 2px 2px 0px #e8e8e8;
-    border: 1px solid #111; }
+    border: 1px solid #212529; }
   input:not(:focus):invalid, textarea:not(:focus):invalid, button:not(:focus):invalid {
     box-shadow: 0px 0px 1px 1px #d65946; }
 
@@ -142,22 +142,22 @@ ul li::before {
 
 /* Links */
 a {
-  color: #2a7ae2;
+  color: #007bff;
   text-decoration: none; }
   a:visited {
-    color: #144b92; }
+    color: #004a99; }
   a:hover {
     text-decoration: underline; }
 
 /* Headings */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 300;
+  font-weight: 400;
   text-align: left;
   display: flex; }
   h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
-    color: #111; }
+    color: #212529; }
     h1 a:visited, h2 a:visited, h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {
-      color: #111; }
+      color: #212529; }
     h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {
       text-decoration: none; }
 
@@ -167,33 +167,33 @@ h1 {
   padding-bottom: 7.5px;
   border-bottom: 1px solid #e8e8e8; }
   h1 code {
-    font-size: 24px; }
+    font-size: 28px; }
   @media screen and (max-width: 600px) {
     h1 {
       font-size: 28px; }
       h1 code {
-        font-size: 21px; } }
+        font-size: 24.5px; } }
 
 h2 {
   font-size: 26px;
   border-bottom: 1px solid #e8e8e8; }
   h2 code {
-    font-size: 19.5px; }
+    font-size: 22.75px; }
   @media screen and (max-width: 600px) {
     h2 {
       font-size: 24px; }
       h2 code {
-        font-size: 18px; } }
+        font-size: 21px; } }
 
 h3 {
   font-size: 22px; }
   h3 code {
-    font-size: 16.5px; }
+    font-size: 19.25px; }
   @media screen and (max-width: 600px) {
     h3 {
       font-size: 20px; }
       h3 code {
-        font-size: 15px; } }
+        font-size: 17.5px; } }
 
 /* Blockquotes */
 blockquote {
@@ -259,9 +259,9 @@ th, td {
   .header-left .site-title {
     font-size: 24px; }
     .header-left .site-title code {
-      font-size: 18px; }
+      font-size: 21px; }
     .header-left .site-title, .header-left .site-title:visited {
-      color: #111; }
+      color: #212529; }
 
 .header-right {
   flex: 0 1 auto; }
@@ -280,7 +280,7 @@ th, td {
   font-size: 18px;
   margin-bottom: 15px; }
   .footer-heading code {
-    font-size: 13.5px; }
+    font-size: 15.75px; }
 
 .footer-col-wrapper {
   color: #828282;
@@ -324,7 +324,7 @@ img + em {
     content: "TODO:";
     display: block;
     margin-bottom: 3.75px;
-    font-weight: 500; }
+    font-weight: 700; }
 
 /* Notes */
 .note {
@@ -336,7 +336,7 @@ img + em {
     content: "Note:";
     display: block;
     margin-bottom: 3.75px;
-    font-weight: 500; }
+    font-weight: 700; }
 
 /* Footnotes */
 .footnote::before {
@@ -389,12 +389,12 @@ img + em {
   padding: 0;
   border: 0; }
   .post-title code {
-    font-size: 24px; }
+    font-size: 28px; }
   @media screen and (max-width: 600px) {
     .post-title {
       font-size: 28px; }
       .post-title code {
-        font-size: 21px; } }
+        font-size: 24.5px; } }
 
 .post-meta {
   color: #828282;
@@ -464,7 +464,7 @@ img + em {
 .spoiler {
   cursor: pointer;
   display: inline-block;
-  color: #2a7ae2;
+  color: #007bff;
   margin-bottom: 15px;
   /* Prevent text selection */
   -webkit-touch-callout: none;
