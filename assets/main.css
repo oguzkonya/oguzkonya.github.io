@@ -91,6 +91,10 @@ input, textarea, button {
   input:not(:focus):invalid, textarea:not(:focus):invalid, button:not(:focus):invalid {
     box-shadow: 0px 0px 1px 1px #d65946; }
 
+small {
+  font-size: 13.6px;
+  color: #828282; }
+
 *::placeholder {
   opacity: 1;
   color: #828282;
