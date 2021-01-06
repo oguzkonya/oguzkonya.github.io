@@ -49,10 +49,38 @@ dl, dd, ol, ul, figure {
   padding: 0; }
 
 /* Basic styling */
+html, html[data-theme="light"] {
+  --link-color: #007bff;
+  --visited-link-color: #004a99;
+  --main-background-color: #fdfdfd;
+  --main-text-color: #212529;
+  --border-color: #e8e8e8; }
+
+html[data-theme="dark"] {
+  --link-color: #57a8ff;
+  --visited-link-color: #0062cc;
+  --main-background-color: #212529;
+  --main-text-color: #c2c2c2;
+  --border-color: #5c5c5c; }
+
+@media (prefers-color-scheme: dark) {
+  html, html[data-theme="dark"] {
+    --link-color: #57a8ff;
+    --visited-link-color: #0062cc;
+    --main-background-color: #212529;
+    --main-text-color: #c2c2c2;
+    --border-color: #5c5c5c; }
+
+  html[data-theme="light"] {
+    --link-color: #007bff;
+    --visited-link-color: #004a99;
+    --main-background-color: #fdfdfd;
+    --main-text-color: #212529;
+    --border-color: #e8e8e8; } }
 body {
   font: 400 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Symbols", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  color: #212529;
-  background-color: #fdfdfd;
+  color: var(--main-text-color);
+  background-color: var(--main-background-color);
   -webkit-text-size-adjust: 100%;
   -webkit-font-feature-settings: "kern" 1;
   -moz-font-feature-settings: "kern" 1;
@@ -108,7 +136,7 @@ ul, ol, dl, figure {
 
 /* Horizontal rule */
 hr {
-  color: #e8e8e8;
+  color: var(--border-color);
   border-style: solid; }
 
 /* Images */
@@ -146,10 +174,10 @@ ul li::before {
 
 /* Links */
 a {
-  color: #007bff;
+  color: var(--link-color);
   text-decoration: none; }
   a:visited {
-    color: #004a99; }
+    color: var(--visited-link-color); }
   a:hover {
     text-decoration: underline; }
 
@@ -159,9 +187,9 @@ h1, h2, h3, h4, h5, h6 {
   text-align: left;
   display: flex; }
   h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
-    color: #212529; }
+    color: var(--main-text-color); }
     h1 a:visited, h2 a:visited, h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {
-      color: #212529; }
+      color: var(--main-text-color); }
     h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {
       text-decoration: none; }
 
@@ -169,7 +197,7 @@ h1 {
   font-size: 32px;
   line-height: 1;
   padding-bottom: 7.5px;
-  border-bottom: 1px solid #e8e8e8; }
+  border-bottom: 1px solid var(--border-color); }
   h1 code {
     font-size: 28px; }
   @media screen and (max-width: 600px) {
@@ -180,7 +208,7 @@ h1 {
 
 h2 {
   font-size: 26px;
-  border-bottom: 1px solid #e8e8e8; }
+  border-bottom: 1px solid var(--border-color); }
   h2 code {
     font-size: 22.75px; }
   @media screen and (max-width: 600px) {
@@ -201,7 +229,7 @@ h3 {
 
 /* Blockquotes */
 blockquote {
-  border-left: 4px solid #e8e8e8;
+  border-left: 4px solid var(--border-color);
   color: #828282;
   margin-left: 15px;
   margin-right: 15px;
@@ -241,14 +269,14 @@ table {
   border-collapse: collapse; }
 
 table, th, td {
-  border: solid 1px silver; }
+  border: solid 1px var(--border-color); }
 
 th, td {
   padding: 6px; }
 
 /* Site header */
 .site-header {
-  border-bottom: 1px solid #e8e8e8; }
+  border-bottom: 1px solid var(--border-color); }
 
 .wrapper-header {
   display: flex;
@@ -265,7 +293,7 @@ th, td {
     .header-left .site-title code {
       font-size: 21px; }
     .header-left .site-title, .header-left .site-title:visited {
-      color: #212529; }
+      color: var(--main-text-color); }
 
 .header-right {
   flex: 0 1 auto; }
@@ -276,7 +304,7 @@ th, td {
 
 /* Site footer */
 .site-footer {
-  border-top: 1px solid #e8e8e8;
+  border-top: 1px solid var(--border-color);
   padding-top: 30px;
   padding-bottom: 30px; }
 
@@ -455,7 +483,7 @@ img + em {
 
 .post-footer {
   padding-bottom: 7.5px;
-  border-bottom: 1px solid #e8e8e8;
+  border-bottom: 1px solid var(--border-color);
   margin-bottom: 30px; }
 
 /* Copyright */
@@ -499,6 +527,9 @@ input:checked ~ .spoiler ~ ul#markdown-toc {
   display: block; }
 
 /* TOC */
+#theme-toggle {
+  cursor: pointer; }
+
 /* Images */
 .img-wrapper {
   text-align: center; }
