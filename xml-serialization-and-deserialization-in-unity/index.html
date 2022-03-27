@@ -9,7 +9,7 @@
 <link rel="alternate" type="application/rss+xml" title="oguzkonya" href="/feed.xml">
 <script src="/assets/js/prism.js"></script>
 <title>XML Serialization in Unity | oguzkonya</title>
-<meta name="generator" content="Jekyll v3.7.4" />
+<meta name="generator" content="Jekyll v4.2.2" />
 <meta property="og:title" content="XML Serialization in Unity" />
 <meta name="author" content="Oguz Konya" />
 <meta property="og:locale" content="en_US" />
@@ -21,7 +21,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2019-08-22T00:00:00+00:00" />
 <script type="application/ld+json">
-{"description":"Game Developer","headline":"XML Serialization in Unity","dateModified":"2019-08-22T00:00:00+00:00","datePublished":"2019-08-22T00:00:00+00:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://oguzkonya.com/xml-serialization-and-deserialization-in-unity/"},"url":"https://oguzkonya.com/xml-serialization-and-deserialization-in-unity/","author":{"@type":"Person","name":"Oguz Konya"},"@context":"https://schema.org"}</script>
+{"author":{"@type":"Person","name":"Oguz Konya"},"@type":"BlogPosting","url":"https://oguzkonya.com/xml-serialization-and-deserialization-in-unity/","description":"Game Developer","headline":"XML Serialization in Unity","dateModified":"2019-08-22T00:00:00+00:00","datePublished":"2019-08-22T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://oguzkonya.com/xml-serialization-and-deserialization-in-unity/"},"@context":"https://schema.org"}</script>
 </head>
 <body data-instant-allow-query-string data-instant-allow-external-links>
 <header class="site-header">
@@ -67,12 +67,12 @@
 
     public float baseDamage;
 }</code></pre>
-<p>This is a very basic version of a <code class="highlighter-rouge">Hero</code> class that you might find yourself creating for your game. You may think that it is <em>too</em> basic, but don’t worry, we will be adding features as we move on. However, before moving on, you should know two important key points about XML serializing:</p>
+<p>This is a very basic version of a <code>Hero</code> class that you might find yourself creating for your game. You may think that it is <em>too</em> basic, but don’t worry, we will be adding features as we move on. However, before moving on, you should know two important key points about XML serializing:</p>
 <ol>
  <li>XML serializer can only serialize public fields.</li>
  <li>Class to be serialized should have a parameterless constructor.</li>
 </ol>
-<p>In our case, <code class="highlighter-rouge">Hero</code> class already has nothing but public fields and since there isn’t any kind of constructor, it implicitly has a parameterless default constructor.</p>
+<p>In our case, <code>Hero</code> class already has nothing but public fields and since there isn’t any kind of constructor, it implicitly has a parameterless default constructor.</p>
 <p>Let’s say we want this class to output an XML file just like the following:</p><pre class="language-xml  line-numbers " data-filename="hero.xml"><code>&lt;Hero&gt;
     &lt;name&gt;&lt;/name&gt;
     &lt;isBoss&gt;&lt;/isBoss&gt;
@@ -100,12 +100,12 @@ public class XMLSerializer : MonoBehaviour
     }
 }</code></pre>
 <p>Let’s have a look at this code line by line:</p>
-<p>On <strong>Line 9-13</strong>, we create a new <code class="highlighter-rouge">Hero</code> and assign its <abbr title="A method to associate declarative information with the code">attributes</abbr>.</p>
-<p>On <strong>Line 15</strong>, we create an <code class="highlighter-rouge">XmlSerializer</code> instance with type of <code class="highlighter-rouge">Hero</code>, since it is the type of the class we are serializing. This <code class="highlighter-rouge">XmlSerializer</code> is a C# class and it can be found under <code class="highlighter-rouge">System.Xml.Serialization</code>.</p>
-<p>On <strong>Line 16</strong>, we create a <code class="highlighter-rouge">StreamWriter</code> instance which would create the XML file itself and do the actual writing. <code class="highlighter-rouge">StreamWriter</code> is also a C# class and it can be found under <code class="highlighter-rouge">System.IO</code></p>
-<p>On <strong>Line 17</strong>, we tell the <code class="highlighter-rouge">XmlSerializer</code> to serialize knight (our <code class="highlighter-rouge">Hero</code>), and send it to a stream.</p>
+<p>On <strong>Line 9-13</strong>, we create a new <code>Hero</code> and assign its <abbr title="A method to associate declarative information with the code">attributes</abbr>.</p>
+<p>On <strong>Line 15</strong>, we create an <code>XmlSerializer</code> instance with type of <code>Hero</code>, since it is the type of the class we are serializing. This <code>XmlSerializer</code> is a C# class and it can be found under <code>System.Xml.Serialization</code>.</p>
+<p>On <strong>Line 16</strong>, we create a <code>StreamWriter</code> instance which would create the XML file itself and do the actual writing. <code>StreamWriter</code> is also a C# class and it can be found under <code>System.IO</code></p>
+<p>On <strong>Line 17</strong>, we tell the <code>XmlSerializer</code> to serialize knight (our <code>Hero</code>), and send it to a stream.</p>
 <p>And finally, on <strong>Line 18</strong>, we tell writer to close streaming (i.e stop reading input and create the file).</p>
-<p>When you drag&amp;drop this code on an empty game object in Unity and run it, you will see that a file named <code class="highlighter-rouge">hero.xml</code> is created in your Unity project folder and its contents hold Hero data:</p><pre class="language-xml  line-numbers " data-filename="hero.xml"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+<p>When you drag&amp;drop this code on an empty game object in Unity and run it, you will see that a file named <code>hero.xml</code> is created in your Unity project folder and its contents hold Hero data:</p><pre class="language-xml  line-numbers " data-filename="hero.xml"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
 &lt;Hero xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
     &lt;name&gt;Knight of Solamnia&lt;/name&gt;
     &lt;isBoss&gt;true&lt;/isBoss&gt;
@@ -125,7 +125,7 @@ public class XMLOp
         writer.Close();
     }
 }</code></pre>
-<p>Now our <code class="highlighter-rouge">XMLSerializer</code> looks like this:</p><pre class="language-csharp  line-numbers " data-filename="XMLSerializer.cs"><code>using UnityEngine;
+<p>Now our <code>XMLSerializer</code> looks like this:</p><pre class="language-csharp  line-numbers " data-filename="XMLSerializer.cs"><code>using UnityEngine;
 
 public class XMLSerializer : MonoBehaviour
 {
@@ -173,7 +173,7 @@ public class Hero
     &lt;baseDamage&gt;50&lt;/baseDamage&gt;
     &lt;isBoss&gt;true&lt;/isBoss&gt;
 &lt;/Hero&gt;</code></pre>
-<p><strong>NOTE</strong>: XML <abbr title="A method to associate declarative information with the code">attributes</abbr> have more constructors with different signatures than this tutorial covers. For example, <code class="highlighter-rouge">XmlElement</code> also has <code class="highlighter-rouge">XmlElement(String, Type)</code> and <code class="highlighter-rouge">XmlElement(Type)</code>. However, since this tutorial is planned to be an introductory one, I am not going to cover them here.</p>
+<p><strong>NOTE</strong>: XML <abbr title="A method to associate declarative information with the code">attributes</abbr> have more constructors with different signatures than this tutorial covers. For example, <code>XmlElement</code> also has <code>XmlElement(String, Type)</code> and <code>XmlElement(Type)</code>. However, since this tutorial is planned to be an introductory one, I am not going to cover them here.</p>
 <h3 id="xmlattributestring">[XmlAttribute(String)]</h3>
 <p>This attribute indicates that a field will be represented as an XML attribute.</p><pre class="language-csharp  line-numbers " data-filename="Hero.cs"><code>using System.Xml.Serialization;
 
@@ -196,7 +196,7 @@ public class Hero
     &lt;baseDamage&gt;50&lt;/baseDamage&gt;
 &lt;/Hero&gt;</code></pre>
 <h3 id="xmlignore">[XmlIgnore]</h3>
-<p>As I have mentioned before, a field must be public in order to be serialized. This also means that all the public fields will be serialized by the XML serializer. But sometimes, we might need a field to be <strong>not</strong> serialized without making it private. This is where <code class="highlighter-rouge">[XmlIgnore]</code> comes into play. It indicates that a field will not be represented in the XML file at all.</p><pre class="language-csharp  line-numbers " data-filename="Hero.cs"><code>using System.Xml.Serialization;
+<p>As I have mentioned before, a field must be public in order to be serialized. This also means that all the public fields will be serialized by the XML serializer. But sometimes, we might need a field to be <strong>not</strong> serialized without making it private. This is where <code>[XmlIgnore]</code> comes into play. It indicates that a field will not be represented in the XML file at all.</p><pre class="language-csharp  line-numbers " data-filename="Hero.cs"><code>using System.Xml.Serialization;
 
 public class Hero
 {
@@ -217,7 +217,7 @@ public class Hero
     &lt;baseDamage&gt;50&lt;/baseDamage&gt;
 &lt;/Hero&gt;</code></pre>
 <h3 id="xmlrootstring">[XmlRoot(String)]</h3>
-<p>The object that is serialized by the XML serializer becomes the root of the XML file. As a result, object’s class name becomes the name of the root tag. Sometimes, we want to use some other name in order to provide clarification. This attribute indicates that the name of the root tag will be the provided string. It should be noted that <code class="highlighter-rouge">[XmlRoot]</code> attribute can only be used on classes, structs, enumerations or interfaces unlike the previous <abbr title="A method to associate declarative information with the code">attributes</abbr>.</p><pre class="language-csharp  line-numbers " data-filename="Hero.cs"><code>using System.Xml.Serialization;
+<p>The object that is serialized by the XML serializer becomes the root of the XML file. As a result, object’s class name becomes the name of the root tag. Sometimes, we want to use some other name in order to provide clarification. This attribute indicates that the name of the root tag will be the provided string. It should be noted that <code>[XmlRoot]</code> attribute can only be used on classes, structs, enumerations or interfaces unlike the previous <abbr title="A method to associate declarative information with the code">attributes</abbr>.</p><pre class="language-csharp  line-numbers " data-filename="Hero.cs"><code>using System.Xml.Serialization;
 
 [XmlRoot(&quot;Knight&quot;)]
 public class Hero
@@ -281,7 +281,7 @@ public class XMLSerializer : MonoBehaviour
         &lt;int&gt;5&lt;/int&gt;
     &lt;/comboRewards&gt;
 &lt;/Knight&gt;</code></pre>
-<p><code class="highlighter-rouge">&lt;comboRewards&gt;</code> tag is OK, but those <code class="highlighter-rouge">&lt;int&gt;</code> tags don’t look nice, do they? Fortunately, there are two XML <abbr title="A method to associate declarative information with the code">attributes</abbr> which modify the XML output of an array: <code class="highlighter-rouge">[XmlArray(string)]</code> which modifies the name of the array, and <code class="highlighter-rouge">[XmlArrayItem(string)]</code> which, as you might have guessed, modifies the name of the array items.</p><pre class="language-csharp  line-numbers " data-filename="Hero.cs"><code>using System.Xml.Serialization;
+<p><code>&lt;comboRewards&gt;</code> tag is OK, but those <code>&lt;int&gt;</code> tags don’t look nice, do they? Fortunately, there are two XML <abbr title="A method to associate declarative information with the code">attributes</abbr> which modify the XML output of an array: <code>[XmlArray(string)]</code> which modifies the name of the array, and <code>[XmlArrayItem(string)]</code> which, as you might have guessed, modifies the name of the array items.</p><pre class="language-csharp  line-numbers " data-filename="Hero.cs"><code>using System.Xml.Serialization;
 
 public class Hero
 {
@@ -310,7 +310,7 @@ public class Hero
     &lt;/rewards&gt;
 &lt;/Knight&gt;</code></pre>
 <h2 id="xml-deserialization">XML Deserialization</h2>
-<p>We have successfully saved our game data in an XML file, but currently it is pretty useless, because we can’t take that data back into our game. In order to do that, we need to read the XML file and create objects (namely, deserialize it). Deserialization is simpler than <abbr title="Converting objects into a form (such as JSON, or XML) that can be easily transported.">serialization</abbr>, because we already defined the structure in our class. All we need to do is just add a few lines of code to our <code class="highlighter-rouge">XMLOp.cs</code>:</p><pre class="language-csharp  line-numbers " data-filename="XMLOp.cs"><code>using System.IO;
+<p>We have successfully saved our game data in an XML file, but currently it is pretty useless, because we can’t take that data back into our game. In order to do that, we need to read the XML file and create objects (namely, deserialize it). Deserialization is simpler than <abbr title="Converting objects into a form (such as JSON, or XML) that can be easily transported.">serialization</abbr>, because we already defined the structure in our class. All we need to do is just add a few lines of code to our <code>XMLOp.cs</code>:</p><pre class="language-csharp  line-numbers " data-filename="XMLOp.cs"><code>using System.IO;
 using System.Xml.Serialization;
 
 public class XMLOp
@@ -333,9 +333,9 @@ public class XMLOp
 	}
 }</code></pre>
 <p>Deserialization process is very similar to <abbr title="Converting objects into a form (such as JSON, or XML) that can be easily transported.">serialization</abbr> process:</p>
-<p>On <strong>Line 16</strong>, we create an <code class="highlighter-rouge">XmlSerializer</code> instance with type of T so that it can take any type to deserialize.</p>
-<p>On <strong>Line 17</strong>, we create a <code class="highlighter-rouge">StreamReader</code> instance which would read the XML file.</p>
-<p>On <strong>Line 18</strong>, we tell the <code class="highlighter-rouge">XmlSerializer</code> to deserialize the stream and cast it to our target type T.</p>
+<p>On <strong>Line 16</strong>, we create an <code>XmlSerializer</code> instance with type of T so that it can take any type to deserialize.</p>
+<p>On <strong>Line 17</strong>, we create a <code>StreamReader</code> instance which would read the XML file.</p>
+<p>On <strong>Line 18</strong>, we tell the <code>XmlSerializer</code> to deserialize the stream and cast it to our target type T.</p>
 <p>On <strong>Line 19</strong>, we tell reader to close streaming and then on <strong>Line 20</strong> we return the deserialized object.</p>
 <p>Let’s say, we have already serialized our weapon object and created the XML file. Now we can deserialize it in another script:</p><pre class="language-csharp  line-numbers " data-filename="XMLDeserializer.cs"><code>using UnityEngine;
 

@@ -9,7 +9,7 @@
 <link rel="alternate" type="application/rss+xml" title="oguzkonya" href="/feed.xml">
 <script src="/assets/js/prism.js"></script>
 <title>Creating Editor Windows in Unity | oguzkonya</title>
-<meta name="generator" content="Jekyll v3.7.4" />
+<meta name="generator" content="Jekyll v4.2.2" />
 <meta property="og:title" content="Creating Editor Windows in Unity" />
 <meta name="author" content="Oguz Konya" />
 <meta property="og:locale" content="en_US" />
@@ -21,7 +21,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2019-08-01T00:00:00+00:00" />
 <script type="application/ld+json">
-{"description":"For the last decade, Unity has been a great platform for developing games that provides a large number of tools to developers: rendering engine, physics engine, animation systems, audio mixers etc. However, when creating levels or generating in-game data, Unity falls short, because each game is unique and requires different kinds of tools. Thankfully, Unity has an API available to us developers to create our own editor windows, custom drawers and inspector panels. In this series of blog posts, I am going to show you how I develop custom editors in Unity for designers and artists. We will start by creating an editor window, put two panels in it, and then make it resizable. In the next post, we will turn that window into a clone of Unity’s own Console window.","headline":"Creating Editor Windows in Unity","dateModified":"2019-08-01T00:00:00+00:00","datePublished":"2019-08-01T00:00:00+00:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://oguzkonya.com/creating-editor-windows-in-unity/"},"url":"https://oguzkonya.com/creating-editor-windows-in-unity/","author":{"@type":"Person","name":"Oguz Konya"},"@context":"https://schema.org"}</script>
+{"author":{"@type":"Person","name":"Oguz Konya"},"@type":"BlogPosting","url":"https://oguzkonya.com/creating-editor-windows-in-unity/","description":"For the last decade, Unity has been a great platform for developing games that provides a large number of tools to developers: rendering engine, physics engine, animation systems, audio mixers etc. However, when creating levels or generating in-game data, Unity falls short, because each game is unique and requires different kinds of tools. Thankfully, Unity has an API available to us developers to create our own editor windows, custom drawers and inspector panels. In this series of blog posts, I am going to show you how I develop custom editors in Unity for designers and artists. We will start by creating an editor window, put two panels in it, and then make it resizable. In the next post, we will turn that window into a clone of Unity’s own Console window.","headline":"Creating Editor Windows in Unity","dateModified":"2019-08-01T00:00:00+00:00","datePublished":"2019-08-01T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://oguzkonya.com/creating-editor-windows-in-unity/"},"@context":"https://schema.org"}</script>
 </head>
 <body data-instant-allow-query-string data-instant-allow-external-links>
 <header class="site-header">
@@ -57,16 +57,16 @@
  <div class="post-content" itemprop="articleBody">
    <p>For the last decade, Unity has been a great platform for developing games that provides a large number of tools to developers: rendering engine, physics engine, animation systems, audio mixers etc. However, when creating levels or generating in-game data, Unity falls short, because each game is unique and requires different kinds of tools. Thankfully, Unity has an API available to us developers to create our own editor windows, custom drawers and inspector panels. In this series of blog posts, I am going to show you how I develop custom editors in Unity for designers and artists. We will start by creating an editor window, put two panels in it, and then make it resizable. In the <a href="/creating-clone-unitys-console-window/">next</a> post, we will turn that window into a clone of Unity’s own Console window.</p>
 <h2 id="creating-an-editor-window">Creating an Editor Window</h2>
-<p>Well then, let’s start! First, we are going to create an empty Unity project and add a folder named <strong>Editor</strong> under <strong>Assets</strong>. If you give folders in Unity certain names, it will treat their contents in a special way. <strong>Editor</strong> is one of those names and the scripts in this folder will become a part of Unity’s own editor. So, then, let’s build an editor window script: go into the <strong>Editor</strong> folder you just created, right-click, and select <strong>Create</strong> <strong>-&gt; C# Script</strong>. You can also select <strong>Editor Test C# Script</strong>, but we will change all the content anyway, so it doesn’t actually matter. Name your script <code class="highlighter-rouge">ResizablePanels</code> and then open it in your favourite text editor (I prefer Visual Studio on Windows and Rider on Mac).</p>
-<p>Since this is going to be an editor window, the class should derive from <code class="highlighter-rouge">EditorWindow</code> instead of <code class="highlighter-rouge">MonoBehaviour</code>. The <code class="highlighter-rouge">EditorWindow</code> class resides in <code class="highlighter-rouge">UnityEditor</code> namespace, so we will need to add it as well.</p><pre class="language-csharp  line-numbers " data-filename="ResizablePanels.cs"><code>using UnityEngine;
+<p>Well then, let’s start! First, we are going to create an empty Unity project and add a folder named <strong>Editor</strong> under <strong>Assets</strong>. If you give folders in Unity certain names, it will treat their contents in a special way. <strong>Editor</strong> is one of those names and the scripts in this folder will become a part of Unity’s own editor. So, then, let’s build an editor window script: go into the <strong>Editor</strong> folder you just created, right-click, and select <strong>Create</strong> <strong>-&gt; C# Script</strong>. You can also select <strong>Editor Test C# Script</strong>, but we will change all the content anyway, so it doesn’t actually matter. Name your script <code>ResizablePanels</code> and then open it in your favourite text editor (I prefer Visual Studio on Windows and Rider on Mac).</p>
+<p>Since this is going to be an editor window, the class should derive from <code>EditorWindow</code> instead of <code>MonoBehaviour</code>. The <code>EditorWindow</code> class resides in <code>UnityEditor</code> namespace, so we will need to add it as well.</p><pre class="language-csharp  line-numbers " data-filename="ResizablePanels.cs"><code>using UnityEngine;
 using UnityEditor;
 
 public class ResizablePanels : EditorWindow
 {
 
 }</code></pre>
-<p>Editor windows require a static method to be initialized. In this method, we are going build the window and (optional) give it a title. <code class="highlighter-rouge">GetWindow()</code> is an <code class="highlighter-rouge">EditorWindow</code> method which creates the window, if it doesn’t exist, or finds and focuses on it if it does.</p>
-<p>However, a static method on its own will not be enough, we also need to add a button, or something like it, to let our users open the window within Unity. Thankfully there is already an attribute called <code class="highlighter-rouge">MenuItem</code> which adds a menu item to Unity’s menu bar and runs the method it is applied to. So, the following code will create the most basic editor window you can create in Unity.</p><pre class="language-csharp  line-numbers " data-line="6-11"><code>using UnityEngine;
+<p>Editor windows require a static method to be initialized. In this method, we are going build the window and (optional) give it a title. <code>GetWindow()</code> is an <code>EditorWindow</code> method which creates the window, if it doesn’t exist, or finds and focuses on it if it does.</p>
+<p>However, a static method on its own will not be enough, we also need to add a button, or something like it, to let our users open the window within Unity. Thankfully there is already an attribute called <code>MenuItem</code> which adds a menu item to Unity’s menu bar and runs the method it is applied to. So, the following code will create the most basic editor window you can create in Unity.</p><pre class="language-csharp  line-numbers " data-line="6-11"><code>using UnityEngine;
 using UnityEditor;
 
 public class ResizablePanels : EditorWindow
@@ -88,7 +88,7 @@ public class ResizablePanels : EditorWindow
         <img src="/assets/img/window.png" class="center" alt="Window" width="300px" />
    <div class="empty-caption"></div>
 </div>
-<p>In order to draw in this window, we will use the <code class="highlighter-rouge">OnGUI()</code> method (yes, Unity’s own editor system still uses the old GUI system and it probably won’t change for a long time). But first, we need two rectangles to define our panels. I will also draw these panels in their own methods, so while we are at it, we should add those methods, too.</p><pre class="language-csharp  line-numbers " data-line="6,7,16-28"><code>using UnityEngine;
+<p>In order to draw in this window, we will use the <code>OnGUI()</code> method (yes, Unity’s own editor system still uses the old GUI system and it probably won’t change for a long time). But first, we need two rectangles to define our panels. I will also draw these panels in their own methods, so while we are at it, we should add those methods, too.</p><pre class="language-csharp  line-numbers " data-line="6,7,16-28"><code>using UnityEngine;
 using UnityEditor;
 
 public class ResizablePanels : EditorWindow
@@ -117,7 +117,7 @@ public class ResizablePanels : EditorWindow
     {
     }
 }</code></pre>
-<p>Our editor window is starting to shape up. All we need to do now is to draw the panels and check if they work correctly. <code class="highlighter-rouge">GUILayout.BeginArea(Rect rect)</code> would create a rectangle area to draw in and <code class="highlighter-rouge">GUILayout.EndArea()</code> marks the end. These areas will define our panels. I am also going to add a label in both areas so that we can see how they look. Let’s fill in <code class="highlighter-rouge">DrawUpperPanel()</code> and <code class="highlighter-rouge">DrawLowerPanel()</code>:</p><pre class="language-csharp  line-numbers " data-line="24-28,33-37"><code>using UnityEngine;
+<p>Our editor window is starting to shape up. All we need to do now is to draw the panels and check if they work correctly. <code>GUILayout.BeginArea(Rect rect)</code> would create a rectangle area to draw in and <code>GUILayout.EndArea()</code> marks the end. These areas will define our panels. I am also going to add a label in both areas so that we can see how they look. Let’s fill in <code>DrawUpperPanel()</code> and <code>DrawLowerPanel()</code>:</p><pre class="language-csharp  line-numbers " data-line="24-28,33-37"><code>using UnityEngine;
 using UnityEditor;
 
 public class ResizablePanels : EditorWindow
@@ -204,7 +204,7 @@ public class ResizablePanels : EditorWindow
 }</code></pre>
 <h2 id="resizing-panels">Resizing Panels</h2>
 <p>OK, both panels have variable heights… but we still can’t resize them! But don’t worry, we are not too far from the final product. Now we just need another rectangle area, so that when the user clicks down there we can start resizing. I am going to add that area just between the two panels. It is going to be 10 pixels tall, because, well, why not? I like 10.</p>
-<p>We also need to show the user that the mouse pointer is in the resizing area. <code class="highlighter-rouge">EditorGUIUtility.AddCursorRect(Rect rect, MouseCursor cursor)</code> does that, so we are going to use it in our drawing method.</p>
+<p>We also need to show the user that the mouse pointer is in the resizing area. <code>EditorGUIUtility.AddCursorRect(Rect rect, MouseCursor cursor)</code> does that, so we are going to use it in our drawing method.</p>
 <p>There is one more thing we need to show the user: where the resizing area begins. This is going to look like magic, but I assure you, it is not: we will use one of Unity’s own icons and stretch it and place it so that it looks like a line between upper and lower panels.</p><pre class="language-csharp  line-numbers " data-line="11,13,22-26,32,53-61"><code>using UnityEngine;
 using UnityEditor;
 
@@ -272,7 +272,7 @@ public class ResizablePanels : EditorWindow
         <img src="/assets/img/window-3.png" class="center" alt="Window" width="300px" />
    <div class="empty-caption"></div>
 </div>
-<p>And now, we will finalize it by adding the actual interaction. We will process the incoming events and if the event is a <code class="highlighter-rouge">mouse down</code> event and it is in the resizing area, we will start resizing.</p><pre class="language-csharp  line-numbers " data-line="34,36,67-93"><code>using UnityEngine;
+<p>And now, we will finalize it by adding the actual interaction. We will process the incoming events and if the event is a <code>mouse down</code> event and it is in the resizing area, we will start resizing.</p><pre class="language-csharp  line-numbers " data-line="34,36,67-93"><code>using UnityEngine;
 using UnityEditor;
 
 public class ResizablePanels : EditorWindow

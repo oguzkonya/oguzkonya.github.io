@@ -9,7 +9,7 @@
 <link rel="alternate" type="application/rss+xml" title="oguzkonya" href="/feed.xml">
 <script src="/assets/js/prism.js"></script>
 <title>Creating a Clone of Unity’s Console Window | oguzkonya</title>
-<meta name="generator" content="Jekyll v3.7.4" />
+<meta name="generator" content="Jekyll v4.2.2" />
 <meta property="og:title" content="Creating a Clone of Unity’s Console Window" />
 <meta name="author" content="Oguz Konya" />
 <meta property="og:locale" content="en_US" />
@@ -21,7 +21,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2019-08-08T00:00:00+00:00" />
 <script type="application/ld+json">
-{"description":"In our last post we created a Unity window and added two resizable panels. In this post, we will improve upon it and make it a clone of Unity’s console window. This post is going to be a little bit longer, so I will omit the previously written code, but the final version will still be available in full at the end.","headline":"Creating a Clone of Unity’s Console Window","dateModified":"2019-08-08T00:00:00+00:00","datePublished":"2019-08-08T00:00:00+00:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://oguzkonya.com/creating-clone-unitys-console-window/"},"url":"https://oguzkonya.com/creating-clone-unitys-console-window/","author":{"@type":"Person","name":"Oguz Konya"},"@context":"https://schema.org"}</script>
+{"author":{"@type":"Person","name":"Oguz Konya"},"@type":"BlogPosting","url":"https://oguzkonya.com/creating-clone-unitys-console-window/","description":"In our last post we created a Unity window and added two resizable panels. In this post, we will improve upon it and make it a clone of Unity’s console window. This post is going to be a little bit longer, so I will omit the previously written code, but the final version will still be available in full at the end.","headline":"Creating a Clone of Unity’s Console Window","dateModified":"2019-08-08T00:00:00+00:00","datePublished":"2019-08-08T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://oguzkonya.com/creating-clone-unitys-console-window/"},"@context":"https://schema.org"}</script>
 </head>
 <body data-instant-allow-query-string data-instant-allow-external-links>
 <header class="site-header">
@@ -91,7 +91,7 @@
         EditorGUIUtility.AddCursorRect(resizer, MouseCursor.ResizeVertical);
     }</code></pre>
 <h3 id="menu-bar">Menu Bar</h3>
-<p>Now we can start adding our menu bar. We will draw this bar just as we drew other panels: by feeding <code class="highlighter-rouge">GUILayout.BeginArea()</code> a rectangle which would define its position and size (basically, its area). I am going to steal this area  from the upper panel, so that we won’t have to change other panels’ positions or heights. You can make this bar as tall as you would like, but since we are cloning Unity’s console window, we should stick to default and make it 20 pixels in height. Also, please note that this time, <code class="highlighter-rouge">GUILayout.BeginArea()</code> takes a second parameter: <code class="highlighter-rouge">EditorStyles.toolbar</code>. As the name suggests, this parameter tells Unity to draw this area in toolbar style. <code class="highlighter-rouge">EditorStyles</code> has many other options to choose from which affects how the GUI elements are displayed, so I would suggest checking them out and see Unity team used them in their own editor windows.</p><pre class="language-csharp  line-numbers " data-start="6" data-line="9,15"><code>    private Rect upperPanel;
+<p>Now we can start adding our menu bar. We will draw this bar just as we drew other panels: by feeding <code>GUILayout.BeginArea()</code> a rectangle which would define its position and size (basically, its area). I am going to steal this area  from the upper panel, so that we won’t have to change other panels’ positions or heights. You can make this bar as tall as you would like, but since we are cloning Unity’s console window, we should stick to default and make it 20 pixels in height. Also, please note that this time, <code>GUILayout.BeginArea()</code> takes a second parameter: <code>EditorStyles.toolbar</code>. As the name suggests, this parameter tells Unity to draw this area in toolbar style. <code>EditorStyles</code> has many other options to choose from which affects how the GUI elements are displayed, so I would suggest checking them out and see Unity team used them in their own editor windows.</p><pre class="language-csharp  line-numbers " data-start="6" data-line="9,15"><code>    private Rect upperPanel;
     private Rect lowerPanel; 
     private Rect resizer; 
     private Rect menuBar;
@@ -130,7 +130,7 @@
         GUILayout.Label(&quot;Upper Panel&quot;);
         GUILayout.EndArea();
     }</code></pre>
-<p>OK, we are ready to add our buttons and toggles. I could have added them in the code above, but there are a couple of new concepts that I should explain beforehand. First of all, there is <code class="highlighter-rouge">GUILayout.BeginHorizontal()</code>. You see, <code class="highlighter-rouge">GUILayout</code>, as the name suggests, lays out the GUI automatically <strong>vertically</strong>. However, a toolbar is laid out horizontally, so we need to use <code class="highlighter-rouge">GUILayout.BeginHorizontal()</code> and then use <code class="highlighter-rouge">GUILayout.EndHorizontal()</code> so that Unity stops horizontal layout and continues automatic vertical layout. Then, there is <code class="highlighter-rouge">GUILayout.FlexibleSpace()</code> which acts like a spring and pushes other UI elements to the edges of its container by filling the space between them. On the other hand, <code class="highlighter-rouge">GUILayout.Space(int)</code> creates just the amount of space you need. <code class="highlighter-rouge">GUILayout.Button()</code> returns true when it is clicked and <code class="highlighter-rouge">GUILayout.Toggle()</code> returns a boolean depending on the status of the toggle: true when it is on and false when it is off.</p><pre class="language-csharp  line-numbers " data-start="14" data-line="17-22"><code>    private float resizerHeight = 5f;
+<p>OK, we are ready to add our buttons and toggles. I could have added them in the code above, but there are a couple of new concepts that I should explain beforehand. First of all, there is <code>GUILayout.BeginHorizontal()</code>. You see, <code>GUILayout</code>, as the name suggests, lays out the GUI automatically <strong>vertically</strong>. However, a toolbar is laid out horizontally, so we need to use <code>GUILayout.BeginHorizontal()</code> and then use <code>GUILayout.EndHorizontal()</code> so that Unity stops horizontal layout and continues automatic vertical layout. Then, there is <code>GUILayout.FlexibleSpace()</code> which acts like a spring and pushes other UI elements to the edges of its container by filling the space between them. On the other hand, <code>GUILayout.Space(int)</code> creates just the amount of space you need. <code>GUILayout.Button()</code> returns true when it is clicked and <code>GUILayout.Toggle()</code> returns a boolean depending on the status of the toggle: true when it is on and false when it is off.</p><pre class="language-csharp  line-numbers " data-start="14" data-line="17-22"><code>    private float resizerHeight = 5f;
     private float menuBarHeight = 20f;
 
     private bool collapse = false;
@@ -163,7 +163,7 @@
         GUILayout.EndHorizontal();
         GUILayout.EndArea();
     }</code></pre>
-<p>It looks pretty good, but the toggles on the right are missing their icons. Adding icons and textures to GUI elements is rather easy, but Unity lacks the documentation on how to do it. Here’s a piece of information you probably can’t find on the internet: Unity uses <code class="highlighter-rouge">EditorGUIUtility.Load(string)</code> to load editor resources and <a href="https://gist.github.com/masa795/5797164">this</a> piece of script lists some of the default Unity editor textures (all the icons). I checked the list and found the icons used in the console editor, so let’s add them into our own clone.</p><pre class="language-csharp  line-numbers " data-start="24" data-line="26-31"><code>    private GUIStyle resizerStyle;
+<p>It looks pretty good, but the toggles on the right are missing their icons. Adding icons and textures to GUI elements is rather easy, but Unity lacks the documentation on how to do it. Here’s a piece of information you probably can’t find on the internet: Unity uses <code>EditorGUIUtility.Load(string)</code> to load editor resources and <a href="https://gist.github.com/masa795/5797164">this</a> piece of script lists some of the default Unity editor textures (all the icons). I checked the list and found the icons used in the console editor, so let’s add them into our own clone.</p><pre class="language-csharp  line-numbers " data-start="24" data-line="26-31"><code>    private GUIStyle resizerStyle;
 
     private Texture2D errorIcon;
     private Texture2D errorIconSmall;
@@ -211,7 +211,7 @@
    <div class="empty-caption"></div>
 </div>
 <h3 id="upper-panel">Upper Panel</h3>
-<p>Let’s move on to the upper panel. This panel should be scrollable, because it could contain more content than it can display. Here is another new concept: <code class="highlighter-rouge">GUILayout.BeginScrollView(Vector2 scroll)</code> creates a scroll view in the area it is defined. All the GUI elements between <code class="highlighter-rouge">GUILayout.BeginScrollView(Vector2 scroll)</code> and <code class="highlighter-rouge">GUILayout.EndScrollView()</code> will be displayed in this scroll area.</p><pre class="language-csharp  line-numbers " data-start="24" data-line="24"><code>    private Vector2 upperPanelScroll;
+<p>Let’s move on to the upper panel. This panel should be scrollable, because it could contain more content than it can display. Here is another new concept: <code>GUILayout.BeginScrollView(Vector2 scroll)</code> creates a scroll view in the area it is defined. All the GUI elements between <code>GUILayout.BeginScrollView(Vector2 scroll)</code> and <code>GUILayout.EndScrollView()</code> will be displayed in this scroll area.</p><pre class="language-csharp  line-numbers " data-start="24" data-line="24"><code>    private Vector2 upperPanelScroll;
 
     private GUIStyle resizerStyle;
 
@@ -230,7 +230,7 @@
         GUILayout.EndScrollView();
         GUILayout.EndArea();
     }</code></pre>
-<p>Unity’s console window displays boxes in this panel, so will we. However, it is not going to be one liner, because we need to know what kind of content needs to be displayed (info, warning or error), and what its index number is (so that we can do a zebra effect on the boxes). For these reasons, it is going to be a little more work than we did previously. First of all, we need an <strong>enum</strong> for the content type of the box, which fortunately exists: <code class="highlighter-rouge">LogType</code>. Then, we should create a method for drawing boxes. This method will draw a box, add an icon to the left of the content based on its type, set the background color to a lighter or darker color based on its index (lighter if the index is odd, darker if the index is even) and then display a text.</p><pre class="language-csharp  line-numbers " data-start="24" data-line="27,29-32"><code>    private Vector2 upperPanelScroll;
+<p>Unity’s console window displays boxes in this panel, so will we. However, it is not going to be one liner, because we need to know what kind of content needs to be displayed (info, warning or error), and what its index number is (so that we can do a zebra effect on the boxes). For these reasons, it is going to be a little more work than we did previously. First of all, we need an <strong>enum</strong> for the content type of the box, which fortunately exists: <code>LogType</code>. Then, we should create a method for drawing boxes. This method will draw a box, add an icon to the left of the content based on its type, set the background color to a lighter or darker color based on its index (lighter if the index is odd, darker if the index is even) and then display a text.</p><pre class="language-csharp  line-numbers " data-start="24" data-line="27,29-32"><code>    private Vector2 upperPanelScroll;
 
     private GUIStyle resizerStyle;
     private GUIStyle boxStyle;
@@ -306,7 +306,7 @@
     private void ProcessEvents(Event e)
     {
         ...</code></pre>
-<p>Now we can use <code class="highlighter-rouge">DrawBox()</code> method in <code class="highlighter-rouge">DrawUpperPanel()</code> to actually display some content:</p><pre class="language-csharp  line-numbers " data-start="104" data-line="111-115"><code>    private void DrawUpperPanel()
+<p>Now we can use <code>DrawBox()</code> method in <code>DrawUpperPanel()</code> to actually display some content:</p><pre class="language-csharp  line-numbers " data-start="104" data-line="111-115"><code>    private void DrawUpperPanel()
     {
         upperPanel = new Rect(0, menuBarHeight, position.width, (position.height * sizeRatio) - menuBarHeight);
 
@@ -374,7 +374,7 @@
    <div class="empty-caption"></div>
 </div>
 <h3 id="adding-interaction">Adding Interaction</h3>
-<p>Yes, our window looks good, but it doesn’t do anything useful right now. Since this is a console window clone, I would like it to receive log messages from Unity’s own <code class="highlighter-rouge">Debug</code> class and display them in a similar manner. A log contains some data, such as a log string, a stack trace and a type, hence we need a class for it. We will be keeping the instances of this class in a list and a reference to the selected log. When we modify the upper and lower panel code, our window will start behaving exactly like the console window.</p><pre class="language-csharp  line-numbers " data-start="209" data-line="209-223"><code>public class Log
+<p>Yes, our window looks good, but it doesn’t do anything useful right now. Since this is a console window clone, I would like it to receive log messages from Unity’s own <code>Debug</code> class and display them in a similar manner. A log contains some data, such as a log string, a stack trace and a type, hence we need a class for it. We will be keeping the instances of this class in a list and a reference to the selected log. When we modify the upper and lower panel code, our window will start behaving exactly like the console window.</p><pre class="language-csharp  line-numbers " data-start="209" data-line="209-223"><code>public class Log
 {
     public bool isSelected;
     public string info;
@@ -458,7 +458,7 @@ using System.Collections.Generic;</code></pre><pre class="language-csharp  line-
         GUILayout.EndScrollView();
         GUILayout.EndArea();
     }</code></pre>
-<p>In order to receive logs from <code class="highlighter-rouge">Debug.Log()</code> calls, we need to tap into Unity’s log message event. Generally, we can’t access parts of Unity API that are restricted to main thread but, fortunately, Unity exposes an application event called <code class="highlighter-rouge">logMessageReceived</code>. We are going to subscribe to this event in <code class="highlighter-rouge">OnEnable()</code> and in the subscriber method we will create a <code class="highlighter-rouge">Log</code> object and add it the list of logs.</p><pre class="language-csharp  line-numbers " data-start="53" data-line="80,83-91"><code>    private void OnEnable()
+<p>In order to receive logs from <code>Debug.Log()</code> calls, we need to tap into Unity’s log message event. Generally, we can’t access parts of Unity API that are restricted to main thread but, fortunately, Unity exposes an application event called <code>logMessageReceived</code>. We are going to subscribe to this event in <code>OnEnable()</code> and in the subscriber method we will create a <code>Log</code> object and add it the list of logs.</p><pre class="language-csharp  line-numbers " data-start="53" data-line="80,83-91"><code>    private void OnEnable()
     {
         errorIcon = EditorGUIUtility.Load(&quot;icons/console.erroricon.png&quot;) as Texture2D;
         warningIcon = EditorGUIUtility.Load(&quot;icons/console.warnicon.png&quot;) as Texture2D;
@@ -501,7 +501,7 @@ using System.Collections.Generic;</code></pre><pre class="language-csharp  line-
         Log l = new Log(false, condition, stackTrace, type);
         logs.Add(l);
     }</code></pre>
-<p>Time for the ultimate test: take your <strong>ResizablePanels.cs</strong> code to a working application of yours or just create a new <code class="highlighter-rouge">Monobehaviour</code> in your current project. Throw in a couple of <code class="highlighter-rouge">Debug.Log()</code>, <code class="highlighter-rouge">Debug.LogWarning()</code> and <code class="highlighter-rouge">Debug.LogError()</code> calls and see how your window works.</p>
+<p>Time for the ultimate test: take your <strong>ResizablePanels.cs</strong> code to a working application of yours or just create a new <code>Monobehaviour</code> in your current project. Throw in a couple of <code>Debug.Log()</code>, <code>Debug.LogWarning()</code> and <code>Debug.LogError()</code> calls and see how your window works.</p>
 <div class="img-wrapper">
         <img src="/assets/img/resizable-panels-working.png" class="center" alt="Resizable Panels" width="400px" />
    <div class="empty-caption"></div>

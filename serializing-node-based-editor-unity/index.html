@@ -9,7 +9,7 @@
 <link rel="alternate" type="application/rss+xml" title="oguzkonya" href="/feed.xml">
 <script src="/assets/js/prism.js"></script>
 <title>Serializing a Node Based Editor in Unity | oguzkonya</title>
-<meta name="generator" content="Jekyll v3.7.4" />
+<meta name="generator" content="Jekyll v4.2.2" />
 <meta property="og:title" content="Serializing a Node Based Editor in Unity" />
 <meta name="author" content="Oguz Konya" />
 <meta property="og:locale" content="en_US" />
@@ -21,7 +21,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2019-08-29T00:00:00+00:00" />
 <script type="application/ld+json">
-{"description":"I actually don’t get a lot of feedback on my posts, but one post stood out: Creating a Node Based Editor in Unity. Some people asked for a more advanced version and some asked how they can save and load data to the editor. I can make an advanced version, but it probably wouldn’t cover all usage cases. On the other hand, serializing (and deserializing) a node list is a more common problem. Although I addressed some issues in XML Serialization in Unity post, I would like to complete the node based editor by adding save and load features in this post.","headline":"Serializing a Node Based Editor in Unity","dateModified":"2019-08-29T00:00:00+00:00","datePublished":"2019-08-29T00:00:00+00:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://oguzkonya.com/serializing-node-based-editor-unity/"},"url":"https://oguzkonya.com/serializing-node-based-editor-unity/","author":{"@type":"Person","name":"Oguz Konya"},"@context":"https://schema.org"}</script>
+{"author":{"@type":"Person","name":"Oguz Konya"},"@type":"BlogPosting","url":"https://oguzkonya.com/serializing-node-based-editor-unity/","description":"I actually don’t get a lot of feedback on my posts, but one post stood out: Creating a Node Based Editor in Unity. Some people asked for a more advanced version and some asked how they can save and load data to the editor. I can make an advanced version, but it probably wouldn’t cover all usage cases. On the other hand, serializing (and deserializing) a node list is a more common problem. Although I addressed some issues in XML Serialization in Unity post, I would like to complete the node based editor by adding save and load features in this post.","headline":"Serializing a Node Based Editor in Unity","dateModified":"2019-08-29T00:00:00+00:00","datePublished":"2019-08-29T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://oguzkonya.com/serializing-node-based-editor-unity/"},"@context":"https://schema.org"}</script>
 </head>
 <body data-instant-allow-query-string data-instant-allow-external-links>
 <header class="site-header">
@@ -67,7 +67,7 @@
     <em>The node based editor we created previously</em>
 </div>
 <h3 id="revisiting-xml-serialization">Revisiting XML Serialization</h3>
-<p>There are a number of serialization options, such as JSON or Unity’s own serialization system. However, since we already covered XML serialization previously, why not use it? We’ll use the <code class="highlighter-rouge">XMLOp</code> class and some of the XML attributes from <a href="/xml-serialization-and-deserialization-in-unity/">this</a> post.</p>
+<p>There are a number of serialization options, such as JSON or Unity’s own serialization system. However, since we already covered XML serialization previously, why not use it? We’ll use the <code>XMLOp</code> class and some of the XML attributes from <a href="/xml-serialization-and-deserialization-in-unity/">this</a> post.</p>
 <h3 id="revisiting-console-window-clone">Revisiting Console Window Clone</h3>
 <p>This post is not that relevant to our matter at hand, but the node editor window lacks buttons for saving and loading. It would be nice to stick with Unity’s standards, so I’ll copy the menu bar from this window clone. It is easy to implement and nice to look at.</p>
 <div class="img-wrapper">
@@ -109,7 +109,7 @@
         GUILayout.EndHorizontal();
         GUILayout.EndArea();
     }</code></pre>
-<p>On line 56, we call <code class="highlighter-rouge">DrawMenuBar()</code> method and between lines 69-82 we create the menu bar. The console window clone had a button and 6 toggles, but since we are only serializing and deserializing, we need no more than two buttons. Keep in mind that the editor GUI system has a draw order and it <strong>draws elements from back to front in the order you call them</strong>. That’s why we are drawing the menu bar after drawing the grid. Otherwise the grid would have been drawn over the menu bar.</p>
+<p>On line 56, we call <code>DrawMenuBar()</code> method and between lines 69-82 we create the menu bar. The console window clone had a button and 6 toggles, but since we are only serializing and deserializing, we need no more than two buttons. Keep in mind that the editor GUI system has a draw order and it <strong>draws elements from back to front in the order you call them</strong>. That’s why we are drawing the menu bar after drawing the grid. Otherwise the grid would have been drawn over the menu bar.</p>
 <div class="img-wrapper">
     <a target="_blank" rel="noopener noreferrer" href="/assets/img/grid-over-menu-bar.png">
         <img src="/assets/img/grid-over-menu-bar.png" class="center" alt="Grid over menu bar" width="480px" />
@@ -118,7 +118,7 @@
 </div>
 <p>Currently, save and load buttons do nothing, but we’ll get to that.</p>
 <h3 id="serialization">Serialization</h3>
-<p>Next up, we need to prepare our classes (<code class="highlighter-rouge">Node</code> and <code class="highlighter-rouge">Connection</code>) for serialization. Let’s remember the two important key points about XML serializing:</p>
+<p>Next up, we need to prepare our classes (<code>Node</code> and <code>Connection</code>) for serialization. Let’s remember the two important key points about XML serializing:</p>
 <ol>
  <li>XML serializer can only serialize public fields.</li>
  <li>Class to be serialized should have a parameterless constructor.</li>
@@ -142,7 +142,7 @@
         this.outPoint = outPoint;
         this.OnClickRemoveConnection = OnClickRemoveConnection;
     }</code></pre>
-<p>Next, we are going to <strong>ignore</strong> the properties that can’t be serialized or don’t need to be serialized. For example, in <code class="highlighter-rouge">Node</code> class, <code class="highlighter-rouge">GUIStyle</code>s can be left out of serialization, because they are already provided by the editor itself. We don’t need <code class="highlighter-rouge">isDragged</code> or <code class="highlighter-rouge">isSelected</code> either. Actually, Node class has only one property that needs to be serialized: the <code class="highlighter-rouge">rect</code>. Let’s see how <code class="highlighter-rouge">Node</code> class looks like after properly <strong>ignoring</strong> unnecessary and unserializable properties:</p><pre class="language-csharp  line-numbers " data-start="5" data-line="9-20" data-filename="Node.cs"><code>public class Node
+<p>Next, we are going to <strong>ignore</strong> the properties that can’t be serialized or don’t need to be serialized. For example, in <code>Node</code> class, <code>GUIStyle</code>s can be left out of serialization, because they are already provided by the editor itself. We don’t need <code>isDragged</code> or <code>isSelected</code> either. Actually, Node class has only one property that needs to be serialized: the <code>rect</code>. Let’s see how <code>Node</code> class looks like after properly <strong>ignoring</strong> unnecessary and unserializable properties:</p><pre class="language-csharp  line-numbers " data-start="5" data-line="9-20" data-filename="Node.cs"><code>public class Node
 {
 	public Rect rect;
 
@@ -160,7 +160,7 @@
 	[XmlIgnore] public Action&lt;Node&gt; OnRemoveNode;
 
 	public Node() { }</code></pre>
-<p><code class="highlighter-rouge">Node</code> class is ready to be serialized at this point. So, let’s serialize nodes!</p>
+<p><code>Node</code> class is ready to be serialized at this point. So, let’s serialize nodes!</p>
 <h3 id="saving-nodes">Saving Nodes</h3>
 <p>Remember the save button which did nothing at all? Well, it should at least save nodes, since they are now serializable. The method for saving nodes is really simple:</p><pre class="language-csharp  line-numbers " data-start="321" data-line="321-324" data-filename="NodeBasedEditor.cs"><code>    private void Save()
     {
@@ -184,7 +184,7 @@
         GUILayout.EndHorizontal();
         GUILayout.EndArea();
     }</code></pre>
-<p>Now, open up your <strong>Node Based Editor</strong>, place a couple of nodes, and then hit <strong>Save</strong> (you must have a <strong>Resources</strong> folder under <strong>Assets</strong> before doing that). Unity will create a file called <code class="highlighter-rouge">nodes.xml</code> in <strong>Resources</strong>, if you can’t see it, simply right-click on <strong>Resources</strong> and then click <strong>Reimport</strong>. Contents of the <code class="highlighter-rouge">nodes.xml</code> file should be something like this:</p><pre class="language-csharp  line-numbers " data-filename="nodes.xml"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+<p>Now, open up your <strong>Node Based Editor</strong>, place a couple of nodes, and then hit <strong>Save</strong> (you must have a <strong>Resources</strong> folder under <strong>Assets</strong> before doing that). Unity will create a file called <code>nodes.xml</code> in <strong>Resources</strong>, if you can’t see it, simply right-click on <strong>Resources</strong> and then click <strong>Reimport</strong>. Contents of the <code>nodes.xml</code> file should be something like this:</p><pre class="language-csharp  line-numbers " data-filename="nodes.xml"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
 &lt;ArrayOfNode xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
   &lt;Node&gt;
     &lt;rect&gt;
@@ -251,9 +251,9 @@
     &lt;/rect&gt;
   &lt;/Node&gt;
 &lt;/ArrayOfNode&gt;</code></pre>
-<p>So, our nodes can be serialized now and if we can serialize <code class="highlighter-rouge">Connection</code>s, our node editor will be completely serializable. Let’s get on with it then.</p>
+<p>So, our nodes can be serialized now and if we can serialize <code>Connection</code>s, our node editor will be completely serializable. Let’s get on with it then.</p>
 <h3 id="serializing-connections">Serializing Connections</h3>
-<p><code class="highlighter-rouge">Connection</code> class has only 2 properties that can be serialized: <code class="highlighter-rouge">inPoint (ConnectionPoint)</code> and <code class="highlighter-rouge">outPoint (ConnectionPoint)</code>. However, serializing these two properties would be meaningless, because objects do not keep references to other objects after deserialization. Which means, if we deserialize a connection, it would create two connection points and connect them, but those connection points wouldn’t belong to the nodes it used to connect (see the figure below).</p>
+<p><code>Connection</code> class has only 2 properties that can be serialized: <code>inPoint (ConnectionPoint)</code> and <code>outPoint (ConnectionPoint)</code>. However, serializing these two properties would be meaningless, because objects do not keep references to other objects after deserialization. Which means, if we deserialize a connection, it would create two connection points and connect them, but those connection points wouldn’t belong to the nodes it used to connect (see the figure below).</p>
 <div class="img-wrapper">
     <a target="_blank" rel="noopener noreferrer" href="/assets/img/serialization.png">
         <img src="/assets/img/serialization.png" class="center" alt="Broken connections" width="480px" />
@@ -305,7 +305,7 @@
 	[XmlIgnore] public GUIStyle selectedNodeStyle;
 
 	[XmlIgnore] public Action&lt;Node&gt; OnRemoveNode;</code></pre>
-<p>Of course, we need to update our <code class="highlighter-rouge">Save</code> method to include connections as well:</p><pre class="language-csharp  line-numbers " data-start="325" data-line="328" data-filename="NodeBasedEditor.cs"><code>    private void Save()
+<p>Of course, we need to update our <code>Save</code> method to include connections as well:</p><pre class="language-csharp  line-numbers " data-start="325" data-line="328" data-filename="NodeBasedEditor.cs"><code>    private void Save()
     {
         XMLOp.Serialize(nodes, &quot;Assets/Resources/nodes.xml&quot;);
         XMLOp.Serialize(connections, &quot;Assets/Resources/connections.xml&quot;);
@@ -334,7 +334,7 @@
         GUILayout.EndHorizontal();
         GUILayout.EndArea();
     }</code></pre>
-<p>We are going to deserialize the contents of the XML files in <code class="highlighter-rouge">Load()</code> method, create nodes and connections and assign them to their respective properties. Deserializing the XML files is a pretty straightforward process; all we have to do is call <code class="highlighter-rouge">XMLOp.Deserialize&lt;T&gt;(string)</code>:</p><pre class="language-csharp  line-numbers " data-start="335" data-line="335-342" data-filename="NodeBasedEditor.cs"><code>    private void Load()
+<p>We are going to deserialize the contents of the XML files in <code>Load()</code> method, create nodes and connections and assign them to their respective properties. Deserializing the XML files is a pretty straightforward process; all we have to do is call <code>XMLOp.Deserialize&lt;T&gt;(string)</code>:</p><pre class="language-csharp  line-numbers " data-start="335" data-line="335-342" data-filename="NodeBasedEditor.cs"><code>    private void Load()
     {
         var nodesDeserialized = XMLOp.Deserialize&lt;List&lt;Node&gt;&gt;(&quot;Assets/Resources/nodes.xml&quot;);
         var connectionsDeserialized = XMLOp.Deserialize&lt;List&lt;Connection&gt;&gt;(&quot;Assets/Resources/connections.xml&quot;);
@@ -342,7 +342,7 @@
         nodes = new List&lt;Node&gt;();
         connections = new List&lt;Connection&gt;();
     }</code></pre>
-<p>However, deserializing the XML files alone is not enough to restore our editor to its last state, because as you can see in the figure above, we broke the relation between the nodes and connections while serializing and we need to reconnect them. This reconnection process requires finding nodes by IDs and creating a connection between them. This is why we added unique IDs to our <code class="highlighter-rouge">ConnectionPoint</code> class. We need to recreate the <code class="highlighter-rouge">ConnectionPoint</code>s with those IDs, so we are going to add another constructor to Node class:</p><pre class="language-csharp  line-numbers " data-start="24" data-line="25,29,30" data-filename="Node.cs"><code>    public Node(Vector2 position, float width, float height, GUIStyle nodeStyle, GUIStyle selectedStyle, GUIStyle inPointStyle, GUIStyle outPointStyle, Action&lt;ConnectionPoint&gt; OnClickInPoint,
+<p>However, deserializing the XML files alone is not enough to restore our editor to its last state, because as you can see in the figure above, we broke the relation between the nodes and connections while serializing and we need to reconnect them. This reconnection process requires finding nodes by IDs and creating a connection between them. This is why we added unique IDs to our <code>ConnectionPoint</code> class. We need to recreate the <code>ConnectionPoint</code>s with those IDs, so we are going to add another constructor to Node class:</p><pre class="language-csharp  line-numbers " data-start="24" data-line="25,29,30" data-filename="Node.cs"><code>    public Node(Vector2 position, float width, float height, GUIStyle nodeStyle, GUIStyle selectedStyle, GUIStyle inPointStyle, GUIStyle outPointStyle, Action&lt;ConnectionPoint&gt; OnClickInPoint,
 		Action&lt;ConnectionPoint&gt; OnClickOutPoint, Action&lt;Node&gt; OnClickRemoveNode, string inPointID, string outPointID)
 	{
 		rect = new Rect(position.x, position.y, width, height);
@@ -353,7 +353,7 @@
 		selectedNodeStyle = selectedStyle;
 		OnRemoveNode = OnClickRemoveNode;
 	}</code></pre>
-<p>This is a new constructor, and it will create a <code class="highlighter-rouge">Node</code> with two <code class="highlighter-rouge">ConnectionPoints</code> with given (instead of generated) IDs. Now we are going to create new nodes based on deserialized nodes:</p><pre class="language-csharp  line-numbers " data-start="335" data-line="343-360" data-filename="NodeBasedEditor.cs"><code>    private void Load()
+<p>This is a new constructor, and it will create a <code>Node</code> with two <code>ConnectionPoints</code> with given (instead of generated) IDs. Now we are going to create new nodes based on deserialized nodes:</p><pre class="language-csharp  line-numbers " data-start="335" data-line="343-360" data-filename="NodeBasedEditor.cs"><code>    private void Load()
     {
         var nodesDeserialized = XMLOp.Deserialize&lt;List&lt;Node&gt;&gt;(&quot;Assets/Resources/nodes.xml&quot;);
         var connectionsDeserialized = XMLOp.Deserialize&lt;List&lt;Connection&gt;&gt;(&quot;Assets/Resources/connections.xml&quot;);
