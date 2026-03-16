@@ -1,4 +1,113 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://oguzkonya.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://oguzkonya.com/" rel="alternate" type="text/html" /><updated>2022-03-27T18:58:05+00:00</updated><id>https://oguzkonya.com/feed.xml</id><title type="html">oguzkonya</title><subtitle>Game Developer</subtitle><author><name>Oguz Konya</name></author><entry><title type="html">Yurt Dışına Yerleşmek: Bir İrlanda Macerası</title><link href="https://oguzkonya.com/yurt-disina-yerlesmek-bir-irlanda-macerasi/" rel="alternate" type="text/html" title="Yurt Dışına Yerleşmek: Bir İrlanda Macerası" /><published>2020-11-11T00:00:00+00:00</published><updated>2020-11-11T00:00:00+00:00</updated><id>https://oguzkonya.com/yurt-disina-yerlesmek-bir-irlanda-macerasi</id><content type="html" xml:base="https://oguzkonya.com/yurt-disina-yerlesmek-bir-irlanda-macerasi/"><![CDATA[<p>Uzun zamandır yazmıyorum fakat son bir yıldır bir yandan işlerin yoğunluğu, bir yandan çoluk-çocuk, bir yandan COVID-19, bir yandan taşınma derken birşeyler yazmaya pek vakit bulamadım. Aslında “draft” klasörümde yarım kalmış 4 tane yazı var fakat Medium gibi sitelerde sıkça gördüğümüz 100-200 kelimelik yazılardan nefret ediyorum, yazım mümkün olduğunca kapsamlı olsun istiyorum. Böyle olunca da bir yazıya epey vakit ayırmam gerekiyor, çoğu zaman da bitiremeden aklım başka yerlere kayıyor.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://oguzkonya.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://oguzkonya.com/" rel="alternate" type="text/html" /><updated>2026-03-16T18:46:22+00:00</updated><id>https://oguzkonya.com/feed.xml</id><title type="html">oguzkonya</title><subtitle>Game Developer</subtitle><author><name>Oguz Konya</name></author><entry><title type="html">Amazing Games You Can’t Buy Anymore</title><link href="https://oguzkonya.com/amazing-games-you-can-t-buy-anymore/" rel="alternate" type="text/html" title="Amazing Games You Can’t Buy Anymore" /><published>2026-03-16T00:00:00+00:00</published><updated>2026-03-16T00:00:00+00:00</updated><id>https://oguzkonya.com/amazing-games-you-can-t-buy-anymore</id><content type="html" xml:base="https://oguzkonya.com/amazing-games-you-can-t-buy-anymore/"><![CDATA[<p><em>(Yes I know, it’s been more than 5 years since I last posted here, and I’m aware that I could’ve used a better opener. But hey, I’m pretty sure no one follows this blog and I’m writing for myself, so there you go.)</em></p>
+
+<p>There’s a specific kind of frustration that comes with trying to buy a game you used to love as a kid. You go to Steam, it’s not there. You go to GOG, it’s not there. You search eBay and find a physical copy going for €80, which is more than most new games cost. At that point, you’re left with a choice: either accept that this part of your childhood is inaccessible, or go the not-so-legal route and grab a copy from one of the many abandonware sites floating around the internet.</p>
+
+<p>I’ve been thinking about this a lot lately (mostly because I’m working on a project where I install all my physical (and GOG) copies on an external drive and make them work in Windows 10 with community patches and mods). There’s a whole category of games that simply don’t exist in the digital marketplace. Not because they’re forgotten (people like me clearly remember them and love them), but because of expired licenses, corporate acquisitions, IP disputes, or just plain corporate indifference. The companies that own the rights either can’t or won’t sell them, and the developers who made them often don’t even have the rights to give them away for free.</p>
+
+<p>So here’s a list of some of those games. Games I played as a kid, games I remember fondly, and games that, for one reason or another, you simply cannot buy today.</p>
+
+<h2 id="midtown-madness-1999">Midtown Madness (1999)</h2>
+
+<p>Before GTA had its open-world driving formula fully figured out, before Forza Horizon made cruising through a living city a mainstream pleasure, there was Midtown Madness. Developed by Angel Studios (who would later become Rockstar San Diego) and published by Microsoft in 1999, it let you loose in a fairly faithful recreation of Chicago (not that I have ever seen Chicago, but I assume it is). No mission objectives breathing down your neck. No wanted level. Just you, a selection of vehicles ranging from a Volkswagen Beetle to a city bus to an actual Freightliner truck, and a city full of traffic to cause mayhem in.</p>
+
+<p>The game had four modes: Blitz, Circuit, Checkpoint, and Cruise which gave you enough structure to keep things interesting, but honestly my favorite was Cruise. It sounds simple because it was simple. But at the time, the idea of an open city you could freely explore felt genuinely novel. Midtown Madness was, in many ways, one of the first games to prove that the open-world driving concept could work, and work well.</p>
+
+<p>The series got two more entries; Midtown Madness 2 (which became my favorite later) and Midtown Madness 3 (which I never got to play because it was Xbox exclusive), but all three are now completely unavailable for purchase anywhere.</p>
+
+<p>Getting it running today requires some fiddling. There’s an open-source reimplementation called Open1560 that handles a lot of the compatibility issues, and the game is widely available on abandonware sites. It’s not the most convenient gaming experience in 2026, but it’s worth the effort.</p>
+
+<h2 id="crimson-skies-2000">Crimson Skies (2000)</h2>
+
+<p>Crimson Skies<sup id="fnref:crimson" role="doc-noteref"><a href="#fn:crimson" class="footnote" rel="footnote">1</a></sup> is set in an alternate 1930s America where the Great Depression caused the United States to fragment into a bunch of warring regional states, and the primary mode of transportation is by air. Zeppelins serve as floating aircraft carriers. Air piracy is a legitimate profession. You play Nathan Zachary, swashbuckling air pirate and leader of the Fortune Hunters, flying absurdly overpowered planes through missions that read like old pulp adventure serials.</p>
+
+<p>The flight model sat exactly where it needed to be: not realistic enough to require a manual (made me buy my first joystick, a Microsoft Sidewinder), not arcade enough to feel weightless. You could pull off maneuvers that would make a physics teacher weep, and the game actively encouraged you to fly through tight gaps, under bridges, and through the hangars of enemy zeppelins. If you played the game, you know I’m talking about “The Stolen Scarlet”. It was a mission where you are mistaken as a stuntman for a movie and you need to follow another stunt plane through these ridiculous stunts. The game just committed fully to its own premise and never apologized for any of it.</p>
+
+<p>It had problems. The original release was plagued with bugs. Most notoriously, the game had a tendency to randomly delete your save files, which is not a minor issue when you’re in the middle of a campaign. Patches helped, but they didn’t eliminate the instability entirely. The load times were also long enough that they affected how you played, nudging you away from the risky maneuvers that were supposed to be the game’s signature.</p>
+
+<p>Despite all that, Crimson Skies developed a genuine cult following, and for good reason. Microsoft eventually made a much more successful Xbox sequel, Crimson Skies: High Road to Revenge, in 2003. But the original PC game sits in the same unavailable limbo as everything else on this list. Microsoft owns the IP but has done nothing with it since, which is a shame because the setting is one of the more original things in flight game history.</p>
+
+<h2 id="black--white-2001">Black &amp; White (2001)</h2>
+
+<p>Peter Molyneux has been promising things he couldn’t deliver since before it was fashionable. But with Black &amp; White, released in 2001 after three years of development, he actually came close to delivering something genuinely unprecedented. You played as a god (literally a floating, disembodied hand) and your job was to convert the villages of a world called Eden to your faith. You could do this through benevolence or through terror. Your choice.</p>
+
+<p>The most memorable part of the game, though, wasn’t the village management or the miracles you could cast. It was your “pet”, the creature. You picked an animal at the start (a cow, a tiger, an ape, among others) and this creature was your avatar in the physical world. Feed it, train it, pet it when it did something right, slap it when it misbehaved, and over time it would develop its own personality shaped entirely by how you treated it. Play as a good god and your creature became a gentle giant that cared for your villagers. Play as a bad god and it turned into something resembling a small apocalypse with fur.</p>
+
+<p>The AI was, genuinely, impressive for 2001.<sup id="fnref:ai" role="doc-noteref"><a href="#fn:ai" class="footnote" rel="footnote">2</a></sup> It wasn’t perfect, but watching your creature develop habits, preferences, and reactions to your behavior was something that felt years ahead of its time. The village management side of things got repetitive, and the later islands were a bit of a slog, but the creature mechanic alone makes Black &amp; White worth remembering.</p>
+
+<p>It also had a sequel in 2005, Black &amp; White 2, which shifted the focus more toward city-building and somewhat diluted the original’s personality. Neither game is available for purchase today. Getting Black &amp; White running on a modern system requires a community-made patch, and even then it can be temperamental. But it’s one of those games where the effort is justified.</p>
+
+<h2 id="no-one-lives-forever-2000">No One Lives Forever (2000)</h2>
+
+<p>I’ll be upfront: No One Lives Forever might be the game on this list I have the most affection for (I mean, Cate Archer, right?). It was 2000, first-person shooters were beginning to feel samey, and then Monolith Productions released this thing. You played as Cate Archer, a Scottish spy working for a secret organization called UNITY, in a game that was essentially every 1960s spy film ever made distilled into a single ridiculous, lovingly crafted experience.</p>
+
+<p>The writing was sharp. The humor was genuinely funny, not in a “ha ha, game humor” way, but in a way that made you actually stop and listen to enemy henchmen complain to each other about their weekends and their workplace grievances before you killed them with your silenced guns. There were documents and letters scattered throughout levels that were worth finding purely for the laughs. One of them was a letter from a spy to his wife explaining that he was, in fact, a spy, and also that he had another wife in Russia, and he was sorry about all of it.</p>
+
+<p>The gadgets (explosive lipstick, fuzzy slippers, spy glasses among a few) were wonderful, and the missions took you everywhere from Moroccan rooftops to outer space, sometimes in ways that seemed almost absurd. One level had you free-falling out of a crashing plane, fighting enemies in mid-air, and stealing one of their parachutes just in time. It was voted Game of the Year 2000 by several PC magazines, and honestly, it deserved it.</p>
+
+<p>The game has a complicated legal history. The rights are split between multiple companies; Fox, Activision, and Monolith’s current owner Warner Bros. all have some claim to various pieces of it, and nobody has been able to untangle the mess to release it properly, not even GOG. The Night Dive Studios petition to remaster it has been stuck in legal limbo for years. So for now, it exists on abandonware sites and nowhere else (maybe also over at NOLF Revival).</p>
+
+<p>If you’ve never played it, I genuinely recommend tracking it down. The sequel, No One Lives Forever 2: A Spy in H.A.R.M.’s Way, is also excellent, arguably with better production values, though with slightly less of the original’s spark of pure invention.</p>
+
+<h2 id="the-movies-2005">The Movies (2005)</h2>
+
+<p>Another Lionhead Studios production, another Peter Molyneux game. The Movies was a studio management sim where you ran a Hollywood film production company, starting in the 1920s and progressing through the decades as filmmaking technology evolved. You hired actors and directors, managed their egos and addictions, built sets, and cranked out films.</p>
+
+<p>The management side was decent, if somewhat shallow. Success in the business model didn’t actually depend on making good films, it depended on how many scenes your movies had, how good your crew was, and what research you’d unlocked (to be fair, how can a game rate how good your in-game made movie is?). You could pump out complete narrative nonsense and still win awards, which was either a commentary on Hollywood or just a flaw in the game design, depending on how charitable you’re feeling.</p>
+
+<p>But the movie making side, the actual machinima creation tools, were genuinely fascinating. You could pick your actors, choose your sets, select scenes from a large library, and sequence them into a proper film that you could then export and share. The game came out a year before YouTube launched, and it had an integrated system for uploading your films to a community website. People made some remarkably creative things with it.</p>
+
+<p>Winning the BAFTA for Best Simulation in 2006 was well-deserved, even if the game sold poorly. The community site shut down in 2008, which took some of the magic with it, but the creative tools still work. The game was available on Steam for a while but it’s completely gone now.</p>
+
+<h2 id="test-drive-6-1999">Test Drive 6 (1999)</h2>
+
+<p>I’ll be honest with you: Test Drive 6 is not a great game. But it’s on this list because I played it as a kid and had an unreasonable amount of fun with it, and I think that experience deserves to be documented even when the game in question doesn’t quite hold up.</p>
+
+<p>Developed by Pitbull Syndicate and published by Infogrames in 1999, it was an arcade racing game with many licensed cars, racing through cities like London, Paris, New York, and Hong Kong. The career mode let you earn credits, bet on races, and upgrade your cars. There was a Cop Chase mode where you drove a police car and issued citations to speeding traffic, which was a nice idea undermined somewhat by the fact that the police cars handled like shopping trolleys.</p>
+
+<p>The PC version in particular received unfavorable reviews at the time, and they weren’t wrong. The graphics were mediocre, the framerate was choppy even on capable machines, and the handling was somewhere between “arcade” and “broken” depending on which direction you wanted to be generous in. The AI cars had a habit of launching into the air on collision in a way that was either hilarious or infuriating depending on your mood.</p>
+
+<p>But here’s the thing: racing through Paris while avoiding traffic, watching the Eiffel Tower scroll past, with some car bouncing off your bumper and spinning into the air was genuinely fun for an eleven-year-old. And the music! Ah, that Cars by Fear Factory! Even if you’ve never been in a car in your life before, it makes you feel like racing one with the wind in your face.</p>
+
+<p>Like everything else on this list, it’s nowhere to be found commercially. Infogrames went through a series of rebrands and acquisitions, and the Test Drive license eventually ended up with various different publishers. None of them have shown any interest in re-releasing the older titles. If you are into Test Drive games, I highly recommend trying the newer titles, though. They definitely scratch an itch.</p>
+
+<h2 id="the-battle-for-middle-earth-2004">The Battle for Middle-Earth (2004)</h2>
+
+<p>And finally, the one on this list that genuinely hurts.</p>
+
+<p>Electronic Arts released The Battle for Middle-Earth in December 2004, built on the same Sage engine that powered Command &amp; Conquer: Generals<sup id="fnref:generals" role="doc-noteref"><a href="#fn:generals" class="footnote" rel="footnote">3</a></sup>, and it was (and I mean this without any nostalgia-softened qualification) one of the best real-time strategy games ever made. Not just as a licensed game. As an RTS.</p>
+
+<p>You commanded the armies of Middle-Earth across two campaigns: one following the events of the film trilogy as the forces of good, one letting you rewrite history as the forces of darkness. Units were recruited as squads, which gave battles a genuine sense of scale. Hero units like Gandalf, Aragorn, Saruman, the Nazgûl leveled up and carried across missions. Armies you kept alive got stronger over time, which made you actually care about not throwing them away carelessly. The power system, borrowed from Generals, let you call in Eagles, summon the Army of the Dead, or bring out the Balrog, and it felt spectacular every single time.</p>
+
+<p>The graphics were genuinely stunning for 2004. The Howard Shore score from the films was integrated seamlessly. The voice acting included actual cast members from the movies. And the atmosphere! The sense that you were actually there, at Helm’s Deep, at Minas Tirith! It was something no other Lord of the Rings game has managed to replicate before or since.</p>
+
+<p>The reason you can’t buy it today is depressingly mundane: EA’s license to use the Lord of the Rings film assets expired in 2009, and they couldn’t reach an agreement with the Tolkien estate and Warner Bros. to extend it. So both Battle for Middle-Earth and its sequel were delisted and have never come back. Physical copies exist, but even those require a CD key to activate on EA’s servers which have long since been shut down.</p>
+
+<p>There is a fan-made patch called T3A:Online that restores multiplayer functionality, and the game can be made to run on modern systems with some effort. But you can’t buy it. You can’t own it legitimately. One of the best RTS games of its era just… doesn’t exist in the marketplace anymore.</p>
+
+<h2 id="closing-thoughts">Closing Thoughts</h2>
+
+<p>There are other games I could have included like Driver: San Francisco, Theocracy, and Harry Potter: The Chamber of Secrets, but these seven felt like the right starting point. Games that are worth playing, games that shaped how I think about what games can be, and games that are, for various boring legal and commercial reasons, inaccessible to anyone who didn’t already own them.</p>
+
+<p>It’s a strange kind of cultural loss. Not as dramatic as a book going out of print, maybe, but still something. These things were made. People worked on them. Millions of people played them and remember them. And yet the only way to experience them today is to find a grey-area download from an abandonware site. Maybe this hurts me a bit extra because I’m a game developer myself. Maybe the games I’ve worked on will also be lost to all this silliness.</p>
+
+<p>I don’t have a tidy conclusion to that thought. But I do think it’s worth naming.</p>
+
+<p>Until next time.</p>
+
+<hr />
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:crimson" role="doc-endnote">
+      <p>If I remember correctly (it’s been more than 25 years, so my memory might be betraying me here), I had gotten the disk for Crimson Skies with my first PC purchase, which is long lost. I regret that deeply. <a href="#fnref:crimson" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:ai" role="doc-endnote">
+      <p>Fun fact: Black &amp; White’s lead AI programmer was Demis Hassabis who co-founded Deep Mind. He was one of the “Architects of AI” chosen as Time’s 2025 Person of the Year. <a href="#fnref:ai" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:generals" role="doc-endnote">
+      <p>When I was in high school, we used to skip school sometimes and go to cyber cafes just to play Generals. Once, we were so early, we had to wait for half an hour for the owner to come in and open the cafe. He’d given us some weird looks. <a href="#fnref:generals" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>]]></content><author><name>Oguz Konya</name></author><category term="games" /><summary type="html"><![CDATA[(Yes I know, it’s been more than 5 years since I last posted here, and I’m aware that I could’ve used a better opener. But hey, I’m pretty sure no one follows this blog and I’m writing for myself, so there you go.)]]></summary></entry><entry><title type="html">Yurt Dışına Yerleşmek: Bir İrlanda Macerası</title><link href="https://oguzkonya.com/yurt-disina-yerlesmek-bir-irlanda-macerasi/" rel="alternate" type="text/html" title="Yurt Dışına Yerleşmek: Bir İrlanda Macerası" /><published>2020-11-11T00:00:00+00:00</published><updated>2020-11-11T00:00:00+00:00</updated><id>https://oguzkonya.com/yurt-disina-yerlesmek-bir-irlanda-macerasi</id><content type="html" xml:base="https://oguzkonya.com/yurt-disina-yerlesmek-bir-irlanda-macerasi/"><![CDATA[<p>Uzun zamandır yazmıyorum fakat son bir yıldır bir yandan işlerin yoğunluğu, bir yandan çoluk-çocuk, bir yandan COVID-19, bir yandan taşınma derken birşeyler yazmaya pek vakit bulamadım. Aslında “draft” klasörümde yarım kalmış 4 tane yazı var fakat Medium gibi sitelerde sıkça gördüğümüz 100-200 kelimelik yazılardan nefret ediyorum, yazım mümkün olduğunca kapsamlı olsun istiyorum. Böyle olunca da bir yazıya epey vakit ayırmam gerekiyor, çoğu zaman da bitiremeden aklım başka yerlere kayıyor.</p>
 
 <p>Gelgelelim, bu yazıyı yarım da olsa yayınlayacağım ve mümkün olduğu kadar güncelleyeceğim. Çünkü hem bir nevi günlük görevi görsün istiyorum, hem de kendime başvuru kaynağı olsun. Bencil isteklerimin ötesinde gelecek planları yapan genç arkadaşlara yardımının dokunması gibi “philanthropist”<sup id="fnref:philanthropist" role="doc-noteref"><a href="#fn:philanthropist" class="footnote" rel="footnote">1</a></sup> bir amacım da var açıkcası, çünkü bu yazımda İrlanda’ya nasıl yerleştiğimden bahsedeceğim ve bu aralar pek çok gencin yurt dışına yerleşme arayışı içerisinde olduğunu biliyorum. Yalnız önden belirteyim, ben iş bulduktan sonra taşındım buraya. Dolayısıyla dil kursu, Ankara anlaşması vb. yollardan yerleşmek bu yazının konusu değil.</p>
 
